@@ -1,5 +1,5 @@
 /*
- Block Hop: http://www.team-arg.org/zmbt-manual.html
+ Zombie Trash: http://www.team-arg.org/zmbt-manual.html
 
  Arduboy version 0.1:  http://www.team-arg.org/zmbt-downloads.html
 

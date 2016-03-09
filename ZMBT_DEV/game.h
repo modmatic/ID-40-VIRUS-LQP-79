@@ -2,6 +2,9 @@
 #define GAME_H
 
 #include "inputs.h"
+#include "player.h"
+#include "enemies.h"
+#include "elements.h"
 
 //define menu states (on main menu)
 #define STATE_MENU_INTRO         0
