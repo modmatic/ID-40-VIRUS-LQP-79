@@ -1,10 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "inputs.h"
-#include "player.h"
-#include "enemies.h"
-#include "elements.h"
+#include <Arduino.h>
 
 //define menu states (on main menu)
 #define STATE_MENU_INTRO         0
@@ -19,7 +16,6 @@
 #define STATE_GAME_PAUSE         7
 #define STATE_GAME_OVER          8
 
-Sprites sprites(arduboy);
 
 extern Arduboy arduboy;
 extern byte gameState;
@@ -27,6 +23,7 @@ extern byte gameState;
 void stateGamePlaying()
 {
   checkInputs();
+  drawPlayer();
 }
 void stateGamePause()
 {

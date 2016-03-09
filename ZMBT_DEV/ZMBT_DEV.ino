@@ -19,9 +19,17 @@
 #include <sprites.h>
 #include <simple_buttons.h>
 #include "menu.h"
+#include "player.h"
 #include "game.h"
+#include "enemies.h"
+#include "elements.h"
+#include "bitmaps.h"
+#include "inputs.h"
 
 Arduboy arduboy;
+SimpleButtons buttons (arduboy);
+Sprites sprites(arduboy);
+unsigned long scorePlayer;
 
 byte gameState;
 
