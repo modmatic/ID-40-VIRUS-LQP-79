@@ -15,6 +15,7 @@
 #define STATE_GAME_PLAYING       6
 #define STATE_GAME_PAUSE         7
 #define STATE_GAME_OVER          8
+#define STATE_GAME_NEXT_LEVEL    9
 
 
 extern Arduboy arduboy;
@@ -24,6 +25,11 @@ void stateGamePlaying()
 {
   checkInputs();
   drawPlayer();
+}
+
+void stateGameNextLevel()
+{
+  
 }
 void stateGamePause()
 {

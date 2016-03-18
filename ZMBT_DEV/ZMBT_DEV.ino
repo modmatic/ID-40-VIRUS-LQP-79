@@ -45,6 +45,7 @@ FunctionPointer mainGameLoop[] =
   stateGamePlaying,
   stateGamePause,
   stateGameOver,
+  stateGameNextLevel,
 };
 
 void setup()
