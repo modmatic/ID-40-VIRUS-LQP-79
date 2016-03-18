@@ -143,7 +143,7 @@ void stateMenuSoundfx()
   if (buttons.justPressed(UP_BUTTON)) soundYesNo = false;
   if (buttons.justPressed(A_BUTTON | B_BUTTON))
   {
-    arduboy.audio.saveOnOff();
+    arduboy.audio.save_on_off();
     gameState = STATE_MENU_MAIN;
   }
   if (soundYesNo == true) arduboy.audio.on();

@@ -14,10 +14,10 @@
 //determine the game
 #define GAME_ID 40
 
-#include <Arduboy.h>
-#include <ArduboyExtra.h>
-#include <sprites.h>
-#include <simple_buttons.h>
+#include "Arglib.h"
+//#include <ArduboyExtra.h>
+//#include <sprites.h>
+//#include <simple_buttons.h>
 #include "menu.h"
 #include "player.h"
 #include "game.h"
