@@ -2,7 +2,7 @@
 
 ## title ideas
 - trailer trash
-- Virus X
+- ~~Virus X~~
 
 ## game ideas
 - zombies are surrounding the player, shoot them away
