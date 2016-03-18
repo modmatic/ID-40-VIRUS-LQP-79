@@ -56,6 +56,8 @@ void updatePlayer()
   else if(down)
     vy = 1;
   
+  
+  
   // Update sprite
   if(vx < 0)
     coolGuy.direction = PLAYER_FACING_WEST;
@@ -80,8 +82,15 @@ void updatePlayer()
       coolGuy.direction = PLAYER_FACING_SOUTH;
   }
   
-  coolGuy.x += vx;
-  coolGuy.y += vy;
+  if(!standgun)
+  {
+    coolGuy.x += vx;
+    coolGuy.y += vy;
+  }
+  else if(rungun && standgun)
+  {
+    // do this in a sec
+  }
 }
 
 void drawPlayer()
