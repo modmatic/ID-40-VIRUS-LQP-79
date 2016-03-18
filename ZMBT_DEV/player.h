@@ -25,14 +25,13 @@ struct Player
     boolean walking;
     byte direction;
     byte frame;
+    byte shotDelay;
 };
 
-Player coolGuy = { .x = 20, .y = 20, .walking = false, .direction = PLAYER_FACING_SOUTH, .frame = 0};
+Player coolGuy = { .x = 20, .y = 20, .walking = false, .direction = PLAYER_FACING_SOUTH, .frame = 0, .shotDelay = 10};
 
 void updatePlayer()
 {
-  coolGuy.walking = false;
-  
   short vx = 0;
   short vy = 0;
   
@@ -43,6 +42,12 @@ void updatePlayer()
   bool down = buttons.pressed(DOWN_BUTTON);
   bool rungun = buttons.pressed(A_BUTTON);
   bool standgun = buttons.pressed(B_BUTTON);
+  bool strafegun = rungun && standgun;
+
+  coolGuy.walking = up || down || left || right;
+  coolGuy.walking = (standgun && !rungun) ? false : coolGuy.walking;
+  
+  if(coolGuy.shotDelay > 0) coolGuy.shotDelay--;
   
   // Update horizontal physics
   if(left)
@@ -50,46 +55,57 @@ void updatePlayer()
   else if(right)
     vx = 1;
   
+  if(strafegun || !standgun)
+  {
+    coolGuy.x += vx;
+  }
+  
   // Update vertical physics
   if(up)
     vy = -1;
   else if(down)
     vy = 1;
   
+  if(strafegun || !standgun)
+  {
+    coolGuy.y += vy;
+  }
   
   
   // Update sprite
-  if(vx < 0)
-    coolGuy.direction = PLAYER_FACING_WEST;
-  else if(vx > 0)
-    coolGuy.direction = PLAYER_FACING_EAST;
-
-  if(vy < 0) {
-    if(coolGuy.direction == PLAYER_FACING_WEST)
-      coolGuy.direction = PLAYER_FACING_NORTHWEST;
-    else if(coolGuy.direction == PLAYER_FACING_EAST)
-      coolGuy.direction = PLAYER_FACING_NORTHEAST;
-    else
-      coolGuy.direction = PLAYER_FACING_NORTH;
-  }
-  else if(vy > 0)
+  if(!strafegun)
   {
-    if(coolGuy.direction == PLAYER_FACING_WEST)
-      coolGuy.direction = PLAYER_FACING_SOUTHWEST;
-    else if(coolGuy.direction == PLAYER_FACING_EAST)
-      coolGuy.direction = PLAYER_FACING_SOUTHEAST;
-    else
-      coolGuy.direction = PLAYER_FACING_SOUTH;
+    if(vx < 0)
+      coolGuy.direction = PLAYER_FACING_WEST;
+    else if(vx > 0)
+      coolGuy.direction = PLAYER_FACING_EAST;
+
+    if(vy < 0) {
+      if(coolGuy.direction == PLAYER_FACING_WEST)
+        coolGuy.direction = PLAYER_FACING_NORTHWEST;
+      else if(coolGuy.direction == PLAYER_FACING_EAST)
+        coolGuy.direction = PLAYER_FACING_NORTHEAST;
+      else
+        coolGuy.direction = PLAYER_FACING_NORTH;
+    }
+    else if(vy > 0)
+    {
+      if(coolGuy.direction == PLAYER_FACING_WEST)
+        coolGuy.direction = PLAYER_FACING_SOUTHWEST;
+      else if(coolGuy.direction == PLAYER_FACING_EAST)
+        coolGuy.direction = PLAYER_FACING_SOUTHEAST;
+      else
+        coolGuy.direction = PLAYER_FACING_SOUTH;
+    }
   }
   
-  if(!standgun)
+  if(standgun || rungun)
   {
-    coolGuy.x += vx;
-    coolGuy.y += vy;
-  }
-  else if(rungun && standgun)
-  {
-    // do this in a sec
+    if(coolGuy.shotDelay == 0)
+    {
+      arduboy.tunes.tone(440, 20);
+      coolGuy.shotDelay = 10;
+    }
   }
 }
 
