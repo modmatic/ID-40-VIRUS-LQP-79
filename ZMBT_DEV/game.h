@@ -29,7 +29,7 @@ void stateGamePlaying()
 
 void stateGameNextLevel()
 {
-  
+  gameState = STATE_GAME_PLAYING;
 }
 void stateGamePause()
 {
@@ -42,7 +42,7 @@ void stateGameOver()
 {
   if (buttons.justPressed(A_BUTTON | B_BUTTON))
   {
-    gameState = STATE_GAME_PLAYING;
+    gameState = STATE_MENU_MAIN;
   }
 }
 

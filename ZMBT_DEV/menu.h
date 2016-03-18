@@ -130,7 +130,7 @@ void stateMenuHelp()
 
 void stateMenuPlay()
 {
-  gameState = STATE_GAME_PLAYING;
+  gameState = STATE_GAME_NEXT_LEVEL;
 }
 
 void stateMenuInfo()
