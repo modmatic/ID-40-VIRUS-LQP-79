@@ -20,8 +20,8 @@
 //#include <simple_buttons.h>
 #include "menu.h"
 #include "player.h"
-#include "game.h"
 #include "enemies.h"
+#include "game.h"
 #include "elements.h"
 #include "bitmaps.h"
 #include "inputs.h"

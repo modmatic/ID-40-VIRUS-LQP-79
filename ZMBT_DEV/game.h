@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <Arduino.h>
+#include "enemies.h"
 
 //define menu states (on main menu)
 #define STATE_MENU_INTRO         0
@@ -25,6 +26,7 @@ void stateGamePlaying()
 {
   checkInputs();
   drawPlayer();
+  drawZombies();
 }
 
 void stateGameNextLevel()
