@@ -21,17 +21,19 @@
 
 extern Arduboy arduboy;
 extern byte gameState;
+byte zombieAmount;
 
 void stateGamePlaying()
 {
   checkInputs();
-  drawZombies();
+  drawZombies(zombieAmount);
   drawPlayer();
 }
 
 void stateGameNextLevel()
 {
-  createZombies(1);
+  zombieAmount = 8;
+  createZombies(zombieAmount);
   gameState = STATE_GAME_PLAYING;
 }
 void stateGamePause()
