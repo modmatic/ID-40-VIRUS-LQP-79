@@ -25,6 +25,7 @@
 #include "elements.h"
 #include "bitmaps.h"
 #include "inputs.h"
+#include "level.h"
 
 Arduboy arduboy;
 SimpleButtons buttons (arduboy);

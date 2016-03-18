@@ -25,12 +25,13 @@ extern byte gameState;
 void stateGamePlaying()
 {
   checkInputs();
-  drawPlayer();
   drawZombies();
+  drawPlayer();
 }
 
 void stateGameNextLevel()
 {
+  createZombies(1);
   gameState = STATE_GAME_PLAYING;
 }
 void stateGamePause()
