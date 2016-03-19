@@ -7,7 +7,7 @@
 void stateGamePlaying()
 {
   // Update
-  updatePlayer(coolGuy);
+  updatePlayer(coolGirl);
   updateBullets();
   updateZombies();
   updateSurvivors();
@@ -16,8 +16,8 @@ void stateGamePlaying()
   drawLevel();
   drawSurvivors();
   drawZombies();
-  drawPlayer(coolGuy);
   drawBullets();
+  drawPlayer(coolGirl);
 }
 
 // stateGameNextLevel

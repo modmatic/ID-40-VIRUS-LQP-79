@@ -2,7 +2,7 @@
 
 // globals ///////////////////////////////////////////////////////////////////
 
-Player coolGuy = {
+Player coolGirl = {
   .x = 20,
   .y = 20,
   .walking = false,
@@ -64,11 +64,11 @@ void updatePlayer(Player& obj)
   }
   
   // collide with survivors
-  for(id=0; id<SURVIVOR_MAX; id++)
+  for(id=0; id<ZOMBIE_MAX; id++)
   {
     if(survivorCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      survivors[id].active = false;
+      zombieHealthOffset(zombies[id], -1);
       break;
     }
   }
@@ -96,11 +96,11 @@ void updatePlayer(Player& obj)
   }
   
   // collide with survivors
-  for(id=0; id<SURVIVOR_MAX; id++)
+  for(id=0; id<ZOMBIE_MAX; id++)
   {
     if(survivorCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      survivors[id].active = false;
+      zombieHealthOffset(zombies[id], -1);
       break;
     }
   }

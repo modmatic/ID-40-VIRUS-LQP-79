@@ -7,7 +7,7 @@
 
 // constants /////////////////////////////////////////////////////////////////
 
-#define SURVIVOR_FRAME_SKIP      6
+#define SURVIVOR_FRAME_SKIP      10
 #define SURVIVOR_FRAME_COUNT     4
 #define SURVIVOR_MAX             5
 
