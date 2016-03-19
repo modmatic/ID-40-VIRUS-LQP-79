@@ -18,6 +18,7 @@
 #define ZOMBIE_HEIGHT            16
 
 #define ZOMBIE_SPEED             1
+#define ZOMBIE_STEP_DELAY        3
 
 // structures ////////////////////////////////////////////////////////////////
 
@@ -30,6 +31,7 @@ struct Enemy
     byte direction;
     byte health;
     byte active;
+    byte flashTime;
 };
 
 // globals ///////////////////////////////////////////////////////////////////

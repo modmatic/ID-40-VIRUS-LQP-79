@@ -7,7 +7,13 @@
 // called each frame the gamestate is set to playing
 void stateGamePlaying()
 {
-  // Update
+  // Update Level
+  if(!(arduboy.frameCount % (60*3))) {
+    addZombie(128, 128);
+  }
+  
+  
+  // Update Objects
   updatePlayer(coolGirl);
   updateBullets();
   updateZombies();
@@ -19,6 +25,7 @@ void stateGamePlaying()
   drawZombies();
   drawBullets();
   drawPlayer(coolGirl);
+  drawWeapons();
 }
 
 // stateGameNextLevel
@@ -27,9 +34,11 @@ void stateGameNextLevel()
 {
   clearSurvivors();
   clearZombies();
+  clearWeapons();
   
-  addZombie(64, 48);
+  addZombie(128, 128);
   addSurvivor(64+16, 48);
+  addWeapon(128, 16, 1);
 
   gameState = STATE_GAME_PLAYING;
 }

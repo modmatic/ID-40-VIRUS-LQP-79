@@ -18,6 +18,7 @@ void setZombie(Enemy& obj, int x, int y)
   obj.x = x;
   obj.y = y;
   obj.health = 3;
+  obj.flashTime = 0;
 }
 
 
@@ -43,17 +44,53 @@ void addZombie(int x, int y)
 // zombies are "removed" (set inactive) when health reaches zero
 void updateZombie(Enemy& obj)
 {
+  byte id;
+  
   int vx = 0;
   int vy = 0;
   
-  //if(obj.x + ZOMBIE_WIDTH < coolGuy.x) vx = -ZOMBIE_SPEED;
-  //if(obj.x > coolGuy.x + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
-  
-  //if(obj.y + ZOMBIE_HEIGHT < coolGuy.y) vy = -ZOMBIE_HEIGHT;
-  //if(obj.y > coolGuy.y + PLAYER_HEIGHT) vy = -ZOMBIE_HEIGHT;
-  
-  obj.x += vx;
-  obj.y += vy;
+  if (arduboy.everyXFrames(ZOMBIE_STEP_DELAY))
+  {
+    if(obj.x + ZOMBIE_WIDTH < coolGirl.positionOnMapX) vx = ZOMBIE_SPEED;
+    if(obj.x > coolGirl.positionOnMapX + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
+    
+    if(obj.y + ZOMBIE_HEIGHT < coolGirl.positionOnMapY) vy = ZOMBIE_SPEED;
+    if(obj.y > coolGirl.positionOnMapY + PLAYER_HEIGHT) vy = -ZOMBIE_SPEED;
+    
+    obj.x += vx;
+    
+    for(id=0; id<ZOMBIE_MAX; id++)
+    {
+      if(zombieCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+      {
+        if(&(zombies[id]) == &obj) continue;
+        
+        if(vx > 0)
+          obj.x = zombies[id].x - ZOMBIE_WIDTH;
+        else if(vx < 0)
+          obj.x = zombies[id].x + ZOMBIE_WIDTH;
+        vx = 0;
+        break;
+      }
+    }
+    
+    obj.y += vy;
+    
+    for(id=0; id<ZOMBIE_MAX; id++)
+    {
+      if(zombieCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+      {
+        if(&(zombies[id]) == &obj) continue;
+        
+        if(vy > 0)
+          obj.y = zombies[id].y - ZOMBIE_HEIGHT;
+        else if(vy < 0)
+          obj.y = zombies[id].y + ZOMBIE_HEIGHT;
+        vy = 0;
+        break;
+      }
+    }
+  }
   
   
   if(obj.health == 0)
@@ -108,6 +145,7 @@ bool zombieHealthOffset(Enemy& obj, char amount)
   
   if(obj.health <= 0)
   {
+    arduboy.tunes.tone(220, 20);
     obj.active = false;
   }
   else if(amount < 0)
@@ -126,8 +164,8 @@ bool zombieCollision(byte id, int x, int y, int w, int h)
     ( zombies[id].active ) &&
     ( zombies[id].x < x+w ) &&
     ( zombies[id].x + ZOMBIE_WIDTH > x ) &&
-    ( zombies[id].y < x+h ) &&
-    ( zombies[id].y + ZOMBIE_HEIGHT > x );
+    ( zombies[id].y < y+h ) &&
+    ( zombies[id].y + ZOMBIE_HEIGHT > y );
 }
 
 // clearZombies
