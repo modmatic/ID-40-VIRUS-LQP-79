@@ -11,7 +11,7 @@
 #define ENEMY_FACING_WEST        0
 #define ENEMY_FACING_EAST        1
 
-#define ZOMBIE_FRAME_SKIP        6
+#define ZOMBIE_FRAME_SKIP        2
 #define ZOMBIE_FRAME_COUNT       8
 #define ZOMBIE_MAX               16
 #define ZOMBIE_WIDTH             16
@@ -27,7 +27,7 @@ struct Enemy
   public:
     int x;
     int y;
-    boolean walking;
+    byte frame;
     byte direction;
     byte health;
     byte active;

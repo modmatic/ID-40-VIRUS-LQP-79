@@ -3,7 +3,6 @@
 // globals ///////////////////////////////////////////////////////////////////
 
 Enemy zombies[ZOMBIE_MAX];
-byte zombieFrame = 0;
 
 
 // method implementations ////////////////////////////////////////////////////
@@ -12,7 +11,7 @@ byte zombieFrame = 0;
 // sets the position of a zombie, and enables that instance
 void setZombie(Enemy& obj, int x, int y)
 {
-  obj.walking = false;
+  obj.frame = 0;
   obj.active = true;
   obj.direction = ENEMY_FACING_WEST;
   obj.x = x;
@@ -127,7 +126,22 @@ void updateZombie(Enemy& obj)
       
       vy = 0;
     }
+    
+    if(vx || vy)
+    {
+      // Advance animation frame
+      if (arduboy.everyXFrames(ZOMBIE_FRAME_SKIP)) obj.frame++;
+      
+      // Just 4 frames
+      if (obj.frame >= ZOMBIE_FRAME_COUNT ) obj.frame = 0;
+    }
+    else
+    {
+      obj.frame = 0;
+    }
   }
+  
+  
   
   if(obj.health == 0)
   {
@@ -156,17 +170,11 @@ void drawZombies()
 {
   byte id;
   
-  // Advance animation frame
-  if (arduboy.everyXFrames(ZOMBIE_FRAME_SKIP)) zombieFrame++;
-  
-  // Just 4 frames
-  if (zombieFrame >= ZOMBIE_FRAME_COUNT ) zombieFrame = 0;
-  
   // Draw all the zombies!
   for (id=0; id<ZOMBIE_MAX; id++)
   {
     if(!zombies[id].active) continue;
-    sprites.drawPlusMask(zombies[id].x - mapPositionX, zombies[id].y - mapPositionY, zombie_plus_mask, zombieFrame + 8*zombies[id].direction);
+    sprites.drawPlusMask(zombies[id].x - mapPositionX, zombies[id].y - mapPositionY, zombie_plus_mask, zombies[id].frame + 8*zombies[id].direction);
   }
 }
 
