@@ -7,6 +7,8 @@
 #include "elements.h"
 #include "enemies.h"
 
+extern int positionOnMapX;
+extern int positionOnMapY;
 
 // constants /////////////////////////////////////////////////////////////////
 
@@ -21,6 +23,7 @@
 
 #define PLAYER_WIDTH  16
 #define PLAYER_HEIGHT 16
+
 
 // structures ////////////////////////////////////////////////////////////////
 

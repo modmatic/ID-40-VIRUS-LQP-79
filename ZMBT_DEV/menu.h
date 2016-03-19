@@ -1,7 +1,6 @@
 #ifndef MENU_BITMAPS_H
 #define MENU_BITMAPS_H
 
-#include "inputs.h"
 #include "game.h"
 #include "globals.h"
 

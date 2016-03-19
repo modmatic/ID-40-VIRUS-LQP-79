@@ -1,5 +1,6 @@
 #include "game.h"
 
+
 // method implementations ////////////////////////////////////////////////////
 
 // stateGamePlaying
@@ -29,7 +30,7 @@ void stateGameNextLevel()
   
   addZombie(64, 48);
   addSurvivor(64+16, 48);
-  
+
   gameState = STATE_GAME_PLAYING;
 }
 

@@ -1,6 +1,16 @@
 #include "bullet.h"
 
 // globals ///////////////////////////////////////////////////////////////////
+const char BulletXVelocities[] = {
+  0,
+  -2,
+  -3,
+  -2,
+  0,
+  2,
+  3,
+  2,
+};
 
 Bullet bullets[BULLET_MAX];
 

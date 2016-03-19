@@ -14,6 +14,8 @@
 #define SURVIVOR_WIDTH           16
 #define SURVIVOR_HEIGHT          16
 
+extern int positionOnMapX;
+extern int positionOnMapY;
 
 // structures ////////////////////////////////////////////////////////////////
 

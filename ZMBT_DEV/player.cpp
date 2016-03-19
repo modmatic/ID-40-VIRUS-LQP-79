@@ -10,7 +10,7 @@ Player coolGirl = {
   .frame = 0,
   .shotDelay = 10,
   .vx = 0,
-  .vy = 0
+  .vy = 0,
 };
 
 
@@ -44,13 +44,18 @@ void updatePlayer(Player& obj)
   
   // Update horizontal physics
   if(left)
+  {
     vx = -1;
+  }
   else if(right)
+  {
     vx = 1;
+  }
  
   if(strafegun || !standgun)
   {
-    obj.x += vx;
+    //obj.x += vx;
+    positionOnMapX += vx;
   }
   
   // collide with zombies
@@ -82,7 +87,8 @@ void updatePlayer(Player& obj)
   
   if(strafegun || !standgun)
   {
-    obj.y += vy;
+    //obj.y += vy;
+    positionOnMapY += vy;
   }
   
   // collide with zombies

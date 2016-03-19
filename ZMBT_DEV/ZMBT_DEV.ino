@@ -25,7 +25,7 @@
 #include "game.h"
 #include "elements.h"
 #include "bitmaps.h"
-#include "inputs.h"
+//#include "inputs.h"
 #include "level.h"
 
 
