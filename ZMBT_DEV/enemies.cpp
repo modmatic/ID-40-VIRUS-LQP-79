@@ -46,14 +46,17 @@ void updateZombie(Enemy& obj)
   int vx = 0;
   int vy = 0;
   
-  //if(obj.x + ZOMBIE_WIDTH < coolGuy.x) vx = -ZOMBIE_SPEED;
-  //if(obj.x > coolGuy.x + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
-  
-  //if(obj.y + ZOMBIE_HEIGHT < coolGuy.y) vy = -ZOMBIE_HEIGHT;
-  //if(obj.y > coolGuy.y + PLAYER_HEIGHT) vy = -ZOMBIE_HEIGHT;
-  
-  obj.x += vx;
-  obj.y += vy;
+  if (arduboy.everyXFrames(2))
+  {
+    if(obj.x + ZOMBIE_WIDTH < coolGirl.positionOnMapX) vx = ZOMBIE_SPEED;
+    if(obj.x > coolGirl.positionOnMapX + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
+    
+    if(obj.y + ZOMBIE_HEIGHT < coolGirl.positionOnMapY) vy = ZOMBIE_SPEED;
+    if(obj.y > coolGirl.positionOnMapY + PLAYER_HEIGHT) vy = -ZOMBIE_SPEED;
+    
+    obj.x += vx;
+    obj.y += vy;
+  }
   
   
   if(obj.health == 0)
