@@ -3,36 +3,113 @@
 
 #include <Arduino.h>
 
-byte survivorFrame = 0;
+// constants /////////////////////////////////////////////////////////////////
+
+#define SURVIVOR_FRAME_SKIP      6
+#define SURVIVOR_FRAME_COUNT     4
+#define SURVIVOR_MAX             5
+
+#define SURVIVOR_WIDTH           16
+#define SURVIVOR_HEIGHT          16
+
+
+// structures ////////////////////////////////////////////////////////////////
 
 struct Element
 {
   public:
     int x;
     int y;
+    byte active;
 };
 
-Element survivor[5];
 
-void createSurvivors(byte survivorCount)
+// globals ///////////////////////////////////////////////////////////////////
+
+// animation frame for all survivors
+byte survivorFrame = 0;
+
+// list of survivors
+Element survivors[SURVIVOR_MAX];
+
+
+// methods ///////////////////////////////////////////////////////////////////
+
+// setZombie
+// sets the position of a zombie, and enables that instance
+void setSurvivor(Element& obj, int x, int y)
 {
-  for (byte i =0; i < survivorCount; i++)
+  obj.x = x;
+  obj.y = y;
+  obj.active = true;
+}
+
+
+// addSurvivor
+// searches the survivor list for an empty slot, adds one if available
+void addSurvivor(int x, int y)
+{
+  byte id;
+  
+  for(id=0; id<SURVIVOR_MAX; id++)
   {
-    survivor[i].x = 0 + (i*80);
-    survivor[i].y = 5;
+    if(!survivors[id].active)
+    {
+      setSurvivor(survivors[id], x, y);
+      break;
+    }
   }
 }
 
-void drawSurvivors(byte survivorCount)
+
+// updateSurvivors
+// updates the survivor states
+void updateSurvivors()
 {
-  if (arduboy.everyXFrames(6))survivorFrame++;
-  if (survivorFrame > 3 ) survivorFrame = 0;
-  for (byte i=0; i< survivorCount; i++)
+  // advance the frame
+  if (arduboy.everyXFrames(SURVIVOR_FRAME_SKIP)) survivorFrame++;
+  
+  // clamp to 4 frames
+  if (survivorFrame >= SURVIVOR_FRAME_COUNT ) survivorFrame = 0;
+}
+
+
+// drawSurvivors
+// draws every active survivor in the list to the display
+void drawSurvivors()
+{
+  // draw the survivor!
+  for (byte id=0; id<SURVIVOR_MAX; id++)
   {
-    sprites.drawPlusMask(survivor[i].x+ (i*17), survivor[i].y, survivor_plus_mask, survivorFrame);
+    if(!survivors[id].active) continue;
+    sprites.drawPlusMask(survivors[id].x+ (id*17), survivors[id].y, survivor_plus_mask, survivorFrame);
   }
   
 }
 
+// survivorCollision
+// takes survivor id, collision box to test against
+// returns true if collision boxes intersect
+bool survivorCollision(byte id, int x, int y, int w, int h)
+{
+  return
+    ( survivors[id].active ) &&
+    ( survivors[id].x < x+w ) &&
+    ( survivors[id].x + SURVIVOR_WIDTH > x ) &&
+    ( survivors[id].y < x+h ) &&
+    ( survivors[id].y + SURVIVOR_HEIGHT > x );
+}
+
+// clearSurvivors
+// clears the entire list of survivors
+void clearSurvivors()
+{
+  byte id;
+  
+  for(id=0; id<SURVIVOR_MAX; id++)
+  {
+    survivors[id].active = false;
+  }
+}
 
 #endif

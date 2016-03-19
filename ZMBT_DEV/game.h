@@ -2,8 +2,12 @@
 #define GAME_H
 
 #include <Arduino.h>
+#include "level.h"
 #include "enemies.h"
 #include "elements.h"
+#include "bullet.h"
+
+// constants /////////////////////////////////////////////////////////////////
 
 //define menu states (on main menu)
 #define STATE_MENU_INTRO         0
@@ -20,27 +24,47 @@
 #define STATE_GAME_NEXT_LEVEL    9
 
 
+// globals ///////////////////////////////////////////////////////////////////
+
 extern Arduboy arduboy;
 extern byte gameState;
-byte zombieAmount;
-byte survivorAmount;
 
+
+// methods ///////////////////////////////////////////////////////////////////
+
+// stateGamePlaying
+// called each frame the gamestate is set to playing
 void stateGamePlaying()
 {
-  checkInputs();
-  drawZombies(zombieAmount);
-  drawSurvivors(survivorAmount);
-  drawPlayer();
+  // Update
+  updatePlayer(coolGuy);
+  updateBullets();
+  updateZombies();
+  updateSurvivors();
+  
+  // Draw
+  drawLevel();
+  drawSurvivors();
+  drawZombies();
+  drawPlayer(coolGuy);
+  drawBullets();
 }
 
+// stateGameNextLevel
+// called each frame the gamestate is set to next level
 void stateGameNextLevel()
 {
-  zombieAmount = 8;
-  survivorAmount = 2;
-  createZombies(zombieAmount);
-  createSurvivors(survivorAmount);
+  clearSurvivors();
+  clearZombies();
+  
+  addZombie(64, 48);
+  addSurvivor(64+16, 48);
+  
   gameState = STATE_GAME_PLAYING;
 }
+
+// stateGamePause
+// called each frame the gamestate is set to paused
 void stateGamePause()
 {
   if (buttons.justPressed(A_BUTTON | B_BUTTON))
@@ -48,6 +72,9 @@ void stateGamePause()
     gameState = STATE_MENU_MAIN;
   }
 }
+
+// stateGameOver
+// called each frame the gamestate is set to game over
 void stateGameOver()
 {
   if (buttons.justPressed(A_BUTTON | B_BUTTON))

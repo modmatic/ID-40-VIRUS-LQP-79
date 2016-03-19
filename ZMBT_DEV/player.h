@@ -3,10 +3,12 @@
 
 #include <Arduino.h>
 #include "bitmaps.h"
+#include "bullet.h"
+#include "elements.h"
+#include "enemies.h"
 
-extern Arduboy arduboy;
-extern Sprites sprites;
-extern SimpleButtons buttons;
+
+// constants /////////////////////////////////////////////////////////////////
 
 #define PLAYER_FACING_SOUTH       0
 #define PLAYER_FACING_SOUTHWEST   1
@@ -17,6 +19,11 @@ extern SimpleButtons buttons;
 #define PLAYER_FACING_EAST        6
 #define PLAYER_FACING_SOUTHEAST   7
 
+#define PLAYER_WIDTH  16
+#define PLAYER_HEIGHT 16
+
+// structures ////////////////////////////////////////////////////////////////
+
 struct Player
 {
   public:
@@ -26,14 +33,41 @@ struct Player
     byte direction;
     byte frame;
     byte shotDelay;
+    short vx;
+    short vy;
 };
 
-Player coolGuy = { .x = 20, .y = 20, .walking = false, .direction = PLAYER_FACING_SOUTH, .frame = 0, .shotDelay = 10};
 
-void updatePlayer()
+// globals ///////////////////////////////////////////////////////////////////
+
+extern Arduboy arduboy;
+extern Sprites sprites;
+extern SimpleButtons buttons;
+extern Player coolGuy;
+
+Player coolGuy = {
+  .x = 20,
+  .y = 20,
+  .walking = false,
+  .direction = PLAYER_FACING_SOUTH,
+  .frame = 0,
+  .shotDelay = 10,
+  .vx = 0,
+  .vy = 0
+};
+
+
+// methods ///////////////////////////////////////////////////////////////////
+
+// updatePlayer
+// updates the player according to game rules
+void updatePlayer(Player& obj)
 {
+  // Input velocity
   short vx = 0;
   short vy = 0;
+  
+  byte id;
   
   // Read input
   bool left = buttons.pressed(LEFT_BUTTON);
@@ -44,21 +78,44 @@ void updatePlayer()
   bool standgun = buttons.pressed(B_BUTTON);
   bool strafegun = rungun && standgun;
 
-  coolGuy.walking = up || down || left || right;
-  coolGuy.walking = (standgun && !rungun) ? false : coolGuy.walking;
+  // Stop or continue walking animation
+  obj.walking = up || down || left || right;
+  obj.walking = (standgun && !rungun) ? false : obj.walking;
   
-  if(coolGuy.shotDelay > 0) coolGuy.shotDelay--;
+  // Bullet timer
+  if(obj.shotDelay > 0) obj.shotDelay--;
   
   // Update horizontal physics
   if(left)
     vx = -1;
   else if(right)
     vx = 1;
-  
+ 
   if(strafegun || !standgun)
   {
-    coolGuy.x += vx;
+    obj.x += vx;
   }
+  
+  // collide with zombies
+  for(id=0; id<ZOMBIE_MAX; id++)
+  {
+    if(zombieCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    {
+      zombieHealthOffset(zombies[id], -1);
+      break;
+    }
+  }
+  
+  // collide with survivors
+  for(id=0; id<ZOMBIE_MAX; id++)
+  {
+    if(survivorCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    {
+      zombieHealthOffset(zombies[id], -1);
+      break;
+    }
+  }
+  
   
   // Update vertical physics
   if(up)
@@ -68,7 +125,27 @@ void updatePlayer()
   
   if(strafegun || !standgun)
   {
-    coolGuy.y += vy;
+    obj.y += vy;
+  }
+  
+  // collide with zombies
+  for(id=0; id<ZOMBIE_MAX; id++)
+  {
+    if(zombieCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    {
+      zombieHealthOffset(zombies[id], -1);
+      break;
+    }
+  }
+  
+  // collide with survivors
+  for(id=0; id<ZOMBIE_MAX; id++)
+  {
+    if(survivorCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    {
+      zombieHealthOffset(zombies[id], -1);
+      break;
+    }
   }
   
   
@@ -76,44 +153,49 @@ void updatePlayer()
   if(!strafegun)
   {
     if(vx < 0)
-      coolGuy.direction = PLAYER_FACING_WEST;
+      obj.direction = PLAYER_FACING_WEST;
     else if(vx > 0)
-      coolGuy.direction = PLAYER_FACING_EAST;
+      obj.direction = PLAYER_FACING_EAST;
 
     if(vy < 0) {
-      if(coolGuy.direction == PLAYER_FACING_WEST)
-        coolGuy.direction = PLAYER_FACING_NORTHWEST;
-      else if(coolGuy.direction == PLAYER_FACING_EAST)
-        coolGuy.direction = PLAYER_FACING_NORTHEAST;
+      if(obj.direction == PLAYER_FACING_WEST)
+        obj.direction = PLAYER_FACING_NORTHWEST;
+      else if(obj.direction == PLAYER_FACING_EAST)
+        obj.direction = PLAYER_FACING_NORTHEAST;
       else
-        coolGuy.direction = PLAYER_FACING_NORTH;
+        obj.direction = PLAYER_FACING_NORTH;
     }
     else if(vy > 0)
     {
-      if(coolGuy.direction == PLAYER_FACING_WEST)
-        coolGuy.direction = PLAYER_FACING_SOUTHWEST;
-      else if(coolGuy.direction == PLAYER_FACING_EAST)
-        coolGuy.direction = PLAYER_FACING_SOUTHEAST;
+      if(obj.direction == PLAYER_FACING_WEST)
+        obj.direction = PLAYER_FACING_SOUTHWEST;
+      else if(obj.direction == PLAYER_FACING_EAST)
+        obj.direction = PLAYER_FACING_SOUTHEAST;
       else
-        coolGuy.direction = PLAYER_FACING_SOUTH;
+        obj.direction = PLAYER_FACING_SOUTH;
     }
   }
   
+  // Update gun
   if(standgun || rungun)
   {
-    if(coolGuy.shotDelay == 0)
+    if(obj.shotDelay == 0)
     {
-      arduboy.tunes.tone(440, 20);
-      coolGuy.shotDelay = 10;
+      addBullet(obj.x + PLAYER_WIDTH/2, obj.y + PLAYER_HEIGHT/2, obj.direction, 0, 0);
+      obj.shotDelay = 10;
     }
   }
+  
+  // Update animation
+  if (arduboy.everyXFrames(6) && obj.walking) obj.frame++;
+  if (obj.frame > 3 ) obj.frame = 0;
 }
 
-void drawPlayer()
+// drawPlayer
+// draws the player to the screen
+void drawPlayer(Player& obj)
 {
-  if (arduboy.everyXFrames(6) && coolGuy.walking) coolGuy.frame++;
-  if (coolGuy.frame > 3 ) coolGuy.frame = 0;
-  sprites.drawPlusMask(coolGuy.x, coolGuy.y, player_plus_mask, coolGuy.frame + 4*coolGuy.direction);
+  sprites.drawPlusMask(obj.x, obj.y, player_plus_mask, obj.frame + 4*obj.direction);
 }
 
 #endif
