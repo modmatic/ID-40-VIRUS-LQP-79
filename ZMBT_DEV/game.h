@@ -26,6 +26,7 @@
 #define STATE_GAME_OVER          8
 #define STATE_GAME_NEXT_LEVEL    9
 
+extern byte level;
 
 // methods prototypes ////////////////////////////////////////////////////////
 

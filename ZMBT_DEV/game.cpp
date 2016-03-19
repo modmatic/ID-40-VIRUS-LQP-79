@@ -40,6 +40,8 @@ void stateGameNextLevel()
   addSurvivor(64+16, 48);
   addWeapon(128, 16, 1);
 
+  level++;
+  
   gameState = STATE_GAME_PLAYING;
 }
 

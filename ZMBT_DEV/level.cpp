@@ -4,27 +4,26 @@
 
 int mapPositionX;
 int mapPositionY;
+byte level;
 
-const unsigned char *levelmap01[] =
+const unsigned char *levels[][32] =
 {
-  tilemap00, tilemap01, tilemap01, tilemap01, tilemap01, tilemap01, tilemap01, tilemap02,
-  tilemap03, tilemap04, tilemap04, tilemap04, tilemap04, tilemap04, tilemap04, tilemap05,
-  tilemap03, tilemap04, tilemap04, tilemap04, tilemap04, tilemap04, tilemap04, tilemap05,
-  tilemap06, tilemap07, tilemap07, tilemap07, tilemap07, tilemap07, tilemap07, tilemap08,
+  block00, block01, block01, block01, block01, block01, block01, block02,
+  block03, block04, block04, block04, block04, block04, block04, block05,
+  block03, block04, block04, block04, block04, block04, block04, block05,
+  block06, block07, block07, block07, block07, block07, block07, block08,
+
+  block06, block07, block07, block07, block07, block07, block07, block08,
+  block03, block04, block04, block04, block04, block04, block04, block05,
+  block03, block04, block04, block04, block04, block04, block04, block05,
+  block06, block07, block07, block07, block07, block07, block07, block08,
+
+  block06, block06, block06, block06, block06, block06, block06, block06,
+  block06, block06, block06, block06, block06, block06, block06, block06,
+  block06, block06, block06, block06, block06, block06, block06, block06,
+  block06, block06, block06, block06, block06, block06, block06, block06,
 };
 
-const unsigned char *levelmap02[] =
-{
-  tilemap00, tilemap01, tilemap01, tilemap01, tilemap01, tilemap01, tilemap01, tilemap02,
-  tilemap03, tilemap04, tilemap04, tilemap04, tilemap04, tilemap04, tilemap04, tilemap05,
-  tilemap03, tilemap04, tilemap04, tilemap04, tilemap04, tilemap04, tilemap04, tilemap05,
-  tilemap06, tilemap07, tilemap07, tilemap07, tilemap07, tilemap07, tilemap07, tilemap08,
-};
-
-const unsigned char *levelmaps[] =
-{
-  *levelmap01,*levelmap01,
-};
 
 void newDraw(unsigned posX, unsigned posY) {
   unsigned int intX = posX >> 3, subX = posX & 0x07;
@@ -33,7 +32,7 @@ void newDraw(unsigned posX, unsigned posY) {
     for (byte y = 0; y < (subY ?  9 :  8); y++) {
       sprites.drawSelfMasked(
         ((int)x << 3) - subX, ((int)y << 3) - subY, tileset,
-        pgm_read_byte(&levelmap01
+        pgm_read_byte(&levels[level-1]
                       [((intX + x) >> 3) + ((intY + y) & 0xF8)]
                       [((intX + x) & 0x07) + (((intY + y) & 0x07) << 3)]
                      ));

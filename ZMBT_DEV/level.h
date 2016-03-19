@@ -10,7 +10,7 @@
 #define LEVEL_WIDTH 512
 #define LEVEL_HEIGHT 256
 
-extern const unsigned char *levelmap01[];
+extern const unsigned char *levelmap01[][32];
 
 
 // method prototypes /////////////////////////////////////////////////////////
@@ -19,21 +19,8 @@ extern const unsigned char *levelmap01[];
 void drawLevel();
 
 
-// data //////////////////////////////////////////////////////////////////////
-/*
-  const unsigned char PROGMEM level01[] =
-  {
-  4, // amount of enemies
-  2, // amount of survivors
 
-  // blocks used in the level
-  1,2,2,2,2,3,
-  4,5,5,5,5,6,
-  7,8,8,8,8,9,
-  };
-*/
-
-PROGMEM const unsigned char tilemap00[] =
+PROGMEM const unsigned char block00[] =
 {
   2, 2, 2, 2, 2, 2, 2, 2,
   2, 3, 3, 3, 3, 3, 3, 3,
@@ -45,7 +32,7 @@ PROGMEM const unsigned char tilemap00[] =
   2, 0, 1, 0, 1, 0, 1, 0,
 };
 
-PROGMEM const unsigned char tilemap01[] =
+PROGMEM const unsigned char block01[] =
 {
   2, 2, 2, 2, 2, 2, 2, 2,
   3, 3, 3, 3, 3, 3, 3, 3,
@@ -57,7 +44,7 @@ PROGMEM const unsigned char tilemap01[] =
   1, 0, 1, 0, 1, 0, 1, 0,
 };
 
-PROGMEM const unsigned char tilemap02[] =
+PROGMEM const unsigned char block02[] =
 {
   2, 2, 2, 2, 2, 2, 2, 2,
   3, 3, 3, 3, 3, 3, 3, 2,
@@ -69,7 +56,7 @@ PROGMEM const unsigned char tilemap02[] =
   1, 0, 1, 0, 1, 0, 0, 2,
 };
 
-PROGMEM const unsigned char tilemap03[] =
+PROGMEM const unsigned char block03[] =
 {
   2, 0, 0, 1, 0, 1, 0, 1,
   2, 0, 1, 0, 1, 0, 1, 0,
@@ -81,7 +68,7 @@ PROGMEM const unsigned char tilemap03[] =
   2, 0, 1, 0, 1, 0, 1, 0,
 };
 
-PROGMEM const unsigned char tilemap04[] =
+PROGMEM const unsigned char block04[] =
 {
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
@@ -93,7 +80,7 @@ PROGMEM const unsigned char tilemap04[] =
   1, 0, 1, 0, 1, 0, 1, 0,
 };
 
-PROGMEM const unsigned char tilemap05[] =
+PROGMEM const unsigned char block05[] =
 {
   0, 1, 0, 1, 0, 1, 0, 2,
   1, 0, 1, 0, 1, 0, 0, 2,
@@ -105,7 +92,7 @@ PROGMEM const unsigned char tilemap05[] =
   1, 0, 1, 0, 1, 0, 0, 2,
 };
 
-PROGMEM const unsigned char tilemap06[] =
+PROGMEM const unsigned char block06[] =
 {
   2, 0, 0, 1, 0, 1, 0, 1,
   2, 0, 1, 0, 1, 0, 1, 0,
@@ -117,7 +104,7 @@ PROGMEM const unsigned char tilemap06[] =
   2, 2, 2, 2, 2, 2, 2, 2,
 };
 
-PROGMEM const unsigned char tilemap07[] =
+PROGMEM const unsigned char block07[] =
 {
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
@@ -129,7 +116,7 @@ PROGMEM const unsigned char tilemap07[] =
   2, 2, 2, 2, 2, 2, 2, 2,
 };
 
-PROGMEM const unsigned char tilemap08[] =
+PROGMEM const unsigned char block08[] =
 {
   0, 1, 0, 1, 0, 1, 0, 2,
   1, 0, 1, 0, 1, 0, 0, 2,
