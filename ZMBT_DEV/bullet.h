@@ -23,6 +23,7 @@ struct Bullet {
   byte active;
 };
 
+
 // globals ///////////////////////////////////////////////////////////////////
 
 extern Bullet bullets[BULLET_MAX];

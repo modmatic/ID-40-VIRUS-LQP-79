@@ -18,6 +18,7 @@ void setZombie(Enemy& obj, int x, int y)
   obj.x = x;
   obj.y = y;
   obj.health = 3;
+  obj.flashTime = 0;
 }
 
 
@@ -46,7 +47,7 @@ void updateZombie(Enemy& obj)
   int vx = 0;
   int vy = 0;
   
-  if (arduboy.everyXFrames(2))
+  if (arduboy.everyXFrames(ZOMBIE_STEP_DELAY))
   {
     if(obj.x + ZOMBIE_WIDTH < coolGirl.positionOnMapX) vx = ZOMBIE_SPEED;
     if(obj.x > coolGirl.positionOnMapX + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
@@ -111,6 +112,7 @@ bool zombieHealthOffset(Enemy& obj, char amount)
   
   if(obj.health <= 0)
   {
+    arduboy.tunes.tone(220, 20);
     obj.active = false;
   }
   else if(amount < 0)
@@ -129,8 +131,8 @@ bool zombieCollision(byte id, int x, int y, int w, int h)
     ( zombies[id].active ) &&
     ( zombies[id].x < x+w ) &&
     ( zombies[id].x + ZOMBIE_WIDTH > x ) &&
-    ( zombies[id].y < x+h ) &&
-    ( zombies[id].y + ZOMBIE_HEIGHT > x );
+    ( zombies[id].y < y+h ) &&
+    ( zombies[id].y + ZOMBIE_HEIGHT > y );
 }
 
 // clearZombies

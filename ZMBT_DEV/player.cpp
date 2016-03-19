@@ -3,8 +3,8 @@
 // globals ///////////////////////////////////////////////////////////////////
 
 Player coolGirl = {
-  .positionOnScreenX = 20,
-  .positionOnScreenY = 20,
+  .positionOnScreenX = 25,
+  .positionOnScreenY = 25,
   .walking = false,
   .direction = PLAYER_FACING_SOUTH,
   .frame = 0,
@@ -57,15 +57,15 @@ void updatePlayer(Player& obj)
   if(strafegun || !standgun)
   {
     //obj.x += vx;
-    mapPositionX += vx;
+    obj.positionOnMapX += vx;
   }
   
   // collide with zombies
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(zombieCollision(id, obj.positionOnScreenX, obj.positionOnScreenY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(zombieCollision(id, obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      zombieHealthOffset(zombies[id], -1);
+      
       break;
     }
   }
@@ -73,7 +73,7 @@ void updatePlayer(Player& obj)
   // collide with survivors
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(survivorCollision(id, obj.positionOnScreenX, obj.positionOnScreenY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(survivorCollision(id, obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       zombieHealthOffset(zombies[id], -1);
       break;
@@ -90,13 +90,13 @@ void updatePlayer(Player& obj)
   if(strafegun || !standgun)
   {
     //obj.y += vy;
-    mapPositionY += vy;
+    obj.positionOnMapY += vy;
   }
   
   // collide with zombies
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(zombieCollision(id, obj.positionOnScreenX, obj.positionOnScreenX, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(zombieCollision(id, obj.positionOnMapX, obj.positionOnMapX, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       zombieHealthOffset(zombies[id], -1);
       break;
@@ -106,7 +106,7 @@ void updatePlayer(Player& obj)
   // collide with survivors
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(survivorCollision(id, obj.positionOnScreenX, obj.positionOnScreenY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(survivorCollision(id, obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       zombieHealthOffset(zombies[id], -1);
       break;
@@ -146,7 +146,7 @@ void updatePlayer(Player& obj)
   {
     if(obj.shotDelay == 0)
     {
-      addBullet(obj.positionOnScreenX + PLAYER_WIDTH/2, obj.positionOnScreenY + PLAYER_HEIGHT/2, obj.direction, 0, 0);
+      addBullet(obj.positionOnMapX + PLAYER_WIDTH/2, obj.positionOnMapY + PLAYER_HEIGHT/2, obj.direction, 0, 0);
       obj.shotDelay = 10;
     }
   }
@@ -154,11 +154,15 @@ void updatePlayer(Player& obj)
   // Update animation
   if (arduboy.everyXFrames(6) && obj.walking) obj.frame++;
   if (obj.frame > 3 ) obj.frame = 0;
+  
+  // Update map
+  mapPositionX = obj.positionOnMapX - obj.positionOnScreenX;
+  mapPositionY = obj.positionOnMapY - obj.positionOnScreenY;
 }
 
 // drawPlayer
 // draws the player to the screen
 void drawPlayer(Player& obj)
 {
-  sprites.drawPlusMask(obj.positionOnScreenX, obj.positionOnScreenY, player_plus_mask, obj.frame + 4*obj.direction);
+  sprites.drawPlusMask(obj.positionOnMapX - mapPositionX, obj.positionOnMapY - mapPositionY, player_plus_mask, obj.frame + 4*obj.direction);
 }

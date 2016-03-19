@@ -7,6 +7,7 @@
 #include "enemies.h"
 #include "elements.h"
 #include "bullet.h"
+#include "weapon.h"
 
 
 // constants /////////////////////////////////////////////////////////////////
