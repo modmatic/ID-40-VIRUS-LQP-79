@@ -7,8 +7,8 @@
 
 // constants /////////////////////////////////////////////////////////////////
 
-#define LEVEL_WIDTH WIDTH * 3
-#define LEVEL_HEIGHT HEIGHT * 3
+#define LEVEL_WIDTH 512
+#define LEVEL_HEIGHT 256
 
 extern const unsigned char *levelmap01[];
 

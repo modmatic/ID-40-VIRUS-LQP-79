@@ -24,6 +24,11 @@ extern int mapPositionY;
 #define PLAYER_WIDTH  16
 #define PLAYER_HEIGHT 16
 
+#define PLAYER_SCREEN_XMIN        (64-32)
+#define PLAYER_SCREEN_XMAX        (64+16)
+#define PLAYER_SCREEN_YMIN        (32-16)
+#define PLAYER_SCREEN_YMAX        (32)
+
 
 // structures ////////////////////////////////////////////////////////////////
 

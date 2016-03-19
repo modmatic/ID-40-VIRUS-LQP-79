@@ -154,9 +154,21 @@ void updatePlayer(Player& obj)
   if (arduboy.everyXFrames(6) && obj.walking) obj.frame++;
   if (obj.frame > 3 ) obj.frame = 0;
   
-  // Update map
-  mapPositionX = obj.positionOnMapX - obj.positionOnScreenX;
-  mapPositionY = obj.positionOnMapY - obj.positionOnScreenY;
+  // Center map on player
+  //mapPositionX = obj.positionOnMapX - obj.positionOnScreenX;
+  //mapPositionY = obj.positionOnMapY - obj.positionOnScreenY;
+  
+  // Move map toward player required boundary
+  mapPositionX = (mapPositionX < obj.positionOnMapX - PLAYER_SCREEN_XMAX) ? obj.positionOnMapX - PLAYER_SCREEN_XMAX : mapPositionX;
+  mapPositionX = (mapPositionX > obj.positionOnMapX - PLAYER_SCREEN_XMIN) ? obj.positionOnMapX - PLAYER_SCREEN_XMIN : mapPositionX;
+  mapPositionY = (mapPositionY < obj.positionOnMapY - PLAYER_SCREEN_YMAX) ? obj.positionOnMapY - PLAYER_SCREEN_YMAX : mapPositionY;
+  mapPositionY = (mapPositionY > obj.positionOnMapY - PLAYER_SCREEN_YMIN) ? obj.positionOnMapY - PLAYER_SCREEN_YMIN : mapPositionY;
+  
+  // Clamp on screen boundaries
+  mapPositionX = (mapPositionX < 0) ? 0 : mapPositionX;
+  mapPositionX = (mapPositionX > LEVEL_WIDTH - WIDTH) ? LEVEL_WIDTH-WIDTH : mapPositionX;
+  mapPositionY = (mapPositionY < 0) ? 0 : mapPositionY;
+  mapPositionY = (mapPositionY > LEVEL_HEIGHT - HEIGHT) ? LEVEL_HEIGHT-HEIGHT : mapPositionY;
 }
 
 // drawPlayer

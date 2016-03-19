@@ -56,6 +56,11 @@ void updateZombie(Enemy& obj)
     
     if(obj.y + ZOMBIE_HEIGHT < coolGirl.positionOnMapY) vy = ZOMBIE_SPEED;
     if(obj.y > coolGirl.positionOnMapY + PLAYER_HEIGHT) vy = -ZOMBIE_SPEED;
+  
+    if(vx < 0)
+      obj.direction = ENEMY_FACING_WEST;
+    else if(vx > 0)
+      obj.direction = ENEMY_FACING_EAST;
     
     obj.x += vx;
     
@@ -91,7 +96,6 @@ void updateZombie(Enemy& obj)
       }
     }
   }
-  
   
   if(obj.health == 0)
   {
