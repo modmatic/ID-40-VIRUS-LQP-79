@@ -51,22 +51,31 @@ void updateZombie(Enemy& obj)
   
   if (arduboy.everyXFrames(ZOMBIE_STEP_DELAY))
   {
-    if(obj.x + ZOMBIE_WIDTH < coolGirl.positionOnMapX) vx = ZOMBIE_SPEED;
-    if(obj.x > coolGirl.positionOnMapX + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
+    // get movement: chase player
+    if(obj.x < coolGirl.positionOnMapX) vx = ZOMBIE_SPEED;
+    if(obj.x > coolGirl.positionOnMapX) vx = -ZOMBIE_SPEED;
     
-    if(obj.y + ZOMBIE_HEIGHT < coolGirl.positionOnMapY) vy = ZOMBIE_SPEED;
-    if(obj.y > coolGirl.positionOnMapY + PLAYER_HEIGHT) vy = -ZOMBIE_SPEED;
+    if(obj.y < coolGirl.positionOnMapY) vy = ZOMBIE_SPEED;
+    if(obj.y > coolGirl.positionOnMapY) vy = -ZOMBIE_SPEED;
+    
+    //if(obj.x + ZOMBIE_WIDTH < coolGirl.positionOnMapX) vx = ZOMBIE_SPEED;
+    //if(obj.x > coolGirl.positionOnMapX + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
+    
+    //if(obj.y + ZOMBIE_HEIGHT < coolGirl.positionOnMapY) vy = ZOMBIE_SPEED;
+    //if(obj.y > coolGirl.positionOnMapY + PLAYER_HEIGHT) vy = -ZOMBIE_SPEED;
   
+    // update orientation
     if(vx < 0)
       obj.direction = ENEMY_FACING_WEST;
     else if(vx > 0)
       obj.direction = ENEMY_FACING_EAST;
     
+    // horizontal physics
     obj.x += vx;
     
     for(id=0; id<ZOMBIE_MAX; id++)
     {
-      if(zombieCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+      if(zombieCollision(zombies[id], obj.x, obj.y, ZOMBIE_WIDTH, ZOMBIE_HEIGHT))
       {
         if(&(zombies[id]) == &obj) continue;
         
@@ -79,11 +88,24 @@ void updateZombie(Enemy& obj)
       }
     }
     
+    if(zombieCollision(obj, coolGirl.positionOnMapX, coolGirl.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    {
+      if(vx > 0)
+        obj.x = coolGirl.positionOnMapX - ZOMBIE_WIDTH;
+      else if(vx < 0)
+        obj.x = coolGirl.positionOnMapX + PLAYER_WIDTH;
+      
+      vx = 0;
+    }
+    
+    
+    
+    // vertical physics
     obj.y += vy;
     
     for(id=0; id<ZOMBIE_MAX; id++)
     {
-      if(zombieCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+      if(zombieCollision(zombies[id], obj.x, obj.y, ZOMBIE_WIDTH, ZOMBIE_HEIGHT))
       {
         if(&(zombies[id]) == &obj) continue;
         
@@ -94,6 +116,16 @@ void updateZombie(Enemy& obj)
         vy = 0;
         break;
       }
+    }
+    
+    if(zombieCollision(obj, coolGirl.positionOnMapX, coolGirl.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    {
+      if(vy > 0)
+        obj.y = coolGirl.positionOnMapY - ZOMBIE_HEIGHT;
+      else if(vy < 0)
+        obj.y = coolGirl.positionOnMapY + PLAYER_HEIGHT;
+      
+      vy = 0;
     }
   }
   
@@ -162,14 +194,14 @@ bool zombieHealthOffset(Enemy& obj, char amount)
 // zombieCollision
 // takes zombie id, collision box to test against
 // returns true if collision boxes intersect
-bool zombieCollision(byte id, int x, int y, int w, int h)
+bool zombieCollision(Enemy& obj, int x, int y, int w, int h)
 {
   return
-    ( zombies[id].active ) &&
-    ( zombies[id].x < x+w ) &&
-    ( zombies[id].x + ZOMBIE_WIDTH > x ) &&
-    ( zombies[id].y < y+h ) &&
-    ( zombies[id].y + ZOMBIE_HEIGHT > y );
+    ( obj.active ) &&
+    ( obj.x < x+w ) &&
+    ( obj.x + ZOMBIE_WIDTH > x ) &&
+    ( obj.y < y+h ) &&
+    ( obj.y + ZOMBIE_HEIGHT > y );
 }
 
 // clearZombies

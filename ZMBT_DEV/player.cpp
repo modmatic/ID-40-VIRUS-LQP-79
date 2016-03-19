@@ -63,7 +63,7 @@ void updatePlayer(Player& obj)
   // collide with zombies
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(zombieCollision(id, obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(zombieCollision(zombies[id], obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       if(vx > 0)
         obj.positionOnMapX = zombies[id].x - PLAYER_WIDTH;
@@ -91,7 +91,7 @@ void updatePlayer(Player& obj)
   // collide with zombies
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(zombieCollision(id, obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(zombieCollision(zombies[id], obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       if(vy > 0)
         obj.positionOnMapY = zombies[id].y - PLAYER_HEIGHT;

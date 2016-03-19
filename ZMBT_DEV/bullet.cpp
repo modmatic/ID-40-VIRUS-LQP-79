@@ -28,7 +28,6 @@ void setBullet(Bullet& obj, int x, int y, int vx, int vy)
   obj.active = true;
 }
 
-
 // addBullet
 // searches the bullet list for an empty slot, adds one if available
 void addBullet(int x, int y, byte direction, int vx, int vy)
@@ -74,7 +73,7 @@ void updateBullet(Bullet& obj)
   // collide with zombies
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(zombieCollision(id, obj.x, obj.y, BULLET_WIDTH, BULLET_HEIGHT))
+    if(zombieCollision(zombies[id], obj.x, obj.y, BULLET_WIDTH, BULLET_HEIGHT))
     {
       obj.active = false;
       zombieHealthOffset(zombies[id], -1);
