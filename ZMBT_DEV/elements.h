@@ -5,6 +5,9 @@
 #include "globals.h"
 #include "bitmaps.h"
 
+extern int mapPositionX;
+extern int mapPositionY;
+
 // constants /////////////////////////////////////////////////////////////////
 
 #define SURVIVOR_FRAME_SKIP      10

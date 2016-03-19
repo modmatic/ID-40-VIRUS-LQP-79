@@ -56,7 +56,7 @@ void drawSurvivors()
   for (byte id=0; id<SURVIVOR_MAX; id++)
   {
     if(!survivors[id].active) continue;
-    sprites.drawPlusMask(survivors[id].x+ (id*17) - positionOnMapX, survivors[id].y - positionOnMapY, survivor_plus_mask, survivorFrame);
+    sprites.drawPlusMask(survivors[id].x - mapPositionX, survivors[id].y - mapPositionY, survivor_plus_mask, survivorFrame);
   }
   
 }

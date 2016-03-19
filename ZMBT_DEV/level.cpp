@@ -2,8 +2,8 @@
 
 // method implementations ///////////////////////////////////////////////////
 
-int positionOnMapX;
-int positionOnMapY;
+int mapPositionX;
+int mapPositionY;
 
 const unsigned char *levelmap01[] =
 {
@@ -43,7 +43,7 @@ void newDraw(unsigned posX, unsigned posY) {
 
 void drawLevel()
 {
-  newDraw (positionOnMapX,positionOnMapY);
+  newDraw (mapPositionX,mapPositionY);
 }
 
 

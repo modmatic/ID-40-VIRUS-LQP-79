@@ -7,8 +7,8 @@
 #include "elements.h"
 #include "enemies.h"
 
-extern int positionOnMapX;
-extern int positionOnMapY;
+extern int mapPositionX;
+extern int mapPositionY;
 
 // constants /////////////////////////////////////////////////////////////////
 
@@ -30,14 +30,16 @@ extern int positionOnMapY;
 struct Player
 {
   public:
-    int x;
-    int y;
+    int positionOnScreenX;
+    int positionOnScreenY;
     boolean walking;
     byte direction;
     byte frame;
     byte shotDelay;
     short vx;
     short vy;
+    int positionOnMapX;
+    int positionOnMapY;
 };
 
 

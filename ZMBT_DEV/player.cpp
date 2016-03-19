@@ -3,14 +3,16 @@
 // globals ///////////////////////////////////////////////////////////////////
 
 Player coolGirl = {
-  .x = 20,
-  .y = 20,
+  .positionOnScreenX = 20,
+  .positionOnScreenY = 20,
   .walking = false,
   .direction = PLAYER_FACING_SOUTH,
   .frame = 0,
   .shotDelay = 10,
   .vx = 0,
   .vy = 0,
+  .positionOnMapX = coolGirl.positionOnScreenX,
+  .positionOnMapY = coolGirl.positionOnScreenY
 };
 
 
@@ -55,13 +57,13 @@ void updatePlayer(Player& obj)
   if(strafegun || !standgun)
   {
     //obj.x += vx;
-    positionOnMapX += vx;
+    mapPositionX += vx;
   }
   
   // collide with zombies
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(zombieCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(zombieCollision(id, obj.positionOnScreenX, obj.positionOnScreenY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       zombieHealthOffset(zombies[id], -1);
       break;
@@ -71,7 +73,7 @@ void updatePlayer(Player& obj)
   // collide with survivors
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(survivorCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(survivorCollision(id, obj.positionOnScreenX, obj.positionOnScreenY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       zombieHealthOffset(zombies[id], -1);
       break;
@@ -88,13 +90,13 @@ void updatePlayer(Player& obj)
   if(strafegun || !standgun)
   {
     //obj.y += vy;
-    positionOnMapY += vy;
+    mapPositionY += vy;
   }
   
   // collide with zombies
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(zombieCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(zombieCollision(id, obj.positionOnScreenX, obj.positionOnScreenX, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       zombieHealthOffset(zombies[id], -1);
       break;
@@ -104,7 +106,7 @@ void updatePlayer(Player& obj)
   // collide with survivors
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(survivorCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(survivorCollision(id, obj.positionOnScreenX, obj.positionOnScreenY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       zombieHealthOffset(zombies[id], -1);
       break;
@@ -144,7 +146,7 @@ void updatePlayer(Player& obj)
   {
     if(obj.shotDelay == 0)
     {
-      addBullet(obj.x + PLAYER_WIDTH/2, obj.y + PLAYER_HEIGHT/2, obj.direction, 0, 0);
+      addBullet(obj.positionOnScreenX + PLAYER_WIDTH/2, obj.positionOnScreenY + PLAYER_HEIGHT/2, obj.direction, 0, 0);
       obj.shotDelay = 10;
     }
   }
@@ -158,5 +160,5 @@ void updatePlayer(Player& obj)
 // draws the player to the screen
 void drawPlayer(Player& obj)
 {
-  sprites.drawPlusMask(obj.x, obj.y, player_plus_mask, obj.frame + 4*obj.direction);
+  sprites.drawPlusMask(obj.positionOnScreenX, obj.positionOnScreenY, player_plus_mask, obj.frame + 4*obj.direction);
 }

@@ -93,7 +93,7 @@ void drawZombies()
   for (id=0; id<ZOMBIE_MAX; id++)
   {
     if(!zombies[id].active) continue;
-    sprites.drawPlusMask(zombies[id].x- positionOnMapX, zombies[id].y- positionOnMapY, zombie_plus_mask, zombieFrame + 8*zombies[id].direction);
+    sprites.drawPlusMask(zombies[id].x - mapPositionX, zombies[id].y - mapPositionY, zombie_plus_mask, zombieFrame + 8*zombies[id].direction);
   }
 }
 
