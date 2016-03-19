@@ -44,6 +44,8 @@ void addZombie(int x, int y)
 // zombies are "removed" (set inactive) when health reaches zero
 void updateZombie(Enemy& obj)
 {
+  byte id;
+  
   int vx = 0;
   int vy = 0;
   
@@ -56,7 +58,38 @@ void updateZombie(Enemy& obj)
     if(obj.y > coolGirl.positionOnMapY + PLAYER_HEIGHT) vy = -ZOMBIE_SPEED;
     
     obj.x += vx;
+    
+    for(id=0; id<ZOMBIE_MAX; id++)
+    {
+      if(zombieCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+      {
+        if(&(zombies[id]) == &obj) continue;
+        
+        if(vx > 0)
+          obj.x = zombies[id].x - ZOMBIE_WIDTH;
+        else if(vx < 0)
+          obj.x = zombies[id].x + ZOMBIE_WIDTH;
+        vx = 0;
+        break;
+      }
+    }
+    
     obj.y += vy;
+    
+    for(id=0; id<ZOMBIE_MAX; id++)
+    {
+      if(zombieCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+      {
+        if(&(zombies[id]) == &obj) continue;
+        
+        if(vy > 0)
+          obj.y = zombies[id].y - ZOMBIE_HEIGHT;
+        else if(vy < 0)
+          obj.y = zombies[id].y + ZOMBIE_HEIGHT;
+        vy = 0;
+        break;
+      }
+    }
   }
   
   

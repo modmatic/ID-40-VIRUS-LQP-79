@@ -38,7 +38,7 @@ void stateGameNextLevel()
   
   addZombie(128, 128);
   addSurvivor(64+16, 48);
-  addWeapon(0, 128, 1);
+  addWeapon(128, 16, 1);
 
   gameState = STATE_GAME_PLAYING;
 }

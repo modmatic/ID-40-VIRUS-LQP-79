@@ -65,22 +65,17 @@ void updatePlayer(Player& obj)
   {
     if(zombieCollision(id, obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
+      if(vx > 0)
+        obj.positionOnMapX = zombies[id].x - PLAYER_WIDTH;
+      else if(vx < 0)
+        obj.positionOnMapX = zombies[id].x + ZOMBIE_WIDTH;
+      obj.vx = 0;
       
       break;
     }
   }
   
-  // collide with survivors
-  for(id=0; id<ZOMBIE_MAX; id++)
-  {
-    if(survivorCollision(id, obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
-    {
-      zombieHealthOffset(zombies[id], -1);
-      break;
-    }
-  }
-  
-  
+
   // Update vertical physics
   if(up)
     vy = -1;
@@ -96,9 +91,13 @@ void updatePlayer(Player& obj)
   // collide with zombies
   for(id=0; id<ZOMBIE_MAX; id++)
   {
-    if(zombieCollision(id, obj.positionOnMapX, obj.positionOnMapX, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(zombieCollision(id, obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      zombieHealthOffset(zombies[id], -1);
+      if(vy > 0)
+        obj.positionOnMapY = zombies[id].y - PLAYER_HEIGHT;
+      else if(vy < 0)
+        obj.positionOnMapY = zombies[id].y + ZOMBIE_HEIGHT;
+      obj.vy = 0;
       break;
     }
   }
@@ -108,7 +107,7 @@ void updatePlayer(Player& obj)
   {
     if(survivorCollision(id, obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      zombieHealthOffset(zombies[id], -1);
+      
       break;
     }
   }
