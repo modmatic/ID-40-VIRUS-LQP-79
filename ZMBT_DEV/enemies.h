@@ -8,13 +8,11 @@
 
 // constants /////////////////////////////////////////////////////////////////
 
-#define ENEMY_FACING_SOUTH       0
-#define ENEMY_FACING_WEST        1
-#define ENEMY_FACING_NORTH       2
-#define ENEMY_FACING_EAST        3
+#define ENEMY_FACING_WEST        0
+#define ENEMY_FACING_EAST        1
 
 #define ZOMBIE_FRAME_SKIP        6
-#define ZOMBIE_FRAME_COUNT       4
+#define ZOMBIE_FRAME_COUNT       8
 #define ZOMBIE_MAX               16
 #define ZOMBIE_WIDTH             16
 #define ZOMBIE_HEIGHT            16

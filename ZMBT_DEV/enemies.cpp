@@ -14,7 +14,7 @@ void setZombie(Enemy& obj, int x, int y)
 {
   obj.walking = false;
   obj.active = true;
-  obj.direction = ENEMY_FACING_SOUTH;
+  obj.direction = ENEMY_FACING_WEST;
   obj.x = x;
   obj.y = y;
   obj.health = 3;
@@ -46,11 +46,11 @@ void updateZombie(Enemy& obj)
   int vx = 0;
   int vy = 0;
   
-  if(obj.x + ZOMBIE_WIDTH < coolGuy.x) vx = ZOMBIE_SPEED;
-  if(obj.x > coolGuy.x + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
+  //if(obj.x + ZOMBIE_WIDTH < coolGuy.x) vx = -ZOMBIE_SPEED;
+  //if(obj.x > coolGuy.x + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
   
-  if(obj.y + ZOMBIE_HEIGHT < coolGuy.y) vy = ZOMBIE_SPEED;
-  if(obj.y > coolGuy.y + PLAYER_HEIGHT) vy = -ZOMBIE_SPEED;
+  //if(obj.y + ZOMBIE_HEIGHT < coolGuy.y) vy = -ZOMBIE_HEIGHT;
+  //if(obj.y > coolGuy.y + PLAYER_HEIGHT) vy = -ZOMBIE_HEIGHT;
   
   obj.x += vx;
   obj.y += vy;
@@ -93,7 +93,7 @@ void drawZombies()
   for (id=0; id<ZOMBIE_MAX; id++)
   {
     if(!zombies[id].active) continue;
-    sprites.drawPlusMask(zombies[id].x, zombies[id].y, zombie_plus_mask, zombieFrame + 4*zombies[id].direction);
+    sprites.drawPlusMask(zombies[id].x, zombies[id].y, zombie_plus_mask, zombieFrame + 8*zombies[id].direction);
   }
 }
 
