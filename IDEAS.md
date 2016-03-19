@@ -18,8 +18,11 @@
 - use all ammo -> pick up another weapon
 
 ## game playground ideas
-- 3x3 array for playfield
-- 384x192 3x(128x64)
+- ~~3x3 array for playfield~~
+- ~~384x192 3x(128x64)~~
+- 512x256 pixels for a level
+- 64x64 pixels for blocks
+- 8x4 blocks each level
 - bush as borders 8x8 pixels
 
 ## game elements ideas
