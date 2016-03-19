@@ -46,11 +46,11 @@ void updateZombie(Enemy& obj)
   int vx = 0;
   int vy = 0;
   
-  //if(obj.x + ZOMBIE_WIDTH < coolGuy.x) vx = -ZOMBIE_SPEED;
-  //if(obj.x > coolGuy.x + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
+  if(obj.x + ZOMBIE_WIDTH < coolGuy.x) vx = ZOMBIE_SPEED;
+  if(obj.x > coolGuy.x + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
   
-  //if(obj.y + ZOMBIE_HEIGHT < coolGuy.y) vy = -ZOMBIE_HEIGHT;
-  //if(obj.y > coolGuy.y + PLAYER_HEIGHT) vy = -ZOMBIE_HEIGHT;
+  if(obj.y + ZOMBIE_HEIGHT < coolGuy.y) vy = ZOMBIE_SPEED;
+  if(obj.y > coolGuy.y + PLAYER_HEIGHT) vy = -ZOMBIE_SPEED;
   
   obj.x += vx;
   obj.y += vy;

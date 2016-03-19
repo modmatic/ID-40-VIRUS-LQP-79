@@ -64,11 +64,11 @@ void updatePlayer(Player& obj)
   }
   
   // collide with survivors
-  for(id=0; id<ZOMBIE_MAX; id++)
+  for(id=0; id<SURVIVOR_MAX; id++)
   {
     if(survivorCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      zombieHealthOffset(zombies[id], -1);
+      survivors[id].active = false;
       break;
     }
   }
@@ -96,11 +96,11 @@ void updatePlayer(Player& obj)
   }
   
   // collide with survivors
-  for(id=0; id<ZOMBIE_MAX; id++)
+  for(id=0; id<SURVIVOR_MAX; id++)
   {
     if(survivorCollision(id, obj.x, obj.y, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      zombieHealthOffset(zombies[id], -1);
+      survivors[id].active = false;
       break;
     }
   }
