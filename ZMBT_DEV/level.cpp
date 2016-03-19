@@ -9,8 +9,8 @@ byte level;
 const unsigned char *levels[][32] =
 {
   block00, block01, block01, block01, block01, block01, block01, block02,
-  block03, block04, block04, block04, block04, block04, block04, block05,
-  block03, block04, block04, block04, block04, block04, block04, block05,
+  block03, block09, block04, block09, block04, block09, block04, block05,
+  block03, block04, block09, block04, block09, block04, block09, block05,
   block06, block07, block07, block07, block07, block07, block07, block08,
 
   block00, block01, block01, block01, block01, block01, block01, block02,
