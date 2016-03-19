@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include <Arduino.h>
+#include "globals.h"
 #include "level.h"
 #include "enemies.h"
 #include "elements.h"
@@ -24,63 +25,12 @@
 #define STATE_GAME_NEXT_LEVEL    9
 
 
-// globals ///////////////////////////////////////////////////////////////////
+// methods prototypes ////////////////////////////////////////////////////////
 
-extern Arduboy arduboy;
-extern byte gameState;
+void stateGamePlaying();
+void stateGameNextLevel();
+void stateGamePause();
+void stateGameOver();
 
-
-// methods ///////////////////////////////////////////////////////////////////
-
-// stateGamePlaying
-// called each frame the gamestate is set to playing
-void stateGamePlaying()
-{
-  // Update
-  updatePlayer(coolGuy);
-  updateBullets();
-  updateZombies();
-  updateSurvivors();
-  
-  // Draw
-  drawLevel();
-  drawSurvivors();
-  drawZombies();
-  drawPlayer(coolGuy);
-  drawBullets();
-}
-
-// stateGameNextLevel
-// called each frame the gamestate is set to next level
-void stateGameNextLevel()
-{
-  clearSurvivors();
-  clearZombies();
-  
-  addZombie(64, 48);
-  addSurvivor(64+16, 48);
-  
-  gameState = STATE_GAME_PLAYING;
-}
-
-// stateGamePause
-// called each frame the gamestate is set to paused
-void stateGamePause()
-{
-  if (buttons.justPressed(A_BUTTON | B_BUTTON))
-  {
-    gameState = STATE_MENU_MAIN;
-  }
-}
-
-// stateGameOver
-// called each frame the gamestate is set to game over
-void stateGameOver()
-{
-  if (buttons.justPressed(A_BUTTON | B_BUTTON))
-  {
-    gameState = STATE_MENU_MAIN;
-  }
-}
 
 #endif

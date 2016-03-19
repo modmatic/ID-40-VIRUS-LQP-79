@@ -15,6 +15,7 @@
 #define GAME_ID 40
 
 #include "Arglib.h"
+#include "globals.h"
 //#include <ArduboyExtra.h>
 //#include <sprites.h>
 //#include <simple_buttons.h>
@@ -27,12 +28,6 @@
 #include "inputs.h"
 #include "level.h"
 
-Arduboy arduboy;
-SimpleButtons buttons (arduboy);
-Sprites sprites(arduboy);
-unsigned long scorePlayer;
-
-byte gameState;
 
 typedef void (*FunctionPointer) ();
 FunctionPointer mainGameLoop[] =

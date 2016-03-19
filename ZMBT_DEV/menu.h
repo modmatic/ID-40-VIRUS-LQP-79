@@ -3,6 +3,9 @@
 
 #include "inputs.h"
 #include "game.h"
+#include "globals.h"
+
+// constants /////////////////////////////////////////////////////////////////
 
 //define menu states (on main menu)
 #define STATE_MENU_INTRO         0
@@ -18,11 +21,22 @@
 #define STATE_GAME_OVER          8
 #define STATE_GAME_NEXT_LEVEL    9
 
-extern byte gameState;
+// globals ///////////////////////////////////////////////////////////////////
 
-boolean soundYesNo;
-int menuSelection;
-byte counter = 0;
+extern int menuSelection;
+
+
+// method prototypes /////////////////////////////////////////////////////////
+
+void stateMenuIntro();
+void stateMenuMain();
+void stateMenuHelp();
+void stateMenuPlay();
+void stateMenuInfo();
+void stateMenuSoundfx();
+
+
+// data //////////////////////////////////////////////////////////////////////
 
 const unsigned char PROGMEM TEAMarg[] = //128,48
 {
@@ -105,51 +119,5 @@ PROGMEM const unsigned char qrcode[] = {
   0xFF, 0xFF, 0xFF, 0x00, 0x00, 0xFE, 0xFE, 0x06, 0x06, 0x06, 0x06, 0x06, 0x06, 0xFE, 0xFE, 0x00, 0x00, 0xFF, 0xFF, 0x87, 0x87, 0x00, 0x00, 0x01, 0x01, 0x60, 0x60, 0x61, 0x61, 0x00, 0x00, 0x9F, 0x9F, 0x1E, 0x1E, 0x86, 0x86, 0x19, 0x19, 0x1E, 0x1E, 0x60, 0x60, 0x80, 0x80, 0x67, 0x67, 0xE6, 0xE6, 0x07, 0x07, 0x60, 0x60, 0xF8, 0xF8, 0x1F, 0x1F, 0x61, 0x61, 0x19, 0x19, 0xFF, 0xFF, 0xFF,
   0xFF, 0xFF, 0xFF, 0xE0, 0xE0, 0xE7, 0xE7, 0xE6, 0xE6, 0xE6, 0xE6, 0xE6, 0xE6, 0xE7, 0xE7, 0xE0, 0xE0, 0xFF, 0xFF, 0xE1, 0xE1, 0xE6, 0xE6, 0xFE, 0xFE, 0xF8, 0xF8, 0xFE, 0xFE, 0xFE, 0xFE, 0xE7, 0xE7, 0xFE, 0xFE, 0xFF, 0xFF, 0xFE, 0xFE, 0xE6, 0xE6, 0xE6, 0xE6, 0xE7, 0xE7, 0xF8, 0xF8, 0xFF, 0xFF, 0xF8, 0xF8, 0xE6, 0xE6, 0xE1, 0xE1, 0xF8, 0xF8, 0xFE, 0xFE, 0xF8, 0xF8, 0xFF, 0xFF, 0xFF
 };
-
-
-void stateMenuIntro()
-{
-  arduboy.drawBitmap(0, 8, TEAMarg, 128, 48, WHITE);
-  counter++;
-  if (counter > 180) gameState = STATE_MENU_MAIN;
-}
-
-void stateMenuMain()
-{
-  arduboy.drawBitmap(0, 0, titleScreen, 128, 64, WHITE);
-  if (buttons.justPressed(DOWN_BUTTON) && (menuSelection < 5)) menuSelection++;
-  if (buttons.justPressed(UP_BUTTON) && (menuSelection > 2)) menuSelection--;
-  if (buttons.justPressed(A_BUTTON | B_BUTTON)) gameState = menuSelection;
-}
-
-void stateMenuHelp()
-{
-  arduboy.drawBitmap(32, 0, qrcode, 64, 64, WHITE);
-  if (buttons.justPressed(A_BUTTON | B_BUTTON)) gameState = STATE_MENU_MAIN;
-}
-
-void stateMenuPlay()
-{
-  gameState = STATE_GAME_NEXT_LEVEL;
-}
-
-void stateMenuInfo()
-{
-  if (buttons.justPressed(A_BUTTON | B_BUTTON)) gameState = STATE_MENU_MAIN;
-}
-
-void stateMenuSoundfx()
-{
-  if (buttons.justPressed(DOWN_BUTTON)) soundYesNo = true;
-  if (buttons.justPressed(UP_BUTTON)) soundYesNo = false;
-  if (buttons.justPressed(A_BUTTON | B_BUTTON))
-  {
-    arduboy.audio.save_on_off();
-    gameState = STATE_MENU_MAIN;
-  }
-  if (soundYesNo == true) arduboy.audio.on();
-  else arduboy.audio.off();
-}
-
 
 #endif
