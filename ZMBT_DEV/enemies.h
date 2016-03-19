@@ -3,10 +3,10 @@
 
 #include <Arduino.h>
 
-#define PLAYER_FACING_SOUTH       0
-#define PLAYER_FACING_WEST        1
-#define PLAYER_FACING_NORTH       2
-#define PLAYER_FACING_EAST        3
+#define ENEMY_FACING_SOUTH       0
+#define ENEMY_FACING_WEST        1
+#define ENEMY_FACING_NORTH       2
+#define ENEMY_FACING_EAST        3
 
 byte zombieFrame = 0;
 
@@ -25,10 +25,10 @@ void createZombies(byte zombieCount)
 {
   for (byte i =0; i < zombieCount; i++)
   {
-    zombie[i].x = 0;
+    zombie[i].x = 0 + (i*17);
     zombie[i].y = 40;
     zombie[i].walking = false;
-    zombie[i].direction = PLAYER_FACING_SOUTH;
+    zombie[i].direction = ENEMY_FACING_SOUTH;
   }
 }
 
@@ -38,7 +38,7 @@ void drawZombies(byte zombieCount)
   if (zombieFrame > 3 ) zombieFrame = 0;
   for (byte i=0; i< zombieCount; i++)
   {
-    sprites.drawPlusMask(zombie[i].x+ (i*17), zombie[i].y, zombie_plus_mask, zombieFrame + 4*zombie[i].direction);
+    sprites.drawPlusMask(zombie[i].x, zombie[i].y, zombie_plus_mask, zombieFrame + 4*zombie[i].direction);
   }
   
 }

@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "enemies.h"
+#include "elements.h"
 
 //define menu states (on main menu)
 #define STATE_MENU_INTRO         0
@@ -22,18 +23,22 @@
 extern Arduboy arduboy;
 extern byte gameState;
 byte zombieAmount;
+byte survivorAmount;
 
 void stateGamePlaying()
 {
   checkInputs();
   drawZombies(zombieAmount);
+  drawSurvivors(survivorAmount);
   drawPlayer();
 }
 
 void stateGameNextLevel()
 {
   zombieAmount = 8;
+  survivorAmount = 2;
   createZombies(zombieAmount);
+  createSurvivors(survivorAmount);
   gameState = STATE_GAME_PLAYING;
 }
 void stateGamePause()
