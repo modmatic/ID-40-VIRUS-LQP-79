@@ -19,6 +19,9 @@
 #define TILE_WIDTH 8
 #define TILE_HEIGHT 8
 
+#define SCORE_SMALL_FONT          0
+#define SCORE_BIG_FONT            1
+
 extern const unsigned char *levelmap01[][32];
 
 
@@ -27,6 +30,7 @@ extern const unsigned char *levelmap01[][32];
 
 void drawLevel();
 unsigned char getTileType(unsigned int x, unsigned int y);
+void drawScore(byte scoreX, byte scoreY, byte fontType);
 
 // data //////////////////////////////////////////////////////////////////////
 

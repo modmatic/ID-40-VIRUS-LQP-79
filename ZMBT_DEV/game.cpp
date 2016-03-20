@@ -26,6 +26,7 @@ void stateGamePlaying()
   drawBullets();
   drawPlayer(coolGirl);
   drawWeapons();
+  drawScore(86,0,0);
 }
 
 // stateGameNextLevel

@@ -30,7 +30,7 @@ void stateMenuHelp()
 
 void stateMenuPlay()
 {
-  level = 1;
+  level = 0;
   gameState = STATE_GAME_NEXT_LEVEL;
 }
 
