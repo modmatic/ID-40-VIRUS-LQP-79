@@ -37,7 +37,6 @@ void drawNextLevel();
 // data //////////////////////////////////////////////////////////////////////
 
 
-
 PROGMEM const unsigned char block00[] =
 {
   3, 3, 3, 3, 3, 3, 3, 3,
@@ -158,6 +157,25 @@ PROGMEM const unsigned char block09[] =
   1, 0, 1, 0, 1, 0, 1, 0,
 };
 
+PROGMEM const unsigned char * const levels[3][32] = {
+  {
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
+  }, {
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block00, block04, block04, block02, block04, block05,
+    block03, block04, block06, block07, block07, block08, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
+  }, {
+    block06, block06, block06, block06, block06, block06, block06, block06,
+    block06, block06, block06, block06, block06, block06, block06, block06,
+    block06, block06, block06, block06, block06, block06, block06, block06,
+    block06, block06, block06, block06, block06, block06, block06, block06
+  }
+};
+
 
 PROGMEM const unsigned char tileset[] = {
   // width, height
@@ -194,7 +212,6 @@ PROGMEM const unsigned char tileset[] = {
   0x3E, 0x08, 0xC4, 0xB4, 0x20, 0x90, 0x00, 0x00,
   // frame 15
   0x5E, 0xE1, 0x5C, 0x42, 0x39, 0x25, 0x51, 0x0A,
-
 };
 
 
