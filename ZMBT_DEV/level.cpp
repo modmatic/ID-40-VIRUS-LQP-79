@@ -65,7 +65,7 @@ void drawLevel()
 void drawNextLevel()
 {
   char buf[10];
-  itoa(level - 1, buf, 10);
+  itoa(level, buf, 10);
   char charLen = strlen(buf);
   char pad = 2 - charLen;
 
