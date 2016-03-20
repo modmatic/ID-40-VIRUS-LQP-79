@@ -148,9 +148,3 @@ void drawScore(byte scoreX, byte scoreY, byte fontType)
   }
 }
 
-
-
-void loadLevel()
-{
-
-}
