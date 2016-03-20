@@ -10,6 +10,15 @@
 #define LEVEL_WIDTH 512
 #define LEVEL_HEIGHT 256
 
+#define LEVEL_BLOCK_WIDTH 8
+#define LEVEL_BLOCK_HEIGHT 4
+
+#define BLOCK_WIDTH 8
+#define BLOCK_HEIGHT 8
+
+#define TILE_WIDTH 8
+#define TILE_HEIGHT 8
+
 extern const unsigned char *levelmap01[][32];
 
 
@@ -17,6 +26,9 @@ extern const unsigned char *levelmap01[][32];
 
 
 void drawLevel();
+unsigned char getTileType(unsigned int x, unsigned int y);
+
+// data //////////////////////////////////////////////////////////////////////
 
 
 

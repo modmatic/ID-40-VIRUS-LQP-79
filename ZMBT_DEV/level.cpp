@@ -40,6 +40,28 @@ void newDraw(unsigned posX, unsigned posY) {
   }
 }
 
+// getTileType
+// takes x and y in tile coordinates
+// returns the tile type
+unsigned char getTileType(unsigned int posX, unsigned int posY)
+{
+
+  int tileAbsoluteIndex = posX + posY*(LEVEL_WIDTH/TILE_WIDTH);
+  
+  int tileLocalX = posX%BLOCK_WIDTH;
+  int tileLocalY = posY%BLOCK_HEIGHT;
+  int tileLocalIndex = tileLocalX + tileLocalY*BLOCK_WIDTH;
+  
+  int tileBlockX = posX/BLOCK_WIDTH;
+  int tileBlockY = posY/BLOCK_HEIGHT;
+  int blockIndex = tileBlockX + tileBlockY*LEVEL_BLOCK_WIDTH;
+  
+  unsigned char tileID = pgm_read_byte(&levels[level - 1][blockIndex][tileLocalIndex]);
+  
+  return tileID;
+  
+}
+
 void drawLevel()
 {
   newDraw (mapPositionX, mapPositionY);

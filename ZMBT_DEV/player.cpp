@@ -26,7 +26,12 @@ void updatePlayer(Player& obj)
   short vx = 0;
   short vy = 0;
   
+  short tilex;
+  short tiley;
+  
   byte id;
+  byte tileXMax;
+  byte tileYMax;
   
   // Read input
   bool left = buttons.pressed(LEFT_BUTTON);
@@ -75,6 +80,23 @@ void updatePlayer(Player& obj)
     }
   }
   
+  // collide with walls
+  tileXMax = obj.positionOnMapX%TILE_WIDTH != 0;
+  tileYMax = obj.positionOnMapY%TILE_HEIGHT != 0;
+  for(tilex = obj.positionOnMapX/TILE_WIDTH; tilex < obj.positionOnMapX/TILE_WIDTH + 2 + tileXMax; tilex++)
+  {
+    for(tiley = obj.positionOnMapY/TILE_HEIGHT; tiley < obj.positionOnMapY/TILE_HEIGHT + 2 + tileYMax; tiley++)
+    {
+      if(getTileType(tilex, tiley) == 2)
+      {
+        if(vx < 0)
+          obj.positionOnMapX = tilex*TILE_WIDTH + TILE_WIDTH;
+        else if(vx > 0)
+          obj.positionOnMapX = tilex*TILE_WIDTH - PLAYER_WIDTH;
+        obj.vx = 0;
+      }
+    }
+  }
 
   // Update vertical physics
   if(up)
@@ -102,6 +124,24 @@ void updatePlayer(Player& obj)
     }
   }
   
+  // collide with walls
+  tileXMax = obj.positionOnMapX%TILE_WIDTH != 0;
+  tileYMax = obj.positionOnMapY%TILE_HEIGHT != 0;
+  for(tilex = obj.positionOnMapX/TILE_WIDTH; tilex < obj.positionOnMapX/TILE_WIDTH + 2 + tileXMax; tilex++)
+  {
+    for(tiley = obj.positionOnMapY/TILE_HEIGHT; tiley < obj.positionOnMapY/TILE_HEIGHT + 2 + tileYMax; tiley++)
+    {
+      if(getTileType(tilex, tiley) == 2)
+      {
+        if(vy < 0)
+          obj.positionOnMapY = tiley*TILE_HEIGHT + TILE_HEIGHT;
+        else if(vy > 0)
+          obj.positionOnMapY = tiley*TILE_HEIGHT - PLAYER_HEIGHT;
+        obj.vy = 0;
+      }
+    }
+  }
+  
   // collide with survivors
   for(id=0; id<ZOMBIE_MAX; id++)
   {
@@ -111,6 +151,7 @@ void updatePlayer(Player& obj)
       break;
     }
   }
+  
   
   
   // Update sprite
@@ -153,10 +194,6 @@ void updatePlayer(Player& obj)
   // Update animation
   if (arduboy.everyXFrames(6) && obj.walking) obj.frame++;
   if (obj.frame > 3 ) obj.frame = 0;
-  
-  // Center map on player
-  //mapPositionX = obj.positionOnMapX - obj.positionOnScreenX;
-  //mapPositionY = obj.positionOnMapY - obj.positionOnScreenY;
   
   // Move map toward player required boundary
   mapPositionX = (mapPositionX < obj.positionOnMapX - PLAYER_SCREEN_XMAX) ? obj.positionOnMapX - PLAYER_SCREEN_XMAX : mapPositionX;
