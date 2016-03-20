@@ -87,7 +87,7 @@ void updatePlayer(Player& obj)
   {
     for(tiley = obj.positionOnMapY/TILE_HEIGHT; tiley < obj.positionOnMapY/TILE_HEIGHT + 2 + tileYMax; tiley++)
     {
-      if(getTileType(tilex, tiley) == 2)
+      if(getTileType(tilex, tiley) > 2)
       {
         if(vx < 0)
           obj.positionOnMapX = tilex*TILE_WIDTH + TILE_WIDTH;
@@ -131,7 +131,7 @@ void updatePlayer(Player& obj)
   {
     for(tiley = obj.positionOnMapY/TILE_HEIGHT; tiley < obj.positionOnMapY/TILE_HEIGHT + 2 + tileYMax; tiley++)
     {
-      if(getTileType(tilex, tiley) == 2)
+      if(getTileType(tilex, tiley) > 2)
       {
         if(vy < 0)
           obj.positionOnMapY = tiley*TILE_HEIGHT + TILE_HEIGHT;

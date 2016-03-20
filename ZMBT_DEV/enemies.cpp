@@ -44,6 +44,10 @@ void addZombie(int x, int y)
 void updateZombie(Enemy& obj)
 {
   byte id;
+  byte tileXMax;
+  byte tileYMax;
+  byte tilex;
+  byte tiley;
   
   int vx = 0;
   int vy = 0;
@@ -72,6 +76,7 @@ void updateZombie(Enemy& obj)
     // horizontal physics
     obj.x += vx;
     
+    // collide with other zombies
     for(id=0; id<ZOMBIE_MAX; id++)
     {
       if(zombieCollision(zombies[id], obj.x, obj.y, ZOMBIE_WIDTH, ZOMBIE_HEIGHT))
@@ -87,6 +92,7 @@ void updateZombie(Enemy& obj)
       }
     }
     
+    // collide with player
     if(zombieCollision(obj, coolGirl.positionOnMapX, coolGirl.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       if(vx > 0)
@@ -97,11 +103,28 @@ void updateZombie(Enemy& obj)
       vx = 0;
     }
     
-    
+    // collide with walls
+    tileXMax = obj.x%TILE_WIDTH != 0;
+    tileYMax = obj.y%TILE_HEIGHT != 0;
+    for(tilex = obj.x/TILE_WIDTH; tilex < obj.x/TILE_WIDTH + 2 + tileXMax; tilex++)
+    {
+      for(tiley = obj.y/TILE_HEIGHT; tiley < obj.y/TILE_HEIGHT + 2 + tileYMax; tiley++)
+      {
+        if(getTileType(tilex, tiley) > 2)
+        {
+          if(vx < 0)
+            obj.x = tilex*TILE_WIDTH + TILE_WIDTH;
+          else if(vx > 0)
+            obj.x = tilex*TILE_WIDTH - PLAYER_WIDTH;
+          vx = 0;
+        }
+      }
+    }
     
     // vertical physics
     obj.y += vy;
     
+    // collide with other zombies
     for(id=0; id<ZOMBIE_MAX; id++)
     {
       if(zombieCollision(zombies[id], obj.x, obj.y, ZOMBIE_WIDTH, ZOMBIE_HEIGHT))
@@ -117,6 +140,7 @@ void updateZombie(Enemy& obj)
       }
     }
     
+    // collide with player
     if(zombieCollision(obj, coolGirl.positionOnMapX, coolGirl.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       if(vy > 0)
@@ -125,6 +149,24 @@ void updateZombie(Enemy& obj)
         obj.y = coolGirl.positionOnMapY + PLAYER_HEIGHT;
       
       vy = 0;
+    }
+    
+    // collide with walls
+    tileXMax = obj.x%TILE_WIDTH != 0;
+    tileYMax = obj.y%TILE_HEIGHT != 0;
+    for(tilex = obj.x/TILE_WIDTH; tilex < obj.x/TILE_WIDTH + 2 + tileXMax; tilex++)
+    {
+      for(tiley = obj.y/TILE_HEIGHT; tiley < obj.y/TILE_HEIGHT + 2 + tileYMax; tiley++)
+      {
+        if(getTileType(tilex, tiley) > 2)
+        {
+          if(vy < 0)
+            obj.y = tiley*TILE_HEIGHT + TILE_HEIGHT;
+          else if(vy > 0)
+            obj.y = tiley*TILE_HEIGHT - PLAYER_HEIGHT;
+          vy = 0;
+        }
+      }
     }
     
     if(vx || vy)
