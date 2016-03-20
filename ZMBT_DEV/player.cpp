@@ -268,3 +268,12 @@ void drawPlayer(Player& obj)
   if((obj.flashTime % 8) < 4)
     sprites.drawPlusMask(obj.positionOnMapX - mapPositionX, obj.positionOnMapY - mapPositionY, player_plus_mask, obj.frame + 4*obj.direction);
 }
+
+void drawLife(Player& obj)
+{
+  for (byte amountLife = 0; amountLife < obj.health;amountLife++)
+  {
+    sprites.drawPlusMask(amountLife*10, 0, HUD_plus_mask, 0);
+  }
+}
+

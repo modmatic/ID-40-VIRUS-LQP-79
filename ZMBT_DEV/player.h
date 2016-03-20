@@ -63,6 +63,7 @@ void updatePlayer(Player& obj);
 void drawPlayer(Player& obj);
 void hurtPlayer(Player& obj);
 void initializePlayer(Player& obj);
+void drawLife(Player& obj);
 
 
 #endif

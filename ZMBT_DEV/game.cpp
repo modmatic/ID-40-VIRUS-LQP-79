@@ -21,12 +21,14 @@ void stateGamePlaying()
   // Draw
   drawLevel();
   drawDoor();
-  drawSurvivors();
   drawZombies();
+  drawSurvivors();
   drawBullets();
   drawPlayer(coolGirl);
   drawWeapons();
   drawScore(86, 0, 0);
+  drawLife(coolGirl);
+  drawAmountSurvivors();
 }
 
 // stateGameNextLevel
@@ -37,7 +39,8 @@ void stateGamePrepareLevel()
   clearZombies();
   clearWeapons();
 
-  //addSurvivor(64+16, 48);
+  addSurvivor(64+16, 48);
+  addSurvivor(450, 224);
   //addWeapon(128, 16, 1);
   //setDoorPosition(128, 16);
 

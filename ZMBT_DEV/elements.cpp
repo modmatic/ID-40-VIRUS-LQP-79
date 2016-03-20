@@ -6,6 +6,8 @@ Element survivors[SURVIVOR_MAX];
 
 // animation frame for all survivors
 byte survivorFrame = 0;
+boolean showHelp = true;
+byte amountActiveSurvivors = 0;
 
 // method implementations ////////////////////////////////////////////////////
 
@@ -24,10 +26,10 @@ void setSurvivor(Element& obj, int x, int y)
 void addSurvivor(int x, int y)
 {
   byte id;
-  
-  for(id=0; id<SURVIVOR_MAX; id++)
+
+  for (id = 0; id < SURVIVOR_MAX; id++)
   {
-    if(!survivors[id].active)
+    if (!survivors[id].active)
     {
       setSurvivor(survivors[id], x, y);
       break;
@@ -42,7 +44,7 @@ void updateSurvivors()
 {
   // advance the frame
   if (arduboy.everyXFrames(SURVIVOR_FRAME_SKIP)) survivorFrame++;
-  
+
   // clamp to 4 frames
   if (survivorFrame >= SURVIVOR_FRAME_COUNT ) survivorFrame = 0;
 }
@@ -52,13 +54,15 @@ void updateSurvivors()
 // draws every active survivor in the list to the display
 void drawSurvivors()
 {
+  if (arduboy.everyXFrames(30)) showHelp = !showHelp;
   // draw the survivor!
-  for (byte id=0; id<SURVIVOR_MAX; id++)
+  for (byte id = 0; id < SURVIVOR_MAX; id++)
   {
-    if(!survivors[id].active) continue;
+    if (!survivors[id].active) continue;
     sprites.drawPlusMask(survivors[id].x - mapPositionX, survivors[id].y - mapPositionY, survivor_plus_mask, survivorFrame);
+    if (showHelp)sprites.drawPlusMask(survivors[id].x + 16 - mapPositionX, survivors[id].y - 9 - mapPositionY, help_plus_mask, 0);
   }
-  
+
 }
 
 // survivorCollision
@@ -68,9 +72,9 @@ bool survivorCollision(Element& obj, int x, int y, int w, int h)
 {
   return
     ( obj.active ) &&
-    ( obj.x < x+w ) &&
+    ( obj.x < x + w ) &&
     ( obj.x + SURVIVOR_WIDTH > x ) &&
-    ( obj.y < y+h ) &&
+    ( obj.y < y + h ) &&
     ( obj.y + SURVIVOR_HEIGHT > y );
 }
 
@@ -82,13 +86,13 @@ bool collectSurvivor(Element& obj)
   byte id;
   obj.active = false;
   arduboy.tunes.tone(660, 20);
-  
-  for(id=0; id<SURVIVOR_MAX; id++)
+
+  for (id = 0; id < SURVIVOR_MAX; id++)
   {
-    if(survivors[id].active)
+    if (survivors[id].active)
       return false;
   }
-  
+
   return true;
 }
 
@@ -97,9 +101,29 @@ bool collectSurvivor(Element& obj)
 void clearSurvivors()
 {
   byte id;
-  
-  for(id=0; id<SURVIVOR_MAX; id++)
+
+  for (id = 0; id < SURVIVOR_MAX; id++)
   {
     survivors[id].active = false;
   }
 }
+
+void drawAmountSurvivors()
+{
+  for (byte amountSurvivors = 0; amountSurvivors < countAmountActiveSurvivors(); amountSurvivors++) // needs the amount of active survivors
+  {
+    sprites.drawPlusMask(40 + amountSurvivors * 10, 0, HUD_plus_mask, 1);
+  }
+}
+
+byte countAmountActiveSurvivors()
+{
+  byte id;
+  byte countAmount = 0;
+  for (id = 0; id < SURVIVOR_MAX; id++)
+  {
+    if (survivors[id].active) countAmount++;
+  }
+  return countAmount;
+};
+

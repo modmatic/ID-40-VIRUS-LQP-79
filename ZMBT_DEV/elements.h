@@ -46,5 +46,7 @@ void drawSurvivors();
 bool survivorCollision(Element& obj, int x, int y, int w, int h);
 bool collectSurvivor(Element& obj);
 void clearSurvivors();
+byte countAmountActiveSurvivors();
+void drawAmountSurvivors();
 
 #endif
