@@ -1,6 +1,5 @@
 #include "game.h"
 
-
 // method implementations ////////////////////////////////////////////////////
 
 // stateGamePlaying
@@ -9,7 +8,7 @@ void stateGamePlaying()
 {
   // Update Level
   if(!(arduboy.frameCount % (60*3))) {
-    addZombie(128, 128);
+    spawnZombie();
   }
   
   
@@ -21,6 +20,7 @@ void stateGamePlaying()
   
   // Draw
   drawLevel();
+  drawDoor();
   drawSurvivors();
   drawZombies();
   drawBullets();
@@ -37,11 +37,31 @@ void stateGameNextLevel()
   clearZombies();
   clearWeapons();
   
-  addZombie(128, 128);
-  addSurvivor(64+16, 48);
-  addWeapon(128, 16, 1);
+  //addSurvivor(64+16, 48);
+  //addWeapon(128, 16, 1);
+  //setDoorPosition(128, 16);
 
   level++;
+  
+  loadLevel();
+  
+  coolGirl.positionOnMapX = 16;
+  coolGirl.positionOnMapY = 16;
+  
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
+  spawnZombie();
   
   gameState = STATE_GAME_PLAYING;
 }

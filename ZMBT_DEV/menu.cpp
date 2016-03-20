@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "player.h"
 
 // globals ///////////////////////////////////////////////////////////////////
 
@@ -33,6 +34,7 @@ void stateMenuPlay()
   level = 0;
   scorePlayer = 0;
   gameState = STATE_GAME_NEXT_LEVEL;
+  initializePlayer(coolGirl);
 }
 
 void stateMenuInfo()

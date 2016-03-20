@@ -24,10 +24,12 @@ extern int mapPositionY;
 #define PLAYER_WIDTH  16
 #define PLAYER_HEIGHT 16
 
-#define PLAYER_SCREEN_XMIN        (64-32)
-#define PLAYER_SCREEN_XMAX        (64+16)
-#define PLAYER_SCREEN_YMIN        (32-16)
-#define PLAYER_SCREEN_YMAX        (32)
+#define PLAYER_SCREEN_XMIN        (64-12)
+#define PLAYER_SCREEN_XMAX        (64+4)
+#define PLAYER_SCREEN_YMIN        (32-8)
+#define PLAYER_SCREEN_YMAX        (32-8)
+
+#define PLAYER_FLASH_TIME 60
 
 
 // structures ////////////////////////////////////////////////////////////////
@@ -45,18 +47,22 @@ struct Player
     short vy;
     int positionOnMapX;
     int positionOnMapY;
+    byte health;
+    byte flashTime;
 };
 
 
 // globals ///////////////////////////////////////////////////////////////////
 
 extern Player coolGirl;
-
+extern int rollingScore;
 
 // method prototypes /////////////////////////////////////////////////////////
 
 void updatePlayer(Player& obj);
 void drawPlayer(Player& obj);
+void hurtPlayer(Player& obj);
+void initializePlayer(Player& obj);
 
 
 #endif

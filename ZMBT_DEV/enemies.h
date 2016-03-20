@@ -20,6 +20,8 @@
 #define ZOMBIE_SPEED             1
 #define ZOMBIE_STEP_DELAY        3
 
+#define ZOMBIE_FLASH_TIME        5
+
 // structures ////////////////////////////////////////////////////////////////
 
 struct Enemy
@@ -42,9 +44,11 @@ extern Enemy zombies[ZOMBIE_MAX];
 // method prototypes /////////////////////////////////////////////////////////
 
 void setZombie(Enemy& obj, int x, int y);
-void addZombie(int x, int y);
+bool spawnZombie();
+bool addZombie(int x, int y);
 void updateZombie(Enemy& obj);
 void updateZombies();
+void drawZombie(Enemy& obj);
 void drawZombies();
 bool zombieHealthOffset(Enemy& obj, char amount);
 bool zombieCollision(Enemy& obj, int x, int y, int w, int h);

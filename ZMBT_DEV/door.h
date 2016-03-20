@@ -1,0 +1,30 @@
+#ifndef DOOR_H
+#define DOOR_H
+
+#include <Arduino.h>
+
+// constants /////////////////////////////////////////////////////////////////
+
+#define DOOR_WIDTH 16
+#define DOOR_HEIGHT 16
+
+// structures ////////////////////////////////////////////////////////////////
+
+struct Door {
+  int x;
+  int y;
+  byte active;
+};
+
+// globals ///////////////////////////////////////////////////////////////////
+
+extern Door exitDoor;
+
+// method prototypes /////////////////////////////////////////////////////////
+
+void setDoorPosition(int x, int y);
+void showDoor();
+void drawDoor();
+bool checkDoorCollision();
+
+#endif

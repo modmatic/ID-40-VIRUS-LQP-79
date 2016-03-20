@@ -1,4 +1,6 @@
 #include "player.h"
+#include "door.h"
+#include "menu.h"
 
 // globals ///////////////////////////////////////////////////////////////////
 
@@ -12,11 +14,25 @@ Player coolGirl = {
   .vx = 0,
   .vy = 0,
   .positionOnMapX = coolGirl.positionOnScreenX,
-  .positionOnMapY = coolGirl.positionOnScreenY
+  .positionOnMapY = coolGirl.positionOnScreenY,
+  .health = 3,
+  .flashTime = 0
 };
 
+int rollingScore = 0;
 
 // method implementations  ///////////////////////////////////////////////////
+
+// initializePlayer
+// sets the default values for player
+void initializePlayer(Player& obj)
+{
+  scorePlayer = 0;
+  rollingScore = 0;
+  obj.direction = PLAYER_FACING_SOUTH,
+  obj.health = 3;
+  obj.flashTime = 0;
+}
 
 // updatePlayer
 // updates the player according to game rules
@@ -75,7 +91,7 @@ void updatePlayer(Player& obj)
       else if(vx < 0)
         obj.positionOnMapX = zombies[id].x + ZOMBIE_WIDTH;
       obj.vx = 0;
-      
+      hurtPlayer(obj);
       break;
     }
   }
@@ -120,6 +136,7 @@ void updatePlayer(Player& obj)
       else if(vy < 0)
         obj.positionOnMapY = zombies[id].y + ZOMBIE_HEIGHT;
       obj.vy = 0;
+      hurtPlayer(obj);
       break;
     }
   }
@@ -143,15 +160,23 @@ void updatePlayer(Player& obj)
   }
   
   // collide with survivors
-  for(id=0; id<ZOMBIE_MAX; id++)
+  for(id=0; id<SURVIVOR_MAX; id++)
   {
-    if(survivorCollision(id, obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(survivorCollision(survivors[id], obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      
+      if(collectSurvivor(survivors[id]))
+      {
+        showDoor();
+      }
       break;
     }
   }
   
+  // collide with door
+  if(checkDoorCollision())
+  {
+    gameState = STATE_GAME_NEXT_LEVEL;
+  }
   
   
   // Update sprite
@@ -206,11 +231,40 @@ void updatePlayer(Player& obj)
   mapPositionX = (mapPositionX > LEVEL_WIDTH - WIDTH) ? LEVEL_WIDTH-WIDTH : mapPositionX;
   mapPositionY = (mapPositionY < 0) ? 0 : mapPositionY;
   mapPositionY = (mapPositionY > LEVEL_HEIGHT - HEIGHT) ? LEVEL_HEIGHT-HEIGHT : mapPositionY;
+  
+  // update score
+  if(rollingScore > 0)
+  {
+    rollingScore -= 5;
+    scorePlayer += 5;
+  }
+  
+  // update flashing
+  if(obj.flashTime > 0)
+    obj.flashTime--;
+}
+
+// hurtPlayer
+// make player take damage
+void hurtPlayer(Player& obj)
+{
+  if(obj.flashTime == 0)
+  {
+    obj.health--;
+    obj.flashTime = PLAYER_FLASH_TIME;
+    arduboy.tunes.tone(880, 20);
+  }
+  
+  if(obj.health == 0)
+  {
+    gameState = STATE_GAME_OVER;
+  }
 }
 
 // drawPlayer
 // draws the player to the screen
 void drawPlayer(Player& obj)
 {
-  sprites.drawPlusMask(obj.positionOnMapX - mapPositionX, obj.positionOnMapY - mapPositionY, player_plus_mask, obj.frame + 4*obj.direction);
+  if((obj.flashTime % 8) < 4)
+    sprites.drawPlusMask(obj.positionOnMapX - mapPositionX, obj.positionOnMapY - mapPositionY, player_plus_mask, obj.frame + 4*obj.direction);
 }

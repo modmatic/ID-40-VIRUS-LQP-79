@@ -8,6 +8,7 @@
 #include "elements.h"
 #include "bullet.h"
 #include "weapon.h"
+#include "door.h"
 
 
 // constants /////////////////////////////////////////////////////////////////

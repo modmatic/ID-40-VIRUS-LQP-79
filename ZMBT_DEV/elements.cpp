@@ -62,16 +62,34 @@ void drawSurvivors()
 }
 
 // survivorCollision
-// takes survivor id, collision box to test against
+// takes a survivor, collision box to test against
 // returns true if collision boxes intersect
-bool survivorCollision(byte id, int x, int y, int w, int h)
+bool survivorCollision(Element& obj, int x, int y, int w, int h)
 {
   return
-    ( survivors[id].active ) &&
-    ( survivors[id].x < x+w ) &&
-    ( survivors[id].x + SURVIVOR_WIDTH > x ) &&
-    ( survivors[id].y < x+h ) &&
-    ( survivors[id].y + SURVIVOR_HEIGHT > x );
+    ( obj.active ) &&
+    ( obj.x < x+w ) &&
+    ( obj.x + SURVIVOR_WIDTH > x ) &&
+    ( obj.y < y+h ) &&
+    ( obj.y + SURVIVOR_HEIGHT > y );
+}
+
+// collectSurvivor
+// takes a survivor, sets it inactive.
+// returns false if no survivors are left on the map, otherwise true
+bool collectSurvivor(Element& obj)
+{
+  byte id;
+  obj.active = false;
+  arduboy.tunes.tone(660, 20);
+  
+  for(id=0; id<SURVIVOR_MAX; id++)
+  {
+    if(survivors[id].active)
+      return false;
+  }
+  
+  return true;
 }
 
 // clearSurvivors

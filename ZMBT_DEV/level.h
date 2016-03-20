@@ -29,6 +29,7 @@ extern const unsigned char *levelmap01[][32];
 
 
 void drawLevel();
+void loadLevel();
 unsigned char getTileType(unsigned int x, unsigned int y);
 void drawScore(byte scoreX, byte scoreY, byte fontType);
 
@@ -194,5 +195,6 @@ PROGMEM const unsigned char tileset[] = {
   0x5E, 0xE1, 0x5C, 0x42, 0x39, 0x25, 0x51, 0x0A,
 
 };
+
 
 #endif

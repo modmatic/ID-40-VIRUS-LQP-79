@@ -1,4 +1,5 @@
 #include "enemies.h"
+#include "player.h"
 
 // globals ///////////////////////////////////////////////////////////////////
 
@@ -20,10 +21,27 @@ void setZombie(Enemy& obj, int x, int y)
   obj.flashTime = 0;
 }
 
+// spawnZombie
+// adds a zombie in a random place in the map
+// returns true if success, false if failure
+bool spawnZombie()
+{
+  int x = random(16, LEVEL_WIDTH-ZOMBIE_WIDTH-16);
+  int y = random(16, LEVEL_HEIGHT-ZOMBIE_HEIGHT-16);
+  
+  if((x < coolGirl.positionOnMapX - WIDTH) || (x > coolGirl.positionOnMapX + WIDTH) || (y < coolGirl.positionOnMapY - HEIGHT) || (y > coolGirl.positionOnMapY + HEIGHT))
+  {
+    return addZombie(x, y);
+  }
+  
+  return false;
+}
+
 
 // addZombie
 // searches the zombies list for an empty slot, adds one if available
-void addZombie(int x, int y)
+// returns true if successful, false otherwise
+bool addZombie(int x, int y)
 {
   byte id;
   
@@ -32,9 +50,12 @@ void addZombie(int x, int y)
     if(!zombies[id].active)
     {
       setZombie(zombies[id], x, y);
+      return true;
       break;
     }
   }
+  
+  return false;
 }
 
 
@@ -60,6 +81,12 @@ void updateZombie(Enemy& obj)
     
     if(obj.y < coolGirl.positionOnMapY) vy = ZOMBIE_SPEED;
     if(obj.y > coolGirl.positionOnMapY) vy = -ZOMBIE_SPEED;
+    
+    if((obj.x < 0) || (obj.y < 0) || (obj.x >= LEVEL_WIDTH) || (obj.y >= LEVEL_HEIGHT))
+    {
+      obj.active = false;
+      return;
+    }
     
     //if(obj.x + ZOMBIE_WIDTH < coolGirl.positionOnMapX) vx = ZOMBIE_SPEED;
     //if(obj.x > coolGirl.positionOnMapX + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
@@ -100,6 +127,7 @@ void updateZombie(Enemy& obj)
       else if(vx < 0)
         obj.x = coolGirl.positionOnMapX + PLAYER_WIDTH;
       
+      hurtPlayer(coolGirl);
       vx = 0;
     }
     
@@ -148,6 +176,7 @@ void updateZombie(Enemy& obj)
       else if(vy < 0)
         obj.y = coolGirl.positionOnMapY + PLAYER_HEIGHT;
       
+      hurtPlayer(coolGirl);
       vy = 0;
     }
     
@@ -205,6 +234,29 @@ void updateZombies()
   }
 }
 
+// drawZombie
+// draws a single zombie
+void drawZombie(Enemy& obj)
+{
+  if(obj.active)
+  {
+    if(obj.flashTime > 0)
+    {
+      obj.flashTime--;
+      //arduboy.drawCircle(obj.x - mapPositionX + ZOMBIE_WIDTH/2, obj.y - mapPositionY + ZOMBIE_HEIGHT/2, 16 - obj.flashTime*2, 1);
+    }
+    if((obj.flashTime % 4) < 2)
+    {
+      sprites.drawPlusMask(obj.x - mapPositionX, obj.y - mapPositionY, zombie_plus_mask, obj.frame + 8*obj.direction);
+    }
+  }
+  else if(obj.flashTime > 0)
+  {
+    obj.flashTime--;
+    arduboy.drawCircle(obj.x - mapPositionX + ZOMBIE_WIDTH/2, obj.y - mapPositionY + ZOMBIE_HEIGHT/2, 12 - obj.flashTime*2, 1);
+  }
+}
+
 
 // drawZombies
 // draws every active zombie in the zombie list
@@ -215,8 +267,7 @@ void drawZombies()
   // Draw all the zombies!
   for (id=0; id<ZOMBIE_MAX; id++)
   {
-    if(!zombies[id].active) continue;
-    sprites.drawPlusMask(zombies[id].x - mapPositionX, zombies[id].y - mapPositionY, zombie_plus_mask, zombies[id].frame + 8*zombies[id].direction);
+    drawZombie(zombies[id]);
   }
 }
 
@@ -228,14 +279,17 @@ bool zombieHealthOffset(Enemy& obj, char amount)
 {
   obj.health += amount;
   
-  
+  // killed
   if(obj.health <= 0)
   {
     arduboy.tunes.tone(220, 20);
+    obj.flashTime = ZOMBIE_FLASH_TIME;
     obj.active = false;
+    rollingScore += 100;
   }
   else if(amount < 0)
   {
+    obj.flashTime = ZOMBIE_FLASH_TIME;
     arduboy.tunes.tone(640, 20);
   }
 }
