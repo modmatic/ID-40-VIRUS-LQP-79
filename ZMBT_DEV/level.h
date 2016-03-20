@@ -32,6 +32,7 @@ void drawLevel();
 void loadLevel();
 unsigned char getTileType(unsigned int x, unsigned int y);
 void drawScore(byte scoreX, byte scoreY, byte fontType);
+void drawNextLevel();
 
 // data //////////////////////////////////////////////////////////////////////
 

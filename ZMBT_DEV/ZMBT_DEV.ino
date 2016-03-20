@@ -5,7 +5,7 @@
 
  MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
 
- 2016 - JO3RI - FUOPY
+ 2016 - FUOPY - JO3RI - STG - JUSTIN CRY
 
  Game License: MIT : https://opensource.org/licenses/MIT
 
@@ -42,6 +42,7 @@ FunctionPointer mainGameLoop[] =
   stateGamePause,
   stateGameOver,
   stateGameNextLevel,
+  stateGamePrepareLevel,
 };
 
 void setup()

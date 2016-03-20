@@ -46,26 +46,61 @@ void newDraw(unsigned posX, unsigned posY) {
 unsigned char getTileType(unsigned int posX, unsigned int posY)
 {
 
-  int tileAbsoluteIndex = posX + posY*(LEVEL_WIDTH/TILE_WIDTH);
-  
-  int tileLocalX = posX%BLOCK_WIDTH;
-  int tileLocalY = posY%BLOCK_HEIGHT;
-  int tileLocalIndex = tileLocalX + tileLocalY*BLOCK_WIDTH;
-  
-  int tileBlockX = posX/BLOCK_WIDTH;
-  int tileBlockY = posY/BLOCK_HEIGHT;
-  int blockIndex = tileBlockX + tileBlockY*LEVEL_BLOCK_WIDTH;
-  
+  int tileAbsoluteIndex = posX + posY * (LEVEL_WIDTH / TILE_WIDTH);
+
+  int tileLocalX = posX % BLOCK_WIDTH;
+  int tileLocalY = posY % BLOCK_HEIGHT;
+  int tileLocalIndex = tileLocalX + tileLocalY * BLOCK_WIDTH;
+
+  int tileBlockX = posX / BLOCK_WIDTH;
+  int tileBlockY = posY / BLOCK_HEIGHT;
+  int blockIndex = tileBlockX + tileBlockY * LEVEL_BLOCK_WIDTH;
+
   unsigned char tileID = pgm_read_byte(&levels[level - 1][blockIndex][tileLocalIndex]);
-  
+
   return tileID;
-  
+
 }
 
 void drawLevel()
 {
   newDraw (mapPositionX, mapPositionY);
 }
+
+void drawNextLevel()
+{
+  char buf[10];
+  itoa(level - 1, buf, 10);
+  char charLen = strlen(buf);
+  char pad = 2 - charLen;
+
+  //draw 0 padding
+  for (byte i = 0; i < pad; i++)
+  {
+    sprites.drawSelfMasked(82 + (10 * i), 8, numbersBig, 0);
+  }
+
+  for (byte i = 0; i < charLen; i++)
+  {
+    char digit = buf[i];
+    byte j;
+    if (digit <= 48)
+    {
+      digit = 0;
+    }
+    else {
+      digit -= 48;
+      if (digit > 9) digit = 0;
+    }
+
+    for (byte z = 0; z < 10; z++)
+    {
+      if (digit == z) j = z;
+    }
+    sprites.drawSelfMasked(82 + (pad * 10) + (10 * i), 8, numbersBig, digit);
+  }
+}
+
 
 void drawScore(byte scoreX, byte scoreY, byte fontType)
 {
@@ -121,5 +156,5 @@ void drawScore(byte scoreX, byte scoreY, byte fontType)
 
 void loadLevel()
 {
-  
+
 }

@@ -26,6 +26,7 @@
 #define STATE_GAME_PAUSE         7
 #define STATE_GAME_OVER          8
 #define STATE_GAME_NEXT_LEVEL    9
+#define STATE_GAME_PREPARE_LEVEL 10
 
 extern byte level;
 
@@ -33,6 +34,7 @@ extern byte level;
 
 void stateGamePlaying();
 void stateGameNextLevel();
+void stateGamePrepareLevel();
 void stateGamePause();
 void stateGameOver();
 
