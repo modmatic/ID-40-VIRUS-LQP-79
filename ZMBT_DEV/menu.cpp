@@ -31,6 +31,7 @@ void stateMenuHelp()
 void stateMenuPlay()
 {
   level = 0;
+  scorePlayer = 0;
   gameState = STATE_GAME_NEXT_LEVEL;
 }
 
