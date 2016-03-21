@@ -63,14 +63,14 @@ void drawLevel()
 }
 
 
-void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, boolean ScoreOrLevel)
+void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, boolean scoreOrLevel)
 {
   char buf[10];
   //scorePlayer = arduboy.cpuLoad();
   if (scoreOrLevel) itoa(level,buf,10);
   else ltoa(scorePlayer, buf, 10);
   char charLen = strlen(buf);
-  char pad = 6 -(ScoreOrLevel*4) - charLen;
+  char pad = 6 -(scoreOrLevel*4) - charLen;
 
   //draw 0 padding
   for (byte i = 0; i < pad; i++)

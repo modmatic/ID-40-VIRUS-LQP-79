@@ -15,11 +15,12 @@
 #define STATE_MENU_SOUNDFX       5
 
 //define game states (on main menu)
-#define STATE_GAME_PLAYING       6
-#define STATE_GAME_PAUSE         7
-#define STATE_GAME_OVER          8
-#define STATE_GAME_NEXT_LEVEL    9
-#define STATE_GAME_PREPARE_LEVEL 10
+
+#define STATE_GAME_PREPARE_LEVEL 6
+#define STATE_GAME_NEXT_LEVEL    7
+#define STATE_GAME_PLAYING       8
+#define STATE_GAME_OVER          9
+
 
 // globals ///////////////////////////////////////////////////////////////////
 

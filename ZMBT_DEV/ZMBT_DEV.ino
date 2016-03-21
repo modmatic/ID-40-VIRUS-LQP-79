@@ -38,11 +38,10 @@ FunctionPointer mainGameLoop[] =
   stateMenuPlay,
   stateMenuInfo,
   stateMenuSoundfx,
-  stateGamePlaying,
-  stateGamePause,
-  stateGameOver,
-  stateGameNextLevel,
   stateGamePrepareLevel,
+  stateGameNextLevel,
+  stateGamePlaying,
+  stateGameOver,
 };
 
 void setup()

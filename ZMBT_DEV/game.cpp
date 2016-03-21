@@ -42,7 +42,7 @@ void stateGamePrepareLevel()
   addSurvivor(64 + 16, 48);
   addSurvivor(450, 224);
   //addWeapon(128, 16, 1);
-  //setDoorPosition(128, 16);
+  setDoorPosition(128, 16);
 
   level++;
 

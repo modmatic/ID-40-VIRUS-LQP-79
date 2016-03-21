@@ -175,7 +175,7 @@ void updatePlayer(Player& obj)
   // collide with door
   if(checkDoorCollision())
   {
-    gameState = STATE_GAME_NEXT_LEVEL;
+    gameState = STATE_GAME_PREPARE_LEVEL;
   }
   
   
