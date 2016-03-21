@@ -67,7 +67,8 @@ void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, boolean ScoreOrLev
 {
   char buf[10];
   //scorePlayer = arduboy.cpuLoad();
-  ltoa(scorePlayer, buf, 10);
+  if (scoreOrLevel) itoa(level,buf,10);
+  else ltoa(scorePlayer, buf, 10);
   char charLen = strlen(buf);
   char pad = 6 -(ScoreOrLevel*4) - charLen;
 
