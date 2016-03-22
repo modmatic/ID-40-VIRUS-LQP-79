@@ -50,6 +50,7 @@ struct Player
     byte health;
     byte flashTime;
     byte camDirection;
+    byte diagonalTime;
 };
 
 

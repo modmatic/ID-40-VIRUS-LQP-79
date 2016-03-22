@@ -18,7 +18,6 @@ void stateGamePlaying()
   updateBullets();
   updateZombies();
   updateSurvivors();
-  updateCamera();
 
   // Draw
   drawLevel();

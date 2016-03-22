@@ -238,6 +238,7 @@ void updateZombies()
 // draws a single zombie
 void drawZombie(Enemy& obj)
 {
+  short drawX, drawY;
   if(obj.active)
   {
     if(obj.flashTime > 0)
@@ -247,7 +248,43 @@ void drawZombie(Enemy& obj)
     }
     if((obj.flashTime % 4) < 2)
     {
-      sprites.drawPlusMask(obj.x - mapPositionX, obj.y - mapPositionY, zombie_plus_mask, obj.frame + 8*obj.direction);
+      drawX = obj.x - mapPositionX;
+      drawY = obj.y - mapPositionY;
+      
+      sprites.drawPlusMask(drawX, drawY, zombie_plus_mask, obj.frame + 8*obj.direction);
+      
+      if(arduboy.frameCount % 16 < 8)
+      {
+        if(drawX < 0 && drawX > -WIDTH/2)
+        {
+          //arduboy.drawFastHLine(0,  drawY + ZOMBIE_HEIGHT/2, 5-(0-(drawX+WIDTH)), 1);
+          arduboy.drawPixel(1, drawY + ZOMBIE_HEIGHT/2, 1);
+          arduboy.drawPixel(1, drawY + ZOMBIE_HEIGHT/2+1, 1);
+          arduboy.drawPixel(2, drawY + ZOMBIE_HEIGHT/2, 1);
+          arduboy.drawPixel(2, drawY + ZOMBIE_HEIGHT/2+1, 1);
+        }
+        else if(drawX > WIDTH && drawX < WIDTH/2+WIDTH)
+        {
+          arduboy.drawPixel(WIDTH-1, drawY + ZOMBIE_HEIGHT/2, 1);
+          arduboy.drawPixel(WIDTH-1, drawY + ZOMBIE_HEIGHT/2+1, 1);
+          arduboy.drawPixel(WIDTH-2, drawY + ZOMBIE_HEIGHT/2, 1);
+          arduboy.drawPixel(WIDTH-2, drawY + ZOMBIE_HEIGHT/2+1, 1);
+        }
+        else if(drawY < 0 && drawY > -HEIGHT/2)
+        {
+          arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2, 1, 1);
+          arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2+1, 1, 1);
+          arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2, 2, 1);
+          arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2+1, 2, 1);
+        }
+        else if(drawY > HEIGHT && drawY < HEIGHT/2+HEIGHT)
+        {
+          arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2, HEIGHT-1, 1);
+          arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2+1, HEIGHT-1, 1);
+          arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2, HEIGHT-2, 1);
+          arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2+1, HEIGHT-2, 1);
+        }
+      }
     }
   }
   else if(obj.flashTime > 0)
@@ -255,6 +292,7 @@ void drawZombie(Enemy& obj)
     obj.flashTime--;
     arduboy.drawCircle(obj.x - mapPositionX + ZOMBIE_WIDTH/2, obj.y - mapPositionY + ZOMBIE_HEIGHT/2, 12 - obj.flashTime*2, 1);
   }
+  
 }
 
 

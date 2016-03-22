@@ -17,7 +17,8 @@ Player coolGirl = {
   .positionOnMapY = coolGirl.positionOnScreenY,
   .health = 3,
   .flashTime = 0,
-  .camDirection = PLAYER_FACING_SOUTH
+  .camDirection = PLAYER_FACING_SOUTH,
+  .diagonalTime = 0
 };
 
 int rollingScore = 0;
@@ -49,6 +50,7 @@ void updatePlayer(Player& obj)
   byte id;
   byte tileXMax;
   byte tileYMax;
+  byte inputDirection = obj.direction;
   
   // Read input
   bool left = buttons.pressed(LEFT_BUTTON);
@@ -62,6 +64,12 @@ void updatePlayer(Player& obj)
   // Stop or continue walking animation
   obj.walking = up || down || left || right;
   obj.walking = (standgun && !rungun) ? false : obj.walking;
+  
+  if(obj.diagonalTime > 0)
+    obj.diagonalTime--;
+  
+  if((up&&left) || (down&&left) || (up&&right) || (down&&right))
+    obj.diagonalTime = 4;
   
   // Bullet timer
   if(obj.shotDelay > 0) obj.shotDelay--;
@@ -181,34 +189,55 @@ void updatePlayer(Player& obj)
   
   
   // Update camera direction
-  if(vx < 0)
-    obj.camDirection = PLAYER_FACING_WEST;
-  else if(vx > 0)
-    obj.camDirection = PLAYER_FACING_EAST;
-
-  if(vy < 0) {
-    if(obj.camDirection == PLAYER_FACING_WEST)
-      obj.camDirection = PLAYER_FACING_NORTHWEST;
-    else if(obj.camDirection == PLAYER_FACING_EAST)
-      obj.camDirection = PLAYER_FACING_NORTHEAST;
-    else
-      obj.camDirection = PLAYER_FACING_NORTH;
-  }
-  else if(vy > 0)
-  {
-    if(obj.camDirection == PLAYER_FACING_WEST)
-      obj.camDirection = PLAYER_FACING_SOUTHWEST;
-    else if(obj.camDirection == PLAYER_FACING_EAST)
-      obj.camDirection = PLAYER_FACING_SOUTHEAST;
-    else
-      obj.camDirection = PLAYER_FACING_SOUTH;
-  }
-  
-  // update sprite
   if(!strafegun)
   {
-    obj.direction = obj.camDirection;
+    if(vx < 0)
+      inputDirection = PLAYER_FACING_WEST;
+    else if(vx > 0)
+      inputDirection = PLAYER_FACING_EAST;
+
+    if(vy < 0) {
+      if(inputDirection == PLAYER_FACING_WEST)
+        inputDirection = PLAYER_FACING_NORTHWEST;
+      else if(inputDirection == PLAYER_FACING_EAST)
+        inputDirection = PLAYER_FACING_NORTHEAST;
+      else
+        inputDirection = PLAYER_FACING_NORTH;
+    }
+    else if(vy > 0)
+    {
+      if(inputDirection == PLAYER_FACING_WEST)
+        inputDirection = PLAYER_FACING_SOUTHWEST;
+      else if(inputDirection == PLAYER_FACING_EAST)
+        inputDirection = PLAYER_FACING_SOUTHEAST;
+      else
+        inputDirection = PLAYER_FACING_SOUTH;
+    }
   }
+  
+  //obj.direction = rconverge(0, 5, 1, 8);
+  
+  
+  obj.direction = inputDirection;
+  obj.camDirection = inputDirection;
+  
+  
+  if(obj.diagonalTime > 0)
+  {
+    if(((obj.direction%2) == 0) && ((obj.camDirection%2) == 1)) // a diagonal direction is odd
+    {
+      //obj.direction = obj.camDirection;
+    }
+    else
+    {
+      obj.camDirection = obj.direction; 
+    }
+  }
+  else
+  {
+      obj.camDirection = obj.direction;
+  }
+  
   
   // Update gun
   if(standgun || rungun)
@@ -240,7 +269,7 @@ void updatePlayer(Player& obj)
   
   // update camera
   short mapGoalX = coolGirl.positionOnMapX - WIDTH/2 + PLAYER_WIDTH/2;
-  short mapGoalY = coolGirl.positionOnMapY - HEIGHT/2 + PLAYER_HEIGHT/2;
+  short mapGoalY = coolGirl.positionOnMapY - HEIGHT/2 + PLAYER_HEIGHT/2 - 4; // hud offset
   
   // offset the goal by the direction
   mapGoalX += BulletXVelocities[coolGirl.camDirection]*4;
