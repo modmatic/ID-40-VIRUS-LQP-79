@@ -219,14 +219,14 @@ void updatePlayer(Player& obj)
   
   
   obj.direction = inputDirection;
-  obj.camDirection = inputDirection;
+  //obj.camDirection = inputDirection;
   
   
   if(obj.diagonalTime > 0)
   {
     if(((obj.direction%2) == 0) && ((obj.camDirection%2) == 1)) // a diagonal direction is odd
     {
-      //obj.direction = obj.camDirection;
+      obj.direction = obj.camDirection;
     }
     else
     {

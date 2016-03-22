@@ -17,7 +17,7 @@ void setZombie(Enemy& obj, int x, int y)
   obj.direction = ENEMY_FACING_WEST;
   obj.x = x;
   obj.y = y;
-  obj.health = 3;
+  obj.health = 2;
   obj.flashTime = 0;
 }
 
@@ -234,6 +234,49 @@ void updateZombies()
   }
 }
 
+void drawZombieBlips()
+{
+  short drawX, drawY;
+  byte id;
+  
+  for(id=0; id<ZOMBIE_MAX; id++)
+  {
+    if(!zombies[id].active) continue;
+    drawX = zombies[id].x - mapPositionX;
+    drawY = zombies[id].y - mapPositionY;
+    byte drawColor = (arduboy.frameCount % 16) < 8;
+    
+    if(drawX < 0 && drawX > -WIDTH/2)
+    {
+      arduboy.drawPixel(1, drawY + ZOMBIE_HEIGHT/2, drawColor);
+      arduboy.drawPixel(1, drawY + ZOMBIE_HEIGHT/2+1, drawColor);
+      arduboy.drawPixel(2, drawY + ZOMBIE_HEIGHT/2, drawColor);
+      arduboy.drawPixel(2, drawY + ZOMBIE_HEIGHT/2+1, drawColor);
+    }
+    else if(drawX > WIDTH && drawX < WIDTH/2+WIDTH)
+    {
+      arduboy.drawPixel(WIDTH-1, drawY + ZOMBIE_HEIGHT/2, drawColor);
+      arduboy.drawPixel(WIDTH-1, drawY + ZOMBIE_HEIGHT/2+1, drawColor);
+      arduboy.drawPixel(WIDTH-2, drawY + ZOMBIE_HEIGHT/2, drawColor);
+      arduboy.drawPixel(WIDTH-2, drawY + ZOMBIE_HEIGHT/2+1, drawColor);
+    }
+    else if(drawY < 0 && drawY > -HEIGHT/2)
+    {
+      arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2, 1, drawColor);
+      arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2+1, 1, drawColor);
+      arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2, 2, drawColor);
+      arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2+1, 2, drawColor);
+    }
+    else if(drawY > HEIGHT && drawY < HEIGHT/2+HEIGHT)
+    {
+      arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2, HEIGHT-1, drawColor);
+      arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2+1, HEIGHT-1, drawColor);
+      arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2, HEIGHT-2, drawColor);
+      arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2+1, HEIGHT-2, drawColor);
+    }
+  }
+}
+
 // drawZombie
 // draws a single zombie
 void drawZombie(Enemy& obj)
@@ -253,38 +296,7 @@ void drawZombie(Enemy& obj)
       
       sprites.drawPlusMask(drawX, drawY, zombie_plus_mask, obj.frame + 8*obj.direction);
       
-      if(arduboy.frameCount % 16 < 8)
-      {
-        if(drawX < 0 && drawX > -WIDTH/2)
-        {
-          //arduboy.drawFastHLine(0,  drawY + ZOMBIE_HEIGHT/2, 5-(0-(drawX+WIDTH)), 1);
-          arduboy.drawPixel(1, drawY + ZOMBIE_HEIGHT/2, 1);
-          arduboy.drawPixel(1, drawY + ZOMBIE_HEIGHT/2+1, 1);
-          arduboy.drawPixel(2, drawY + ZOMBIE_HEIGHT/2, 1);
-          arduboy.drawPixel(2, drawY + ZOMBIE_HEIGHT/2+1, 1);
-        }
-        else if(drawX > WIDTH && drawX < WIDTH/2+WIDTH)
-        {
-          arduboy.drawPixel(WIDTH-1, drawY + ZOMBIE_HEIGHT/2, 1);
-          arduboy.drawPixel(WIDTH-1, drawY + ZOMBIE_HEIGHT/2+1, 1);
-          arduboy.drawPixel(WIDTH-2, drawY + ZOMBIE_HEIGHT/2, 1);
-          arduboy.drawPixel(WIDTH-2, drawY + ZOMBIE_HEIGHT/2+1, 1);
-        }
-        else if(drawY < 0 && drawY > -HEIGHT/2)
-        {
-          arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2, 1, 1);
-          arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2+1, 1, 1);
-          arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2, 2, 1);
-          arduboy.drawPixel(drawX + ZOMBIE_WIDTH/2+1, 2, 1);
-        }
-        else if(drawY > HEIGHT && drawY < HEIGHT/2+HEIGHT)
-        {
-          arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2, HEIGHT-1, 1);
-          arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2+1, HEIGHT-1, 1);
-          arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2, HEIGHT-2, 1);
-          arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2+1, HEIGHT-2, 1);
-        }
-      }
+
     }
   }
   else if(obj.flashTime > 0)

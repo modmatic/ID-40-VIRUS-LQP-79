@@ -53,5 +53,6 @@ void drawZombies();
 bool zombieHealthOffset(Enemy& obj, char amount);
 bool zombieCollision(Enemy& obj, int x, int y, int w, int h);
 void clearZombies();
+void drawZombieBlips();
 
 #endif

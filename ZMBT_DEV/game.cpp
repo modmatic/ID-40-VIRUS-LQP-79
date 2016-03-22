@@ -30,6 +30,7 @@ void stateGamePlaying()
   drawNumbers(86, 0, 0,0);
   drawLife(coolGirl);
   drawAmountSurvivors();
+  drawZombieBlips();
 }
 
 // stateGameNextLevel
