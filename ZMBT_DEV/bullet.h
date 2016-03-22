@@ -4,14 +4,14 @@
 #include "enemies.h"
 #include "level.h"
 
-extern const char BulletXVelocities[];
-
 // constants /////////////////////////////////////////////////////////////////
 
 #define BULLET_MAX        6
 #define BULLET_WIDTH      2
 #define BULLET_HEIGHT     2
 #define BULLET_DIRECTIONS 8
+
+extern const char BulletXVelocities[8];
 
 // structures ////////////////////////////////////////////////////////////////
 

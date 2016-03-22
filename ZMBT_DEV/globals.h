@@ -14,3 +14,7 @@ extern boolean soundYesNo;
 
 #endif
 
+// function prototypes ///////////////////////////////////////////////////////
+
+short converge(short start, short goal, short step);
+

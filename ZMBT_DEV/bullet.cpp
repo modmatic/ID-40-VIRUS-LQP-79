@@ -2,7 +2,7 @@
 #include "player.h"
 
 // globals ///////////////////////////////////////////////////////////////////
-const char BulletXVelocities[] = {
+const char BulletXVelocities[8] = {
   0,
   -2,
   -3,

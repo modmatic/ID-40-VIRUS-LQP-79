@@ -16,7 +16,8 @@ Player coolGirl = {
   .positionOnMapX = coolGirl.positionOnScreenX,
   .positionOnMapY = coolGirl.positionOnScreenY,
   .health = 3,
-  .flashTime = 0
+  .flashTime = 0,
+  .camDirection = PLAYER_FACING_SOUTH
 };
 
 int rollingScore = 0;
@@ -90,7 +91,7 @@ void updatePlayer(Player& obj)
         obj.positionOnMapX = zombies[id].x - PLAYER_WIDTH;
       else if(vx < 0)
         obj.positionOnMapX = zombies[id].x + ZOMBIE_WIDTH;
-      obj.vx = 0;
+      vx = 0;
       hurtPlayer(obj);
       break;
     }
@@ -109,7 +110,7 @@ void updatePlayer(Player& obj)
           obj.positionOnMapX = tilex*TILE_WIDTH + TILE_WIDTH;
         else if(vx > 0)
           obj.positionOnMapX = tilex*TILE_WIDTH - PLAYER_WIDTH;
-        obj.vx = 0;
+        vx = 0;
       }
     }
   }
@@ -135,7 +136,7 @@ void updatePlayer(Player& obj)
         obj.positionOnMapY = zombies[id].y - PLAYER_HEIGHT;
       else if(vy < 0)
         obj.positionOnMapY = zombies[id].y + ZOMBIE_HEIGHT;
-      obj.vy = 0;
+      vy = 0;
       hurtPlayer(obj);
       break;
     }
@@ -154,7 +155,7 @@ void updatePlayer(Player& obj)
           obj.positionOnMapY = tiley*TILE_HEIGHT + TILE_HEIGHT;
         else if(vy > 0)
           obj.positionOnMapY = tiley*TILE_HEIGHT - PLAYER_HEIGHT;
-        obj.vy = 0;
+        vy = 0;
       }
     }
   }
@@ -179,31 +180,34 @@ void updatePlayer(Player& obj)
   }
   
   
-  // Update sprite
+  // Update camera direction
+  if(vx < 0)
+    obj.camDirection = PLAYER_FACING_WEST;
+  else if(vx > 0)
+    obj.camDirection = PLAYER_FACING_EAST;
+
+  if(vy < 0) {
+    if(obj.camDirection == PLAYER_FACING_WEST)
+      obj.camDirection = PLAYER_FACING_NORTHWEST;
+    else if(obj.camDirection == PLAYER_FACING_EAST)
+      obj.camDirection = PLAYER_FACING_NORTHEAST;
+    else
+      obj.camDirection = PLAYER_FACING_NORTH;
+  }
+  else if(vy > 0)
+  {
+    if(obj.camDirection == PLAYER_FACING_WEST)
+      obj.camDirection = PLAYER_FACING_SOUTHWEST;
+    else if(obj.camDirection == PLAYER_FACING_EAST)
+      obj.camDirection = PLAYER_FACING_SOUTHEAST;
+    else
+      obj.camDirection = PLAYER_FACING_SOUTH;
+  }
+  
+  // update sprite
   if(!strafegun)
   {
-    if(vx < 0)
-      obj.direction = PLAYER_FACING_WEST;
-    else if(vx > 0)
-      obj.direction = PLAYER_FACING_EAST;
-
-    if(vy < 0) {
-      if(obj.direction == PLAYER_FACING_WEST)
-        obj.direction = PLAYER_FACING_NORTHWEST;
-      else if(obj.direction == PLAYER_FACING_EAST)
-        obj.direction = PLAYER_FACING_NORTHEAST;
-      else
-        obj.direction = PLAYER_FACING_NORTH;
-    }
-    else if(vy > 0)
-    {
-      if(obj.direction == PLAYER_FACING_WEST)
-        obj.direction = PLAYER_FACING_SOUTHWEST;
-      else if(obj.direction == PLAYER_FACING_EAST)
-        obj.direction = PLAYER_FACING_SOUTHEAST;
-      else
-        obj.direction = PLAYER_FACING_SOUTH;
-    }
+    obj.direction = obj.camDirection;
   }
   
   // Update gun
@@ -220,18 +224,6 @@ void updatePlayer(Player& obj)
   if (arduboy.everyXFrames(6) && obj.walking) obj.frame++;
   if (obj.frame > 3 ) obj.frame = 0;
   
-  // Move map toward player required boundary
-  mapPositionX = (mapPositionX < obj.positionOnMapX - PLAYER_SCREEN_XMAX) ? obj.positionOnMapX - PLAYER_SCREEN_XMAX : mapPositionX;
-  mapPositionX = (mapPositionX > obj.positionOnMapX - PLAYER_SCREEN_XMIN) ? obj.positionOnMapX - PLAYER_SCREEN_XMIN : mapPositionX;
-  mapPositionY = (mapPositionY < obj.positionOnMapY - PLAYER_SCREEN_YMAX) ? obj.positionOnMapY - PLAYER_SCREEN_YMAX : mapPositionY;
-  mapPositionY = (mapPositionY > obj.positionOnMapY - PLAYER_SCREEN_YMIN) ? obj.positionOnMapY - PLAYER_SCREEN_YMIN : mapPositionY;
-  
-  // Clamp on screen boundaries
-  mapPositionX = (mapPositionX < 0) ? 0 : mapPositionX;
-  mapPositionX = (mapPositionX > LEVEL_WIDTH - WIDTH) ? LEVEL_WIDTH-WIDTH : mapPositionX;
-  mapPositionY = (mapPositionY < 0) ? 0 : mapPositionY;
-  mapPositionY = (mapPositionY > LEVEL_HEIGHT - HEIGHT) ? LEVEL_HEIGHT-HEIGHT : mapPositionY;
-  
   // update score
   if(rollingScore > 0)
   {
@@ -242,6 +234,27 @@ void updatePlayer(Player& obj)
   // update flashing
   if(obj.flashTime > 0)
     obj.flashTime--;
+  
+  obj.vx = vx;
+  obj.vy = vy;
+  
+  // update camera
+  short mapGoalX = coolGirl.positionOnMapX - WIDTH/2 + PLAYER_WIDTH/2;
+  short mapGoalY = coolGirl.positionOnMapY - HEIGHT/2 + PLAYER_HEIGHT/2;
+  
+  // offset the goal by the direction
+  mapGoalX += BulletXVelocities[coolGirl.camDirection]*4;
+  mapGoalY += BulletXVelocities[(coolGirl.camDirection+6)%8]*4;
+  
+  // move the camera toward the desired location
+  mapPositionX = converge(mapPositionX, mapGoalX, 2);
+  mapPositionY = converge(mapPositionY, mapGoalY, 2);
+  
+  // Clamp on screen boundaries
+  mapPositionX = (mapPositionX < 0) ? 0 : mapPositionX;
+  mapPositionX = (mapPositionX > LEVEL_WIDTH - WIDTH) ? LEVEL_WIDTH-WIDTH : mapPositionX;
+  mapPositionY = (mapPositionY < 0) ? 0 : mapPositionY;
+  mapPositionY = (mapPositionY > LEVEL_HEIGHT - HEIGHT) ? LEVEL_HEIGHT-HEIGHT : mapPositionY;
 }
 
 // hurtPlayer

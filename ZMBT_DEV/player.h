@@ -49,6 +49,7 @@ struct Player
     int positionOnMapY;
     byte health;
     byte flashTime;
+    byte camDirection;
 };
 
 

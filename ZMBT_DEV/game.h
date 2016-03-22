@@ -38,5 +38,4 @@ void stateGamePrepareLevel();
 void stateGamePause();
 void stateGameOver();
 
-
 #endif

@@ -1,4 +1,5 @@
 #include "game.h"
+#include "enemies.h"
 
 // method implementations ////////////////////////////////////////////////////
 
@@ -17,6 +18,7 @@ void stateGamePlaying()
   updateBullets();
   updateZombies();
   updateSurvivors();
+  updateCamera();
 
   // Draw
   drawLevel();
@@ -49,12 +51,13 @@ void stateGamePrepareLevel()
   coolGirl.positionOnMapX = 16;
   coolGirl.positionOnMapY = 16;
 
-  for (byte spawnZombies; spawnZombies < 14; spawnZombies++)
-  {
-    spawnZombie();
-  }
+  //for (byte spawnZombies; spawnZombies < 14; spawnZombies++)
+  //{
+  //}
 
   gameState = STATE_GAME_NEXT_LEVEL;
+    spawnZombie();
+    spawnZombie();
 }
 
 void stateGameNextLevel()
