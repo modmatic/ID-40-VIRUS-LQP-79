@@ -25,10 +25,10 @@ bool checkDoorCollision()
 {
   return
     ( exitDoor.active ) &&
-    ( exitDoor.x < coolGirl.positionOnMapX+PLAYER_WIDTH ) &&
-    ( exitDoor.x + SURVIVOR_WIDTH > coolGirl.positionOnMapX ) &&
-    ( exitDoor.y < coolGirl.positionOnMapY+PLAYER_HEIGHT ) &&
-    ( exitDoor.y + SURVIVOR_HEIGHT > coolGirl.positionOnMapY );
+    ( exitDoor.x < coolGirl.x+PLAYER_WIDTH ) &&
+    ( exitDoor.x + SURVIVOR_WIDTH > coolGirl.x ) &&
+    ( exitDoor.y < coolGirl.y+PLAYER_HEIGHT ) &&
+    ( exitDoor.y + SURVIVOR_HEIGHT > coolGirl.y );
 }
 
 void drawDoor()

@@ -4,22 +4,7 @@
 
 // globals ///////////////////////////////////////////////////////////////////
 
-Player coolGirl = {
-  .positionOnScreenX = 25,
-  .positionOnScreenY = 25,
-  .walking = false,
-  .direction = PLAYER_FACING_SOUTH,
-  .frame = 0,
-  .shotDelay = 10,
-  .vx = 0,
-  .vy = 0,
-  .positionOnMapX = coolGirl.positionOnScreenX,
-  .positionOnMapY = coolGirl.positionOnScreenY,
-  .health = 3,
-  .flashTime = 0,
-  .camDirection = PLAYER_FACING_SOUTH,
-  .diagonalTime = 0
-};
+Player coolGirl;
 
 int rollingScore = 0;
 
@@ -31,9 +16,10 @@ void initializePlayer(Player& obj)
 {
   scorePlayer = 0;
   rollingScore = 0;
-  obj.direction = PLAYER_FACING_SOUTH,
+  obj.direction = PLAYER_FACING_SOUTH;
   obj.health = 3;
   obj.flashTime = 0;
+  obj.shotDelay = 10;
 }
 
 // updatePlayer
@@ -41,214 +27,138 @@ void initializePlayer(Player& obj)
 void updatePlayer(Player& obj)
 {
   // Input velocity
-  short vx = 0;
-  short vy = 0;
-  
-  short tilex;
-  short tiley;
+  int vx = 0;
+  int vy = 0;
   
   byte id;
   byte tileXMax;
   byte tileYMax;
   byte inputDirection = obj.direction;
   
-  // Read input
+  ///////////
+  // input //
+  ///////////
+
   bool left = buttons.pressed(LEFT_BUTTON);
   bool right = buttons.pressed(RIGHT_BUTTON);
   bool up = buttons.pressed(UP_BUTTON);
   bool down = buttons.pressed(DOWN_BUTTON);
+  
   bool rungun = buttons.pressed(A_BUTTON);
   bool standgun = buttons.pressed(B_BUTTON);
   bool strafegun = rungun;
-
-  // Stop or continue walking animation
+  
   obj.walking = up || down || left || right;
   obj.walking = (standgun && !rungun) ? false : obj.walking;
   
+  ////////////
+  // timers //
+  ////////////
+  
+  // Diagonal anti-jerk timer
   if(obj.diagonalTime > 0)
     obj.diagonalTime--;
-  
   if((up&&left) || (down&&left) || (up&&right) || (down&&right))
     obj.diagonalTime = 4;
   
   // Bullet timer
-  if(obj.shotDelay > 0) obj.shotDelay--;
+  if(obj.shotDelay > 0) obj.shotDelay--;  
+
+  ////////////////////////
+  // horizontal physics //
+  ////////////////////////
   
-  // Update horizontal physics
+  // input
   if(left)
-  {
     vx = -1;
-  }
   else if(right)
-  {
     vx = 1;
-  }
  
+  // update position
   if(strafegun || !standgun)
-  {
-    //obj.x += vx;
-    obj.positionOnMapX += vx;
-  }
+    obj.x += vx;
   
   // collide with zombies
-  for(id=0; id<ZOMBIE_MAX; id++)
-  {
-    if(zombieCollision(zombies[id], obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
-    {
-      if(vx > 0)
-        obj.positionOnMapX = zombies[id].x - PLAYER_WIDTH;
-      else if(vx < 0)
-        obj.positionOnMapX = zombies[id].x + ZOMBIE_WIDTH;
-      vx = 0;
-      hurtPlayer(obj);
-      break;
-    }
-  }
+  if(zombieCollide(obj.x, obj.y, true, vx, PLAYER_WIDTH, PLAYER_HEIGHT))
+    hurtPlayer(obj);
   
   // collide with walls
-  tileXMax = obj.positionOnMapX%TILE_WIDTH != 0;
-  tileYMax = obj.positionOnMapY%TILE_HEIGHT != 0;
-  for(tilex = obj.positionOnMapX/TILE_WIDTH; tilex < obj.positionOnMapX/TILE_WIDTH + 2 + tileXMax; tilex++)
-  {
-    for(tiley = obj.positionOnMapY/TILE_HEIGHT; tiley < obj.positionOnMapY/TILE_HEIGHT + 2 + tileYMax; tiley++)
-    {
-      if(getTileType(tilex, tiley) > 2)
-      {
-        if(vx < 0)
-          obj.positionOnMapX = tilex*TILE_WIDTH + TILE_WIDTH;
-        else if(vx > 0)
-          obj.positionOnMapX = tilex*TILE_WIDTH - PLAYER_WIDTH;
-        vx = 0;
-      }
-    }
-  }
+  mapCollide(obj.x, obj.y, true, vx, PLAYER_WIDTH, PLAYER_HEIGHT);
 
-  // Update vertical physics
+  //////////////////////
+  // vertical physics //
+  //////////////////////
+  
+  // input
   if(up)
     vy = -1;
   else if(down)
     vy = 1;
   
+  // update position
   if(strafegun || !standgun)
-  {
-    //obj.y += vy;
-    obj.positionOnMapY += vy;
-  }
+    obj.y += vy;
   
   // collide with zombies
-  for(id=0; id<ZOMBIE_MAX; id++)
-  {
-    if(zombieCollision(zombies[id], obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
-    {
-      if(vy > 0)
-        obj.positionOnMapY = zombies[id].y - PLAYER_HEIGHT;
-      else if(vy < 0)
-        obj.positionOnMapY = zombies[id].y + ZOMBIE_HEIGHT;
-      vy = 0;
-      hurtPlayer(obj);
-      break;
-    }
-  }
-  
+  if(zombieCollide(obj.x, obj.y, false, vy, PLAYER_WIDTH, PLAYER_HEIGHT))
+    hurtPlayer(obj);
+
   // collide with walls
-  tileXMax = obj.positionOnMapX%TILE_WIDTH != 0;
-  tileYMax = obj.positionOnMapY%TILE_HEIGHT != 0;
-  for(tilex = obj.positionOnMapX/TILE_WIDTH; tilex < obj.positionOnMapX/TILE_WIDTH + 2 + tileXMax; tilex++)
-  {
-    for(tiley = obj.positionOnMapY/TILE_HEIGHT; tiley < obj.positionOnMapY/TILE_HEIGHT + 2 + tileYMax; tiley++)
-    {
-      if(getTileType(tilex, tiley) > 2)
-      {
-        if(vy < 0)
-          obj.positionOnMapY = tiley*TILE_HEIGHT + TILE_HEIGHT;
-        else if(vy > 0)
-          obj.positionOnMapY = tiley*TILE_HEIGHT - PLAYER_HEIGHT;
-        vy = 0;
-      }
-    }
-  }
-  
+  mapCollide(obj.x, obj.y, false, vy, PLAYER_WIDTH, PLAYER_HEIGHT);
+
   // collide with survivors
-  for(id=0; id<SURVIVOR_MAX; id++)
-  {
-    if(survivorCollision(survivors[id], obj.positionOnMapX, obj.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
-    {
-      if(collectSurvivor(survivors[id]))
-      {
-        showDoor();
-      }
-      break;
-    }
-  }
+  survivorCollide(obj.x, obj.y);
   
   // collide with door
   if(checkDoorCollision())
-  {
     gameState = STATE_GAME_PREPARE_LEVEL;
-  }
   
+  ///////////////
+  // direction //
+  ///////////////
   
-  // Update camera direction
+  // Update camera direction according to the way the player is moving
   if(!strafegun)
   {
     if(vx < 0)
+    {
       inputDirection = PLAYER_FACING_WEST;
+      if(vy < 0) inputDirection = PLAYER_FACING_NORTHWEST;
+      else if(vy > 0) inputDirection = PLAYER_FACING_SOUTHWEST;
+    }
     else if(vx > 0)
+    {
       inputDirection = PLAYER_FACING_EAST;
-
-    if(vy < 0) {
-      if(inputDirection == PLAYER_FACING_WEST)
-        inputDirection = PLAYER_FACING_NORTHWEST;
-      else if(inputDirection == PLAYER_FACING_EAST)
-        inputDirection = PLAYER_FACING_NORTHEAST;
-      else
-        inputDirection = PLAYER_FACING_NORTH;
+      if(vy < 0) inputDirection = PLAYER_FACING_NORTHEAST;
+      else if(vy > 0) inputDirection = PLAYER_FACING_SOUTHEAST;
+    }
+    else if(vy < 0)
+    {
+      inputDirection = PLAYER_FACING_NORTH;
     }
     else if(vy > 0)
     {
-      if(inputDirection == PLAYER_FACING_WEST)
-        inputDirection = PLAYER_FACING_SOUTHWEST;
-      else if(inputDirection == PLAYER_FACING_EAST)
-        inputDirection = PLAYER_FACING_SOUTHEAST;
-      else
-        inputDirection = PLAYER_FACING_SOUTH;
+      inputDirection = PLAYER_FACING_SOUTH;
     }
   }
   
-  
-  
   obj.direction = inputDirection;
   
+  // the camera will only be updated if moving nondiagonally or look mode
   if((standgun && !rungun) || (obj.direction%2) == 0)
   {
     obj.camDirection = inputDirection;
   } 
+
+  ////////////
+  // timers //
+  ////////////
   
-  
-  /*
-  if(obj.diagonalTime > 0)
-  {
-    if(((obj.direction%2) == 0) && ((obj.camDirection%2) == 1)) // a diagonal direction is odd
-    {
-      obj.direction = obj.camDirection;
-    }
-    else
-    {
-      obj.camDirection = obj.direction; 
-    }
-  }
-  else
-  {
-      obj.camDirection = obj.direction;
-  }
-  */
-  
-  // Update gun
   if(standgun || rungun)
   {
     if(obj.shotDelay == 0)
     {
-      addBullet(obj.positionOnMapX + PLAYER_WIDTH/2, obj.positionOnMapY + PLAYER_HEIGHT/2, obj.direction, 0, 0);
+      addBullet(obj.x + PLAYER_WIDTH/2, obj.y + PLAYER_HEIGHT/2, obj.direction, 0, 0);
       obj.shotDelay = 10;
     }
   }
@@ -268,12 +178,13 @@ void updatePlayer(Player& obj)
   if(obj.flashTime > 0)
     obj.flashTime--;
   
-  obj.vx = vx;
-  obj.vy = vy;
+  ////////////
+  // camera //
+  ////////////
   
   // update camera
-  short mapGoalX = coolGirl.positionOnMapX - WIDTH/2 + PLAYER_WIDTH/2;
-  short mapGoalY = coolGirl.positionOnMapY - HEIGHT/2 + PLAYER_HEIGHT/2 - 4; // hud offset
+  short mapGoalX = coolGirl.x - WIDTH/2 + PLAYER_WIDTH/2;
+  short mapGoalY = coolGirl.y - HEIGHT/2 + PLAYER_HEIGHT/2 - 4; // hud offset
   
   // offset the goal by the direction
   mapGoalX += BulletXVelocities[coolGirl.camDirection]*4;
@@ -312,7 +223,7 @@ void hurtPlayer(Player& obj)
 void drawPlayer(Player& obj)
 {
   if((obj.flashTime % 8) < 4)
-    sprites.drawPlusMask(obj.positionOnMapX - mapPositionX, obj.positionOnMapY - mapPositionY, player_plus_mask, obj.frame + 4*obj.direction);
+    sprites.drawPlusMask(obj.x - mapPositionX, obj.y - mapPositionY, player_plus_mask, obj.frame + 4*obj.direction);
 }
 
 void drawLife(Player& obj)
@@ -322,4 +233,3 @@ void drawLife(Player& obj)
     sprites.drawPlusMask(amountLife*10, 0, HUD_plus_mask, 0);
   }
 }
-

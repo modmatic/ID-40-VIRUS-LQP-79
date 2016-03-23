@@ -1,4 +1,6 @@
 #include "elements.h"
+#include "player.h"
+#include "door.h"
 
 // globals ///////////////////////////////////////////////////////////////////
 
@@ -132,3 +134,19 @@ byte countAmountActiveSurvivors()
   return countAmount;
 };
 
+
+bool survivorCollide(int x, int y)
+{
+  byte id;
+  
+  for(id=0; id<SURVIVOR_MAX; id++)
+  {
+    if(survivorCollision(survivors[id], x, y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    {
+      if(collectSurvivor(survivors[id]))
+      {
+        showDoor();
+      }
+    }
+  }
+}

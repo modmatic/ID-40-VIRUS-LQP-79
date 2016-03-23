@@ -17,9 +17,6 @@ extern int mapPositionY;
 #define SURVIVOR_WIDTH           16
 #define SURVIVOR_HEIGHT          16
 
-extern int positionOnMapX;
-extern int positionOnMapY;
-
 // structures ////////////////////////////////////////////////////////////////
 
 struct Element
@@ -48,5 +45,6 @@ bool collectSurvivor(Element& obj);
 void clearSurvivors();
 byte countAmountActiveSurvivors();
 void drawAmountSurvivors();
+bool survivorCollide(int x, int y);
 
 #endif

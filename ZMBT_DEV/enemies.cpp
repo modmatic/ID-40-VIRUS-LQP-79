@@ -29,7 +29,7 @@ bool spawnZombie()
   int x = random(16, LEVEL_WIDTH-ZOMBIE_WIDTH-16);
   int y = random(16, LEVEL_HEIGHT-ZOMBIE_HEIGHT-16);
   
-  if((x < coolGirl.positionOnMapX - WIDTH) || (x > coolGirl.positionOnMapX + WIDTH) || (y < coolGirl.positionOnMapY - HEIGHT) || (y > coolGirl.positionOnMapY + HEIGHT))
+  if((x < coolGirl.x - WIDTH) || (x > coolGirl.x + WIDTH) || (y < coolGirl.y - HEIGHT) || (y > coolGirl.y + HEIGHT))
   {
     return addZombie(x, y);
   }
@@ -64,35 +64,28 @@ bool addZombie(int x, int y)
 // zombies are "removed" (set inactive) when health reaches zero
 void updateZombie(Enemy& obj)
 {
-  byte id;
-  byte tileXMax;
-  byte tileYMax;
-  byte tilex;
-  byte tiley;
-  
   int vx = 0;
   int vy = 0;
   
   if (arduboy.everyXFrames(ZOMBIE_STEP_DELAY))
   {
-    // get movement: chase player
-    if(obj.x < coolGirl.positionOnMapX) vx = ZOMBIE_SPEED;
-    if(obj.x > coolGirl.positionOnMapX) vx = -ZOMBIE_SPEED;
+    ///////////
+    // input //
+    ///////////
     
-    if(obj.y < coolGirl.positionOnMapY) vy = ZOMBIE_SPEED;
-    if(obj.y > coolGirl.positionOnMapY) vy = -ZOMBIE_SPEED;
+    // chase player
+    if(obj.x < coolGirl.x) vx = ZOMBIE_SPEED;
+    if(obj.x > coolGirl.x) vx = -ZOMBIE_SPEED;
     
+    if(obj.y < coolGirl.y) vy = ZOMBIE_SPEED;
+    if(obj.y > coolGirl.y) vy = -ZOMBIE_SPEED;
+    
+    // if out of bounds, delete this
     if((obj.x < 0) || (obj.y < 0) || (obj.x >= LEVEL_WIDTH) || (obj.y >= LEVEL_HEIGHT))
     {
       obj.active = false;
       return;
     }
-    
-    //if(obj.x + ZOMBIE_WIDTH < coolGirl.positionOnMapX) vx = ZOMBIE_SPEED;
-    //if(obj.x > coolGirl.positionOnMapX + PLAYER_WIDTH) vx = -ZOMBIE_SPEED;
-    
-    //if(obj.y + ZOMBIE_HEIGHT < coolGirl.positionOnMapY) vy = ZOMBIE_SPEED;
-    //if(obj.y > coolGirl.positionOnMapY + PLAYER_HEIGHT) vy = -ZOMBIE_SPEED;
   
     // update orientation
     if(vx < 0)
@@ -100,103 +93,59 @@ void updateZombie(Enemy& obj)
     else if(vx > 0)
       obj.direction = ENEMY_FACING_EAST;
     
-    // horizontal physics
+    ////////////////////////
+    // horizontal physics //
+    ////////////////////////
+    
+    // update position
     obj.x += vx;
     
     // collide with other zombies
-    for(id=0; id<ZOMBIE_MAX; id++)
-    {
-      if(zombieCollision(zombies[id], obj.x, obj.y, ZOMBIE_WIDTH, ZOMBIE_HEIGHT))
-      {
-        if(&(zombies[id]) == &obj) continue;
-        
-        if(vx > 0)
-          obj.x = zombies[id].x - ZOMBIE_WIDTH;
-        else if(vx < 0)
-          obj.x = zombies[id].x + ZOMBIE_WIDTH;
-        vx = 0;
-        break;
-      }
-    }
+    zombieCollide(obj.x, obj.y, true, vx, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
     
     // collide with player
-    if(zombieCollision(obj, coolGirl.positionOnMapX, coolGirl.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(zombieCollision(obj, coolGirl.x, coolGirl.y, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       if(vx > 0)
-        obj.x = coolGirl.positionOnMapX - ZOMBIE_WIDTH;
+        obj.x = coolGirl.x - ZOMBIE_WIDTH;
       else if(vx < 0)
-        obj.x = coolGirl.positionOnMapX + PLAYER_WIDTH;
+        obj.x = coolGirl.x + PLAYER_WIDTH;
       
       hurtPlayer(coolGirl);
       vx = 0;
     }
     
     // collide with walls
-    tileXMax = obj.x%TILE_WIDTH != 0;
-    tileYMax = obj.y%TILE_HEIGHT != 0;
-    for(tilex = obj.x/TILE_WIDTH; tilex < obj.x/TILE_WIDTH + 2 + tileXMax; tilex++)
-    {
-      for(tiley = obj.y/TILE_HEIGHT; tiley < obj.y/TILE_HEIGHT + 2 + tileYMax; tiley++)
-      {
-        if(getTileType(tilex, tiley) > 2)
-        {
-          if(vx < 0)
-            obj.x = tilex*TILE_WIDTH + TILE_WIDTH;
-          else if(vx > 0)
-            obj.x = tilex*TILE_WIDTH - PLAYER_WIDTH;
-          vx = 0;
-        }
-      }
-    }
+    mapCollide(obj.x, obj.y, true, vx, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+  
+    //////////////////////
+    // vertical physics //
+    //////////////////////
     
-    // vertical physics
+    // update position
     obj.y += vy;
     
     // collide with other zombies
-    for(id=0; id<ZOMBIE_MAX; id++)
-    {
-      if(zombieCollision(zombies[id], obj.x, obj.y, ZOMBIE_WIDTH, ZOMBIE_HEIGHT))
-      {
-        if(&(zombies[id]) == &obj) continue;
-        
-        if(vy > 0)
-          obj.y = zombies[id].y - ZOMBIE_HEIGHT;
-        else if(vy < 0)
-          obj.y = zombies[id].y + ZOMBIE_HEIGHT;
-        vy = 0;
-        break;
-      }
-    }
+    zombieCollide(obj.x, obj.y, false, vy, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
     
     // collide with player
-    if(zombieCollision(obj, coolGirl.positionOnMapX, coolGirl.positionOnMapY, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if(zombieCollision(obj, coolGirl.x, coolGirl.y, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
       if(vy > 0)
-        obj.y = coolGirl.positionOnMapY - ZOMBIE_HEIGHT;
+        obj.y = coolGirl.y - ZOMBIE_HEIGHT;
       else if(vy < 0)
-        obj.y = coolGirl.positionOnMapY + PLAYER_HEIGHT;
+        obj.y = coolGirl.y + PLAYER_HEIGHT;
       
       hurtPlayer(coolGirl);
       vy = 0;
     }
     
     // collide with walls
-    tileXMax = obj.x%TILE_WIDTH != 0;
-    tileYMax = obj.y%TILE_HEIGHT != 0;
-    for(tilex = obj.x/TILE_WIDTH; tilex < obj.x/TILE_WIDTH + 2 + tileXMax; tilex++)
-    {
-      for(tiley = obj.y/TILE_HEIGHT; tiley < obj.y/TILE_HEIGHT + 2 + tileYMax; tiley++)
-      {
-        if(getTileType(tilex, tiley) > 2)
-        {
-          if(vy < 0)
-            obj.y = tiley*TILE_HEIGHT + TILE_HEIGHT;
-          else if(vy > 0)
-            obj.y = tiley*TILE_HEIGHT - PLAYER_HEIGHT;
-          vy = 0;
-        }
-      }
-    }
+    mapCollide(obj.x, obj.y, false, vy, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
+    
+    ///////////////
+    // animation //
+    ///////////////
     
     if(vx || vy)
     {
@@ -211,8 +160,6 @@ void updateZombie(Enemy& obj)
       obj.frame = 0;
     }
   }
-  
-  
   
   if(obj.health == 0)
   {
@@ -275,6 +222,7 @@ void drawZombieBlips()
       arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2+1, HEIGHT-2, drawColor);
     }
   }
+  
 }
 
 // drawZombie
@@ -287,7 +235,6 @@ void drawZombie(Enemy& obj)
     if(obj.flashTime > 0)
     {
       obj.flashTime--;
-      //arduboy.drawCircle(obj.x - mapPositionX + ZOMBIE_WIDTH/2, obj.y - mapPositionY + ZOMBIE_HEIGHT/2, 16 - obj.flashTime*2, 1);
     }
     if((obj.flashTime % 4) < 2)
     {
@@ -295,8 +242,6 @@ void drawZombie(Enemy& obj)
       drawY = obj.y - mapPositionY;
       
       sprites.drawPlusMask(drawX, drawY, zombie_plus_mask, obj.frame + 8*obj.direction);
-      
-
     }
   }
   else if(obj.flashTime > 0)
@@ -304,7 +249,6 @@ void drawZombie(Enemy& obj)
     obj.flashTime--;
     arduboy.drawCircle(obj.x - mapPositionX + ZOMBIE_WIDTH/2, obj.y - mapPositionY + ZOMBIE_HEIGHT/2, 12 - obj.flashTime*2, 1);
   }
-  
 }
 
 
@@ -368,4 +312,34 @@ void clearZombies()
   {
     zombies[id].active = false;
   }
+}
+
+bool zombieCollide(int &x, int &y, bool horizontal, int &vel, int w, int h)
+{
+  bool collide = false;
+  byte id;
+  for(id=0; id<ZOMBIE_MAX; id++)
+  {
+    if(zombieCollision(zombies[id], x, y, w, h))
+    {
+      if(x == zombies[id].x && y == zombies[id].y) continue;
+      if(horizontal)
+      {
+        if(vel > 0)
+          x = zombies[id].x - w;
+        else if(vel < 0)
+          x = zombies[id].x + ZOMBIE_WIDTH;
+      }
+      else
+      {
+        if(vel > 0)
+          y = zombies[id].y - h;
+        else if(vel < 0)
+          y = zombies[id].y + ZOMBIE_HEIGHT;
+      }
+      vel = 0;
+      collide = true;
+    }
+  }
+  return collide;
 }

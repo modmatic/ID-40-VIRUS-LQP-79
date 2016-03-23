@@ -115,3 +115,34 @@ void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, boolean scoreOrLev
   }
 }
 
+void mapCollide(int& x, int& y, bool horizontal, int& vel, int w, int h)
+{
+  short tilex;
+  short tiley;
+  byte tileXMax = x%TILE_WIDTH != 0;
+  byte tileYMax = y%TILE_HEIGHT != 0;
+  for(tilex = x/TILE_WIDTH; tilex < x/TILE_WIDTH + 2 + tileXMax; tilex++)
+  {
+    for(tiley = y/TILE_HEIGHT; tiley < y/TILE_HEIGHT + 2 + tileYMax; tiley++)
+    {
+      if(getTileType(tilex, tiley) > 2)
+      {
+        if(horizontal)
+        {
+          if(vel < 0)
+            x = tilex*TILE_WIDTH + TILE_WIDTH;
+          else if(vel > 0)
+            x = tilex*TILE_WIDTH - w;
+        }
+        else
+        {
+          if(vel < 0)
+            y = tiley*TILE_HEIGHT + TILE_HEIGHT;
+          else if(vel > 0)
+            y = tiley*TILE_HEIGHT - h;
+        }
+        vel = 0;
+      }
+    }
+  }
+}

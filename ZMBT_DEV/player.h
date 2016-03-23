@@ -37,16 +37,12 @@ extern int mapPositionY;
 struct Player
 {
   public:
-    int positionOnScreenX;
-    int positionOnScreenY;
     boolean walking;
     byte direction;
     byte frame;
     byte shotDelay;
-    short vx;
-    short vy;
-    int positionOnMapX;
-    int positionOnMapY;
+    int x;
+    int y;
     byte health;
     byte flashTime;
     byte camDirection;
@@ -66,6 +62,5 @@ void drawPlayer(Player& obj);
 void hurtPlayer(Player& obj);
 void initializePlayer(Player& obj);
 void drawLife(Player& obj);
-
 
 #endif

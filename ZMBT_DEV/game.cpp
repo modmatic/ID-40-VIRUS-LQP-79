@@ -48,13 +48,9 @@ void stateGamePrepareLevel()
 
   level++;
 
-  coolGirl.positionOnMapX = 16;
-  coolGirl.positionOnMapY = 16;
-
-  //for (byte spawnZombies; spawnZombies < 14; spawnZombies++)
-  //{
-  //}
-
+  coolGirl.x = 16;
+  coolGirl.y = 16;
+  
   gameState = STATE_GAME_NEXT_LEVEL;
     spawnZombie();
     spawnZombie();
