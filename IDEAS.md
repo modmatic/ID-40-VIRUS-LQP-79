@@ -4,7 +4,7 @@
 - ~~Zombie trash~~
 - ~~Virus X~~
 - ~~Zombie Flesh~~
-- ~~VIRUS LQP-79~~
+- VIRUS LQP-79
 
 ## game ideas
 - zombies are surrounding the player, shoot them away
