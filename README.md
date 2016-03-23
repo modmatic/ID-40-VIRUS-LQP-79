@@ -1,2 +1,2 @@
-# ID-40-Zombie-Trash
-Code for the game Zombie Trash for Arduboy
+# ID 40 VIRUS LQP-79
+Code for the game VIRUS LQP-79 for Arduboy
