@@ -59,7 +59,7 @@ void updatePlayer(Player& obj)
   bool down = buttons.pressed(DOWN_BUTTON);
   bool rungun = buttons.pressed(A_BUTTON);
   bool standgun = buttons.pressed(B_BUTTON);
-  bool strafegun = rungun && standgun;
+  bool strafegun = rungun;
 
   // Stop or continue walking animation
   obj.walking = up || down || left || right;
@@ -215,13 +215,17 @@ void updatePlayer(Player& obj)
     }
   }
   
-  //obj.direction = rconverge(0, 5, 1, 8);
   
   
   obj.direction = inputDirection;
-  //obj.camDirection = inputDirection;
+  
+  if((standgun && !rungun) || (obj.direction%2) == 0)
+  {
+    obj.camDirection = inputDirection;
+  } 
   
   
+  /*
   if(obj.diagonalTime > 0)
   {
     if(((obj.direction%2) == 0) && ((obj.camDirection%2) == 1)) // a diagonal direction is odd
@@ -237,7 +241,7 @@ void updatePlayer(Player& obj)
   {
       obj.camDirection = obj.direction;
   }
-  
+  */
   
   // Update gun
   if(standgun || rungun)
@@ -276,8 +280,8 @@ void updatePlayer(Player& obj)
   mapGoalY += BulletXVelocities[(coolGirl.camDirection+6)%8]*4;
   
   // move the camera toward the desired location
-  mapPositionX = converge(mapPositionX, mapGoalX, 2);
-  mapPositionY = converge(mapPositionY, mapGoalY, 2);
+  mapPositionX = burp(mapPositionX, mapGoalX, 3);
+  mapPositionY = burp(mapPositionY, mapGoalY, 3);
   
   // Clamp on screen boundaries
   mapPositionX = (mapPositionX < 0) ? 0 : mapPositionX;

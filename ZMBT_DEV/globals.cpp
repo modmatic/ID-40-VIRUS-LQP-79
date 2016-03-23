@@ -26,29 +26,19 @@ short converge(short start, short goal, short step)
   
   return start;
 }
-/*
-byte rconverge(short start, short goal, short step, short range)
+
+short burp(short start, short goal, short step)
 {
   if(start < goal)
   {
-    if((goal - start) < (start + goal)%range) // if positive is faster
-      return start+1;
-    return start-1;
-      
-  
-  if(start == goal) return goal;
-  short next;
-  
-  if(((start-goal)%range) < ((goal-start)%range)) // step negative
-  {
-    return (start - step)%range;
+    start += 1+((long)(goal-start) * step)/16;
+    if(start > goal) return goal;
   }
-  else // step positive
+  else if(start > goal)
   {
-    return (start + step)%range;
+    start -= 1+((long)(start-goal) * step)/16;
+    if(start < goal) return goal;
   }
   
-  return goal;
-  
+  return start;
 }
-*/
