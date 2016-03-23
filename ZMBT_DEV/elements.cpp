@@ -135,7 +135,7 @@ byte countAmountActiveSurvivors()
 };
 
 
-bool survivorCollide(int x, int y)
+void survivorCollide(int x, int y)
 {
   byte id;
   

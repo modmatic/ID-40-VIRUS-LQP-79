@@ -26,7 +26,7 @@ void stateGamePlaying()
   drawSurvivors();
   drawBullets();
   drawPlayer(coolGirl);
-  drawWeapons();
+  //drawWeapons();
   drawNumbers(86, 0, 0,0);
   drawLife(coolGirl);
   drawAmountSurvivors();
@@ -39,7 +39,7 @@ void stateGamePrepareLevel()
 {
   clearSurvivors();
   clearZombies();
-  clearWeapons();
+  //clearWeapons();
 
   addSurvivor(64 + 16, 48);
   addSurvivor(450, 224);

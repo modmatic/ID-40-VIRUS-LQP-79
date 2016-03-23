@@ -45,6 +45,6 @@ bool collectSurvivor(Element& obj);
 void clearSurvivors();
 byte countAmountActiveSurvivors();
 void drawAmountSurvivors();
-bool survivorCollide(int x, int y);
+void survivorCollide(int x, int y);
 
 #endif

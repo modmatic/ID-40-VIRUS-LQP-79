@@ -61,14 +61,8 @@ void updateBullet(Bullet& obj)
   // horizontal physics
   obj.x += obj.vx;
   
-  // collide with walls
-  
-  // collide with zombies
-  
   // vertical physics
   obj.y += obj.vy;
-  
-  // collide with walls
   
   // collide with zombies
   for(id=0; id<ZOMBIE_MAX; id++)
@@ -81,6 +75,7 @@ void updateBullet(Bullet& obj)
     }
   }
   
+  // delete if gone off screen
   if((obj.x < mapPositionX) || (obj.y < mapPositionY) || (obj.x > WIDTH + mapPositionX) || (obj.y > HEIGHT + mapPositionY))
   {
     obj.active = false;
