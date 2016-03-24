@@ -1,6 +1,7 @@
 #include "player.h"
 #include "door.h"
 #include "menu.h"
+#include "pickup.h"
 
 // globals ///////////////////////////////////////////////////////////////////
 
@@ -112,6 +113,9 @@ void updatePlayer(Player& obj)
   // collide with door
   if(checkDoorCollision())
     gameState = STATE_GAME_PREPARE_LEVEL;
+  
+  // collide with pickup
+  pickupCollision(obj.x, obj.y);
   
   ///////////////
   // direction //

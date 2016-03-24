@@ -1,5 +1,6 @@
 #include "enemies.h"
 #include "player.h"
+#include "pickup.h"
 
 // globals ///////////////////////////////////////////////////////////////////
 
@@ -280,6 +281,7 @@ bool zombieHealthOffset(Enemy& obj, char amount)
     obj.flashTime = ZOMBIE_FLASH_TIME;
     obj.active = false;
     rollingScore += 100;
+    addPickup(obj.x + 4, obj.y + 4);
   }
   else if(amount < 0)
   {

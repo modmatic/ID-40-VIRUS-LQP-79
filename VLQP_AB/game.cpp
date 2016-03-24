@@ -1,5 +1,6 @@
 #include "game.h"
 #include "enemies.h"
+#include "pickup.h"
 
 // method implementations ////////////////////////////////////////////////////
 
@@ -27,6 +28,7 @@ void stateGamePlaying()
   drawBullets();
   drawPlayer(coolGirl);
   //drawWeapons();
+  drawPickups();
   drawNumbers(86, 0, 0,0);
   drawLife(coolGirl);
   drawAmountSurvivors();
@@ -38,6 +40,7 @@ void stateGamePlaying()
 void stateGamePrepareLevel()
 {
   clearSurvivors();
+  clearPickups();
   clearZombies();
   //clearWeapons();
 
