@@ -18,8 +18,8 @@ extern const char BulletXVelocities[8];
 struct Bullet {
   int x;
   int y;
-  int vx;
-  int vy;
+  char vx;
+  char vy;
   byte active;
 };
 
@@ -29,8 +29,8 @@ extern Bullet bullets[BULLET_MAX];
 
 // method prototypes /////////////////////////////////////////////////////////
 
-void setBullet(Bullet& obj, int x, int y, int vx, int vy);
-void addBullet(int x, int y, byte direction, int vx, int vy);
+void setBullet(Bullet& obj, int x, int y, char vx, char vy);
+void addBullet(int x, int y, byte direction, char vx, char vy);
 void updateBullet(Bullet& obj);
 void updateBullets();
 void drawBullets();

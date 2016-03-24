@@ -11,34 +11,28 @@ byte gameState;
 
 // function implementations //////////////////////////////////////////////////
 
-short converge(short start, short goal, short step)
+// burp
+// returns the value a given percent distance between start and goal
+// percent is given in 4.4 fixed point
+short burp(short start, short goal, unsigned char step)
 {
-  if(start < goal)
+  short a = goal;
+  short b = start;
+  char sign = 0;
+  
+  if(start > goal)
   {
-    start += step;
-    if(start > goal) return goal;
+    a = start;
+    b = goal;
+    sign = -1;
   }
-  else if(start > goal)
+  else if(start < goal)
   {
-    start -= step;
-    if(start < goal) return goal;
+    sign = 1;
   }
   
-  return start;
-}
-
-short burp(short start, short goal, short step)
-{
-  if(start < goal)
-  {
-    start += 1+((long)(goal-start) * step)/16;
-    if(start > goal) return goal;
-  }
-  else if(start > goal)
-  {
-    start -= 1+((long)(start-goal) * step)/16;
-    if(start < goal) return goal;
-  }
+  start += sign*(1+((a-b) * step)/16);
+  if(a < b) return goal;
   
   return start;
 }

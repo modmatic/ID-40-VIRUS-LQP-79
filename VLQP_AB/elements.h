@@ -40,7 +40,7 @@ void setSurvivor(Element& obj, int x, int y);
 void addSurvivor(int x, int y);
 void updateSurvivors();
 void drawSurvivors();
-bool survivorCollision(Element& obj, int x, int y, int w, int h);
+bool survivorCollision(Element& obj, int x, int y, char w, char h);
 bool collectSurvivor(Element& obj);
 void clearSurvivors();
 byte countAmountActiveSurvivors();

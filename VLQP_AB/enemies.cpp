@@ -65,8 +65,8 @@ bool addZombie(int x, int y)
 // zombies are "removed" (set inactive) when health reaches zero
 void updateZombie(Enemy& obj)
 {
-  int vx = 0;
-  int vy = 0;
+  char vx = 0;
+  char vy = 0;
   
   if (arduboy.everyXFrames(ZOMBIE_STEP_DELAY))
   {
@@ -294,7 +294,7 @@ bool zombieHealthOffset(Enemy& obj, char amount)
 // zombieCollision
 // takes zombie id, collision box to test against
 // returns true if collision boxes intersect
-bool zombieCollision(Enemy& obj, int x, int y, int w, int h)
+bool zombieCollision(Enemy& obj, int x, int y, char w, char h)
 {
   return
     ( obj.active ) &&
@@ -316,7 +316,7 @@ void clearZombies()
   }
 }
 
-bool zombieCollide(int &x, int &y, bool horizontal, int &vel, int w, int h)
+bool zombieCollide(int &x, int &y, bool horizontal, char &vel, char w, char h)
 {
   bool collide = false;
   byte id;

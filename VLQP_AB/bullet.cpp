@@ -19,7 +19,7 @@ Bullet bullets[BULLET_MAX];
 
 // setBullet
 // sets the position and the velocity of a bullet
-void setBullet(Bullet& obj, int x, int y, int vx, int vy)
+void setBullet(Bullet& obj, int x, int y, char vx, char vy)
 {
   obj.x = x;
   obj.y = y;
@@ -30,7 +30,7 @@ void setBullet(Bullet& obj, int x, int y, int vx, int vy)
 
 // addBullet
 // searches the bullet list for an empty slot, adds one if available
-void addBullet(int x, int y, byte direction, int vx, int vy)
+void addBullet(int x, int y, byte direction, char vx, char vy)
 {
   byte id;
   

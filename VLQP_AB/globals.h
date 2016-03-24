@@ -16,5 +16,4 @@ extern boolean soundYesNo;
 
 // function prototypes ///////////////////////////////////////////////////////
 
-short converge(short start, short goal, short step);
-short burp(short start, short goal, short step);
+short burp(short start, short goal, unsigned char step);

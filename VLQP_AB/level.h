@@ -32,7 +32,7 @@ void drawLevel();
 unsigned char getTileType(unsigned int x, unsigned int y);
 void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, boolean ScoreOrLevel);
 
-void mapCollide(int& x, int& y, bool horizontal, int& vel, int w, int h);
+void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h);
 
 // data //////////////////////////////////////////////////////////////////////
 

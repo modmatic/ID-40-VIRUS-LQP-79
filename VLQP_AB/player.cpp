@@ -28,8 +28,8 @@ void initializePlayer(Player& obj)
 void updatePlayer(Player& obj)
 {
   // Input velocity
-  int vx = 0;
-  int vy = 0;
+  char vx = 0;
+  char vy = 0;
   
   byte id;
   byte tileXMax;
