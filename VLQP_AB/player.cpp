@@ -120,25 +120,26 @@ void updatePlayer(Player& obj)
   ///////////////
   
   // Update camera direction according to the way the player is moving
+
   if(!strafegun)
   {
-    if(vx < 0)
+    if(left)
     {
       inputDirection = PLAYER_FACING_WEST;
-      if(vy < 0) inputDirection = PLAYER_FACING_NORTHWEST;
-      else if(vy > 0) inputDirection = PLAYER_FACING_SOUTHWEST;
+      if(up) inputDirection = PLAYER_FACING_NORTHWEST;
+      else if(down) inputDirection = PLAYER_FACING_SOUTHWEST;
     }
-    else if(vx > 0)
+    else if(right)
     {
       inputDirection = PLAYER_FACING_EAST;
-      if(vy < 0) inputDirection = PLAYER_FACING_NORTHEAST;
-      else if(vy > 0) inputDirection = PLAYER_FACING_SOUTHEAST;
+      if(up) inputDirection = PLAYER_FACING_NORTHEAST;
+      else if(down) inputDirection = PLAYER_FACING_SOUTHEAST;
     }
-    else if(vy < 0)
+    else if(up)
     {
       inputDirection = PLAYER_FACING_NORTH;
     }
-    else if(vy > 0)
+    else if(down)
     {
       inputDirection = PLAYER_FACING_SOUTH;
     }
