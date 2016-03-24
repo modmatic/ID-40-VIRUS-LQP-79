@@ -55,6 +55,6 @@ bool zombieCollision(Enemy& obj, int x, int y, char w, char h);
 void clearZombies();
 void drawZombieBlips();
 
-bool zombieCollide(int &x, int &y, bool horizontal, char &vel, char w, char h);
+void zombieCollide(int &x, int &y, bool horizontal, char &vel, char w, char h);
 
 #endif

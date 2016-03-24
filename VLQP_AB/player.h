@@ -30,6 +30,7 @@ extern int mapPositionY;
 #define PLAYER_SCREEN_YMAX        (32-8)
 
 #define PLAYER_FLASH_TIME 60
+#define PLAYER_MAXHEALTH 4
 
 
 // structures ////////////////////////////////////////////////////////////////
@@ -59,7 +60,7 @@ extern int rollingScore;
 
 void updatePlayer(Player& obj);
 void drawPlayer(Player& obj);
-void hurtPlayer(Player& obj);
+void playerHealthOffset(Player& obj, char amount);
 void initializePlayer(Player& obj);
 void drawLife(Player& obj);
 

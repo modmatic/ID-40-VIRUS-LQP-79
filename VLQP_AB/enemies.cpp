@@ -112,7 +112,7 @@ void updateZombie(Enemy& obj)
       else if(vx < 0)
         obj.x = coolGirl.x + PLAYER_WIDTH;
       
-      hurtPlayer(coolGirl);
+      playerHealthOffset(coolGirl, -1);
       vx = 0;
     }
     
@@ -137,7 +137,7 @@ void updateZombie(Enemy& obj)
       else if(vy < 0)
         obj.y = coolGirl.y + PLAYER_HEIGHT;
       
-      hurtPlayer(coolGirl);
+      playerHealthOffset(coolGirl, -1);
       vy = 0;
     }
     
@@ -316,9 +316,8 @@ void clearZombies()
   }
 }
 
-bool zombieCollide(int &x, int &y, bool horizontal, char &vel, char w, char h)
+void zombieCollide(int &x, int &y, bool horizontal, char &vel, char w, char h)
 {
-  bool collide = false;
   byte id;
   for(id=0; id<ZOMBIE_MAX; id++)
   {
@@ -340,8 +339,6 @@ bool zombieCollide(int &x, int &y, bool horizontal, char &vel, char w, char h)
           y = zombies[id].y + ZOMBIE_HEIGHT;
       }
       vel = 0;
-      collide = true;
     }
   }
-  return collide;
 }

@@ -80,8 +80,7 @@ void updatePlayer(Player& obj)
     obj.x += vx;
   
   // collide with zombies
-  if(zombieCollide(obj.x, obj.y, true, vx, PLAYER_WIDTH, PLAYER_HEIGHT))
-    hurtPlayer(obj);
+  zombieCollide(obj.x, obj.y, true, vx, PLAYER_WIDTH, PLAYER_HEIGHT);
   
   // collide with walls
   mapCollide(obj.x, obj.y, true, vx, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -101,8 +100,7 @@ void updatePlayer(Player& obj)
     obj.y += vy;
   
   // collide with zombies
-  if(zombieCollide(obj.x, obj.y, false, vy, PLAYER_WIDTH, PLAYER_HEIGHT))
-    hurtPlayer(obj);
+  zombieCollide(obj.x, obj.y, false, vy, PLAYER_WIDTH, PLAYER_HEIGHT);
 
   // collide with walls
   mapCollide(obj.x, obj.y, false, vy, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -207,18 +205,26 @@ void updatePlayer(Player& obj)
 
 // hurtPlayer
 // make player take damage
-void hurtPlayer(Player& obj)
+void playerHealthOffset(Player& obj, char amount)
 {
   if(obj.flashTime == 0)
   {
-    obj.health--;
-    obj.flashTime = PLAYER_FLASH_TIME;
-    arduboy.tunes.tone(880, 20);
-  }
-  
-  if(obj.health == 0)
-  {
-    gameState = STATE_GAME_OVER;
+    obj.health += amount;
+    
+    if(amount < 0)
+    {
+      obj.flashTime = PLAYER_FLASH_TIME;
+      arduboy.tunes.tone(880, 20);
+    }
+    
+    if(obj.health > PLAYER_MAXHEALTH)
+    {
+      obj.health = PLAYER_MAXHEALTH;
+    }
+    else if(obj.health == 0)
+    {
+      gameState = STATE_GAME_OVER;
+    }
   }
 }
 
