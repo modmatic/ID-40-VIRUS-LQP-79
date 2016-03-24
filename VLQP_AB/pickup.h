@@ -8,6 +8,10 @@
 #define PICKUP_WIDTH 16
 #define PICKUP_HEIGHT 16
 
+#define PICKUP_TYPE_INACTIVE 0
+#define PICKUP_TYPE_COIN 1
+#define PICKUP_TYPE_HEART 2
+
 #define PICKUP_MAX 3
 
 // structures ////////////////////////////////////////////////////////////////
@@ -16,7 +20,7 @@ struct Pickup
 {
   int x;
   int y;
-  byte active;
+  byte type;
   byte frame;
 };
 

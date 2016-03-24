@@ -15,12 +15,12 @@ bool addPickup(int x, int y)
   
   for(id=0; id<PICKUP_MAX; id++)
   {
-    if(!pickups[id].active)
+    if(!pickups[id].type)
     {
       pickups[id].x = x;
       pickups[id].y = y;
       pickups[id].frame = 0;
-      pickups[id].active = true;
+      pickups[id].type = random(0, 3);
       return true;
     }
   }
@@ -36,12 +36,15 @@ void drawPickups()
   
   for(id=0; id < PICKUP_MAX; id++)
   {
-    if(!pickups[id].active) continue;
+    if(!pickups[id].type) continue;
     
     if (arduboy.everyXFrames(6)) pickups[id].frame++;
     if(pickups[id].frame > 3) pickups[id].frame = 0;
     
-    sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, coin_plus_mask, pickups[id].frame);
+    if(pickups[id].type == PICKUP_TYPE_HEART)
+      sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, heart_plus_mask, pickups[id].frame);
+    else
+      sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, coin_plus_mask, pickups[id].frame);
   }
 }
 
@@ -53,15 +56,23 @@ void pickupCollision(int x, int y)
   for(id=0; id < PICKUP_MAX; id++)
   {
     if(
-      ( pickups[id].active ) &&
+      ( pickups[id].type ) &&
       ( pickups[id].x < x + PLAYER_WIDTH ) &&
       ( pickups[id].x + PICKUP_WIDTH > x ) &&
       ( pickups[id].y < y + PLAYER_HEIGHT ) &&
       ( pickups[id].y + PICKUP_HEIGHT > y ))
     {
-      pickups[id].active = false;
-      arduboy.tunes.tone(440, 20);
-      rollingScore += 100;
+      if(pickups[id].type == PICKUP_TYPE_HEART)
+      {
+        arduboy.tunes.tone(660, 20);
+        coolGirl.health++;
+      }
+      else
+      {
+        arduboy.tunes.tone(880, 20);
+        rollingScore += 100;
+      }
+      pickups[id].type = PICKUP_TYPE_INACTIVE;
     }
   }
 }
@@ -74,6 +85,6 @@ void clearPickups()
   
   for(id=0; id<PICKUP_MAX; id++)
   {
-    pickups[id].active = false;
+    pickups[id].type = PICKUP_TYPE_INACTIVE;
   }
 }
