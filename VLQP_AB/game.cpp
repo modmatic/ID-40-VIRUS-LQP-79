@@ -35,6 +35,11 @@ void stateGamePlaying()
   drawZombieBlips();
 }
 
+int readLevelData(unsigned char index)
+{
+	return pgm_read_byte(levelInfo + level*10 + index) * PLAYER_WIDTH;
+}
+
 // stateGameNextLevel
 // called each frame the gamestate is set to next level
 void stateGamePrepareLevel()
@@ -42,21 +47,19 @@ void stateGamePrepareLevel()
   clearSurvivors();
   clearPickups();
   clearZombies();
-  //clearWeapons();
-
-  addSurvivor(64 + 16, 48);
-  addSurvivor(450, 224);
-  //addWeapon(128, 16, 1);
-  setDoorPosition(128, 16);
 
   level++;
-
-  coolGirl.x = 16;
-  coolGirl.y = 16;
+  
+  coolGirl.x = readLevelData(0);
+  coolGirl.y = readLevelData(1);
+  setDoorPosition(readLevelData(2),readLevelData(3));
+  addSurvivor(readLevelData(4),readLevelData(5));
+  addSurvivor(readLevelData(6),readLevelData(7));
+  addSurvivor(readLevelData(8),readLevelData(9));
   
   gameState = STATE_GAME_NEXT_LEVEL;
-    spawnZombie();
-    spawnZombie();
+  spawnZombie();
+  spawnZombie();
 }
 
 void stateGameNextLevel()

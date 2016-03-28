@@ -169,6 +169,50 @@ PROGMEM const unsigned char block10[] =
   1, 0, 1, 0, 1, 0, 1, 0,
 };
 
+PROGMEM const unsigned char block11[] =
+{
+  0, 1, 0, 1, 0, 1, 0, 1,
+  3, 3, 1, 0, 1, 0, 1, 3,
+  2, 3, 0, 1, 0, 1, 0, 2,
+  1, 3, 1, 0, 1, 0, 3, 0,
+  0, 2, 3, 1, 0, 3, 2, 1,
+  1, 0, 2, 0, 1, 3, 1, 0,
+  0, 1, 0, 1, 0, 3, 0, 1,
+  1, 0, 1, 0, 1, 2, 1, 0,
+};
+
+PROGMEM const unsigned char block12[] =
+{
+  3, 1, 0, 1, 0, 1, 3, 1,
+  3, 0, 1, 0, 1, 0, 2, 0,
+  3, 1, 0, 1, 0, 3, 0, 1,
+  3, 3, 1, 0, 1, 2, 1, 0,
+  3, 3, 3, 1, 0, 1, 0, 1,
+  3, 3, 3, 0, 1, 0, 1, 0,
+  3, 2, 2, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+};
+
+// format: <spawn x> <spawn y> <door x> <door y> <s1x> <s1y> <s2x> <s2y> <s3x> <s3y>
+PROGMEM const unsigned char levelInfo[16*10] = {
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
+};
+
 PROGMEM const unsigned char * const levels[16][32] = {
   {
     block00, block01, block01, block01, block01, block01, block01, block02,
@@ -181,75 +225,75 @@ PROGMEM const unsigned char * const levels[16][32] = {
     block03, block04, block06, block07, block07, block08, block04, block05,
     block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block11, block04, block04, block04, block04, block11, block05,
+    block12, block04, block04, block11, block11, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06,
-    block06, block06, block06, block06, block06, block06, block06, block06
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block03, block04, block04, block04, block04, block04, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
   }
 };
 
@@ -257,15 +301,15 @@ PROGMEM const unsigned char * const levels[16][32] = {
 PROGMEM const unsigned char tileset[] = {
   // width, height
   8, 8,
-  // tile 0
+  // tile 0: empty
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-  // tile 1
+  // tile 1: grass
   0x00, 0x00, 0x30, 0x00, 0x20, 0x10, 0x00, 0x00,
-  // tile 2
+  // tile 2: wall side
   0x00, 0xCF, 0x30, 0x03, 0x04, 0x18, 0x64, 0x83,
-  // tile 3
+  // tile 3: wall top
   0x6D, 0xFB, 0xBF, 0x57, 0xED, 0xBD, 0xDB, 0xEE,
-  // tile 4
+  // tile 4: tree start
   0x80, 0x40, 0x60, 0x80, 0x64, 0x0C, 0xF0, 0x40,
   // tile 5
   0x09, 0x2A, 0x12, 0x24, 0x27, 0x48, 0xB3, 0xCC,
@@ -287,15 +331,15 @@ PROGMEM const unsigned char tileset[] = {
   0x3D, 0x7F, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00,
   // tile 14
   0x3E, 0x08, 0xC4, 0xB4, 0x20, 0x90, 0x00, 0x00,
-  // tile 15
+  // tile 15: tree end
   0x5E, 0xE1, 0x5C, 0x42, 0x39, 0x25, 0x51, 0x0A,
-  // tile 16
+  // tile 16: RIP start
   0x00, 0xF8, 0x04, 0xE6, 0xA2, 0x62, 0x02, 0xC2,
   // tile 17
   0x20, 0x07, 0x54, 0x09, 0xA8, 0x09, 0x50, 0x13,
   // tile 18
   0x06, 0x86, 0x86, 0x8C, 0x1C, 0xF8, 0xF0, 0x00,
-  // tile 19
+  // tile 19: RIP end
   0x50, 0x17, 0xA2, 0x23, 0xA0, 0x7F, 0x7F, 0x00,
 };
 
