@@ -193,7 +193,7 @@ void drawZombieBlips()
     drawX = zombies[id].x - mapPositionX;
     drawY = zombies[id].y - mapPositionY;
     byte drawColor = (arduboy.frameCount % 16) < 8;
-    
+
     if(drawX < 0 && drawX > -WIDTH/2)
     {
       arduboy.drawPixel(1, drawY + ZOMBIE_HEIGHT/2, drawColor);

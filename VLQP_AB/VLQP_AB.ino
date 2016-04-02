@@ -5,7 +5,7 @@
 
  MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
 
- 2016 - FUOPY - JO3RI - STG - JUSTIN CRY
+ 2016 - FUOPY - JO3RI - STG - JUSTIN CRY - CASTPIXEL
 
  Game License: MIT : https://opensource.org/licenses/MIT
 
@@ -16,16 +16,12 @@
 
 #include "Arglib.h"
 #include "globals.h"
-//#include <ArduboyExtra.h>
-//#include <sprites.h>
-//#include <simple_buttons.h>
 #include "menu.h"
 #include "player.h"
 #include "enemies.h"
 #include "game.h"
 #include "elements.h"
 #include "bitmaps.h"
-//#include "inputs.h"
 #include "level.h"
 
 
