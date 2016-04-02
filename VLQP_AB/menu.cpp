@@ -6,6 +6,9 @@
 byte menuSelection;
 byte counter = 0;
 boolean slideIn = false;
+boolean slideInToo = false;
+byte slideCount01 = 0;
+byte slideCount02 = 0;
 
 // method implementations ////////////////////////////////////////////////////
 void drawTitleScreen()
@@ -26,14 +29,53 @@ void stateMenuIntro()
 void stateMenuMain()
 {
   drawTitleScreen();
-  for (byte i=0; i<4;i++)
+  for (byte i = 0; i < 3; i++)
   {
-  if (((2+i)-menuSelection) != 0) sprites.drawSelfMasked(106, 25+(9*i), menuText, i);
-  if (((2+i)-menuSelection) == 0) sprites.drawSelfMasked(104 - 5*slideIn, 25+(9*i), menuText, i);
+    arduboy.drawBitmap(127 - slideCount01 + (8*i) , 25, smallMask, 8, 8, BLACK);
   }
-  if (buttons.justPressed(DOWN_BUTTON) && (menuSelection < 5)) menuSelection++;
-  if (buttons.justPressed(UP_BUTTON) && (menuSelection > 2)) menuSelection--;
-  if (buttons.justPressed(A_BUTTON | B_BUTTON)) gameState = menuSelection;
+  if (menuSelection == 2 && slideIn) arduboy.drawBitmap(98 , 25, smallMask, 8, 8, BLACK);
+  for (byte i = 0; i < 4; i++)
+  {
+    if (((2 + i) - menuSelection) != 0)
+    {
+      sprites.drawSelfMasked(128 - slideCount01, 25 + (9 * i), menuText, i);
+    }
+    if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(128 - slideCount01 - (2*slideInToo) - (5 * slideIn), 25 + (9 * i), menuText, i);
+  }
+  if (buttons.justPressed(DOWN_BUTTON) && (menuSelection < 5))
+  {
+    menuSelection++;
+    slideIn = false;
+    slideCount02 = 0;
+  }
+  if (buttons.justPressed(UP_BUTTON) && (menuSelection > 2))
+  {
+    menuSelection--;
+    slideIn = false;
+    slideCount02 = 0;
+  }
+  if (buttons.justPressed(A_BUTTON | B_BUTTON))
+  {
+    slideCount02 = 0;
+    slideCount01 = 0;
+    slideIn = false;
+    slideInToo = false;
+    gameState = menuSelection;
+  }
+  slideCount01++;
+  if (slideCount01 > 22)
+  {
+    slideInToo = true;
+    slideCount02++;
+    slideCount01 = 22;
+  }
+
+  if (slideCount02 > 5)
+  {
+    slideCount02 = 5;
+    slideIn = true;
+  }
+  //if (arduboy.everyXFrames(6)) slideIn = true;
 }
 
 void stateMenuHelp()
@@ -60,6 +102,7 @@ void stateMenuInfo()
 void stateMenuSoundfx()
 {
   drawTitleScreen();
+  
   if (buttons.justPressed(DOWN_BUTTON)) soundYesNo = true;
   if (buttons.justPressed(UP_BUTTON)) soundYesNo = false;
   if (buttons.justPressed(A_BUTTON | B_BUTTON))

@@ -472,5 +472,4 @@ PROGMEM const unsigned char heart_plus_mask[] = {
 };
 
 
-
 #endif
