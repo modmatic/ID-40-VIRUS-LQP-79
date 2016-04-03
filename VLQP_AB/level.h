@@ -38,22 +38,21 @@ void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h);
 
 // format: <spawn x> <spawn y> <door x> <door y> <s1x> <s1y> <s2x> <s2y> <s3x> <s3y> <s4x> <s4y> <s5x> <s5y>
 PROGMEM const unsigned char levelInfo[] = {
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  2, 2,
+  2, 2,
+  8, 12,
+  2, 9,
+  0, 0,
+  0, 0,
+  0, 0,
+  
+  10, 1,
+  10, 10,
+  4, 6,
+  10, 9,
+  0, 0,
+  0, 0,
+  0, 0,
 };
 
 
@@ -224,9 +223,9 @@ PROGMEM const unsigned char * const levels[2][32] = {
     block03, block10, block10, block04, block04, block10, block09, block05,
     block06, block07, block07, block07, block07, block07, block07, block08
   }, {
-    block00, block01, block01, block01, block01, block01, block01, block02
-    block03, block09, block04, block09, block04, block09, block04, block05
-    block00, block01, block01, block01, block01, block09, block04, block05
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block09, block04, block09, block04, block09, block04, block05,
+    block00, block01, block01, block01, block01, block09, block04, block05,
     block06, block07, block07, block07, block07, block07, block07, block08
   }
 };

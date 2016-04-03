@@ -28,7 +28,9 @@ bool setBullet(Bullet& obj, int x, int y, char vx, char vy)
     obj.vx = vx;
     obj.vy = vy;
     obj.active = true;
+    return true;
   }
+  return false;
 }
 
 // addBullet

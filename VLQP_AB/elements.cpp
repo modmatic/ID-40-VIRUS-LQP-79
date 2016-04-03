@@ -18,12 +18,14 @@ byte amountActiveSurvivors = 0;
 // sets the position of a survivor, and enables that instance
 bool setSurvivor(Element& obj, int x, int y)
 {
-  if(!obj.active)
+  if(!obj.active && (!(x==0 && y==0)))
   {
     obj.x = x;
     obj.y = y;
     obj.active = true;
+    return true;
   }
+  return false;
 }
 
 
