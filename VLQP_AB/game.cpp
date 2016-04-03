@@ -50,6 +50,8 @@ void stateGamePrepareLevel()
   clearZombies();
 
   level++;
+  level = (level-1)%NUM_LEVELS + 1;
+  displayLevel++;
 
   coolGirl.x = readLevelData(0);
   coolGirl.y = readLevelData(1);

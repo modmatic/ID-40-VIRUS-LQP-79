@@ -26,6 +26,7 @@
 
 extern byte menuSelection;
 extern byte level;
+extern byte displayLevel;
 
 
 // method prototypes /////////////////////////////////////////////////////////

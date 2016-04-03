@@ -5,6 +5,7 @@
 int mapPositionX;
 int mapPositionY;
 byte level;
+byte displayLevel;
 
 /// OLD level data down here
 void newDraw(unsigned posX, unsigned posY) {
@@ -160,7 +161,7 @@ void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, boolean scoreOrLev
 {
   char buf[10];
   //scorePlayer = arduboy.cpuLoad();
-  if (scoreOrLevel) itoa(level,buf,10);
+  if (scoreOrLevel) itoa(displayLevel,buf,10);
   else ltoa(scorePlayer, buf, 10);
   char charLen = strlen(buf);
   char pad = 6 -(scoreOrLevel*4) - charLen;

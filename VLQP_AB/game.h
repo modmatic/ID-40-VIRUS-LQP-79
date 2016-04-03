@@ -29,6 +29,7 @@
 #define STATE_GAME_OVER          9
 
 extern byte level;
+extern byte displayLevel;
 
 // methods prototypes ////////////////////////////////////////////////////////
 
