@@ -7,6 +7,7 @@ int mapPositionY;
 byte level;
 
 
+<<<<<<< HEAD
 void newDraw()
 {
   /*
@@ -43,6 +44,15 @@ void newDraw()
         // Calculate the sprite to draw
         
         
+=======
+void newDraw(unsigned posX, unsigned posY) {
+  unsigned int intX = posX >> 3, subX = posX & 0x07;
+  unsigned int intY = posY >> 3, subY = posY & 0x07;
+  for (byte x = 0; x < (subX ? 17 : 16); x++) {
+    for (byte y = 0; y < (subY ?  9 :  8); y++) {
+      sprites.drawSelfMasked(
+        ((int)x << 3) - subX, ((int)y << 3) - subY, tileset,
+>>>>>>> parent of ecb6822... reduced level format code size
         // Block:read tile index (byte) for tileset
         pgm_read_byte(&(
           // Levels:read pointer (word) to blockNN, cast for arry indexing
@@ -56,11 +66,18 @@ void newDraw()
             ]
           ))[
             // Block:first index is map tiles (lower x/y bits)
+<<<<<<< HEAD
             ((upperFiveX + x) & 0x07) + (((upperFiveY + y) & 0x07) * 8)
           ]
         ))
       );
       ;
+=======
+            ((intX + x) & 0x07) + (((intY + y) & 0x07) << 3)
+          ]
+        ))
+      );
+>>>>>>> parent of ecb6822... reduced level format code size
     }
   }
 }
@@ -80,10 +97,13 @@ unsigned char getTileType(unsigned int posX, unsigned int posY)
   int tileBlockX = posX / BLOCK_WIDTH;
   int tileBlockY = posY / BLOCK_HEIGHT;
   int blockIndex = tileBlockX + tileBlockY * LEVEL_BLOCK_WIDTH;
+<<<<<<< HEAD
   unsigned char blockShift = (blockIndex % 2 == 0) ? 4 : 0;
   unsigned char blockName = (((pgm_read_word(&levels[(level-1) * LEVEL_OFFSET + (blockIndex/2)])) >> blockShift)) & 0x0f;
+=======
+>>>>>>> parent of ecb6822... reduced level format code size
 
-  unsigned char tileID = pgm_read_byte(blocks + (blockName * BLOCK_OFFSET) + tileLocalIndex);
+  unsigned char tileID = pgm_read_byte(&(((unsigned char * const)pgm_read_word(&levels[level - 1][blockIndex]))[tileLocalIndex]));
 
   return tileID;
 
