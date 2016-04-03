@@ -36,8 +36,211 @@ void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h);
 
 // data //////////////////////////////////////////////////////////////////////
 
-PROGMEM const unsigned char blocks[] =
+// format: <spawn x> <spawn y> <door x> <door y> <s1x> <s1y> <s2x> <s2y> <s3x> <s3y> <s4x> <s4y> <s5x> <s5y>
+PROGMEM const unsigned char levelInfo[] = {
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
+};
+
+
+
+
+/// OLD level data down here
+PROGMEM const unsigned char block00[] =
 {
+  3, 3, 3, 3, 3, 3, 3, 3,
+  3, 2, 2, 2, 2, 2, 2, 2,
+  3, 0, 0, 0, 0, 0, 0, 0,
+  3, 0, 1, 0, 1, 0, 1, 0,
+  3, 0, 0, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+  3, 0, 0, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+};
+
+PROGMEM const unsigned char block01[] =
+{
+  3, 3, 3, 3, 3, 3, 3, 3,
+  2, 2, 2, 2, 2, 2, 2, 2,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  1, 0, 1, 0, 1, 0, 1, 0,
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+};
+
+PROGMEM const unsigned char block02[] =
+{
+  3, 3, 3, 3, 3, 3, 3, 3,
+  2, 2, 2, 2, 2, 2, 2, 3,
+  0, 0, 0, 0, 0, 0, 0, 3,
+  1, 0, 1, 0, 1, 0, 0, 3,
+  0, 1, 0, 1, 0, 1, 0, 3,
+  1, 0, 1, 0, 1, 0, 0, 3,
+  0, 1, 0, 1, 0, 1, 0, 3,
+  1, 0, 1, 0, 1, 0, 0, 3,
+};
+
+PROGMEM const unsigned char block03[] =
+{
+  3, 0, 0, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+  3, 0, 0, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+  3, 0, 0, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+  3, 0, 0, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+};
+
+PROGMEM const unsigned char block04[] =
+{
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+};
+
+PROGMEM const unsigned char block05[] =
+{
+  0, 1, 0, 1, 0, 1, 0, 3,
+  1, 0, 1, 0, 1, 0, 0, 3,
+  0, 1, 0, 1, 0, 1, 0, 3,
+  1, 0, 1, 0, 1, 0, 0, 3,
+  0, 1, 0, 1, 0, 1, 0, 3,
+  1, 0, 1, 0, 1, 0, 0, 3,
+  0, 1, 0, 1, 0, 1, 0, 3,
+  1, 0, 1, 0, 1, 0, 0, 3,
+};
+
+PROGMEM const unsigned char block06[] =
+{
+  3, 0, 0, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+  3, 0, 0, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+  3, 0, 0, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+  3, 0, 0, 0, 0, 0, 0, 0,
+  3, 3, 3, 3, 3, 3, 3, 3,
+};
+
+PROGMEM const unsigned char block07[] =
+{
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+  0, 0, 0, 0, 0, 0, 0, 0,
+  3, 3, 3, 3, 3, 3, 3, 3,
+};
+
+PROGMEM const unsigned char block08[] =
+{
+  0, 1, 0, 1, 0, 1, 0, 3,
+  1, 0, 1, 0, 1, 0, 0, 3,
+  0, 1, 0, 1, 0, 1, 0, 3,
+  1, 0, 1, 0, 1, 0, 0, 3,
+  0, 1, 0, 1, 0, 1, 0, 3,
+  1, 0, 1, 0, 1, 0, 0, 3,
+  0, 0, 0, 0, 0, 0, 0, 3,
+  3, 3, 3, 3, 3, 3, 3, 3,
+};
+
+PROGMEM const unsigned char block09[] =
+{
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+  0, 1, 4, 6, 10, 14, 0, 1,
+  1, 0, 5, 7, 11, 15, 1, 0,
+  0, 1, 0, 8, 12, 1, 0, 1,
+  1, 0, 1, 9, 13, 0, 1, 0,
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+};
+
+PROGMEM const unsigned char block10[] =
+{
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 16, 18, 0, 1, 16, 18, 0,
+  0, 17, 19, 1, 0, 17, 19, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+  0, 1, 0, 1, 0, 1, 0, 1,
+  1, 16, 18, 0, 1, 16, 18, 0,
+  0, 17, 19, 1, 0, 17, 19, 1,
+  1, 0, 1, 0, 1, 0, 1, 0,
+};
+
+PROGMEM const unsigned char block11[] =
+{
+  0, 1, 0, 1, 0, 1, 0, 1,
+  3, 3, 1, 0, 1, 0, 1, 3,
+  2, 3, 0, 1, 0, 1, 0, 2,
+  1, 3, 1, 0, 1, 0, 3, 0,
+  0, 2, 3, 1, 0, 3, 2, 1,
+  1, 0, 2, 0, 1, 3, 1, 0,
+  0, 1, 0, 1, 0, 3, 0, 1,
+  1, 0, 1, 0, 1, 2, 1, 0,
+};
+
+PROGMEM const unsigned char block12[] =
+{
+  3, 1, 0, 1, 0, 1, 3, 1,
+  3, 0, 1, 0, 1, 0, 2, 0,
+  3, 1, 0, 1, 0, 3, 0, 1,
+  3, 3, 1, 0, 1, 2, 1, 0,
+  3, 3, 3, 1, 0, 1, 0, 1,
+  3, 3, 3, 0, 1, 0, 1, 0,
+  3, 2, 2, 1, 0, 1, 0, 1,
+  3, 0, 1, 0, 1, 0, 1, 0,
+};
+
+
+PROGMEM const unsigned char * const levels[2][32] = {
+  {
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block09, block10, block03, block04, block05, block04, block05,
+    block03, block10, block09, block06, block07, block08, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
+  }, {
+    block00, block01, block01, block01, block01, block01, block01, block02,
+    block03, block04, block00, block04, block04, block02, block04, block05,
+    block03, block04, block06, block07, block07, block08, block04, block05,
+    block06, block07, block07, block07, block07, block07, block07, block08
+  }
+};
+/// OLD level data up here
+
+
+
+
+
+/// NEW level data down here
+
+/*
+  PROGMEM const unsigned char blocks[] =
+  {
   // BLOCK 0
   3, 3, 3, 3, 3, 3, 3, 3,
   3, 2, 2, 2, 2, 2, 2, 2,
@@ -167,31 +370,9 @@ PROGMEM const unsigned char blocks[] =
   3, 3, 3, 0, 1, 0, 1, 0,
   3, 2, 2, 1, 0, 1, 0, 1,
   3, 0, 1, 0, 1, 0, 1, 0,
-};
+  };
 
-// format: <spawn x> <spawn y> <door x> <door y> <s1x> <s1y> <s2x> <s2y> <s3x> <s3y> <s4x> <s4y> <s5x> <s5y>
-PROGMEM const unsigned char levelInfo[] = {
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-  1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
-};
-
-
-
-PROGMEM const unsigned char levels[] = {
+  PROGMEM const unsigned char levels[] = {
   0x01, 0x11, 0x11, 0x12, 0x39, 0xa3, 0x45, 0x45,
   0x3a, 0x96, 0x78, 0x45, 0x67, 0x77, 0x77, 0x78,
 
@@ -239,94 +420,9 @@ PROGMEM const unsigned char levels[] = {
 
   0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
   0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78
-};
-
-
-/*
-  PROGMEM const unsigned char * const levels[16][32] = {
-  {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block09, block10, block03, block04, block05, block04, block05,
-    block03, block10, block09, block06, block07, block08, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block00, block04, block04, block02, block04, block05,
-    block03, block04, block06, block07, block07, block08, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block11, block04, block04, block04, block04, block11, block05,
-    block12, block04, block04, block11, block11, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }, {
-    block00, block01, block01, block01, block01, block01, block01, block02,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block03, block04, block04, block04, block04, block04, block04, block05,
-    block06, block07, block07, block07, block07, block07, block07, block08
-  }
   };
 */
+/// NEW level data up here
 
 PROGMEM const unsigned char tileset[] = {
   // width, height
@@ -339,6 +435,7 @@ PROGMEM const unsigned char tileset[] = {
   0x00, 0xCF, 0x30, 0x03, 0x04, 0x18, 0x64, 0x83,
   // tile 3: wall top
   0x6D, 0xFB, 0xBF, 0x57, 0xED, 0xBD, 0xDB, 0xEE,
+  
   // tile 4: tree start
   0x80, 0x40, 0x60, 0x80, 0x64, 0x0C, 0xF0, 0x40,
   // tile 5
@@ -363,6 +460,8 @@ PROGMEM const unsigned char tileset[] = {
   0x3E, 0x08, 0xC4, 0xB4, 0x20, 0x90, 0x00, 0x00,
   // tile 15: tree end
   0x5E, 0xE1, 0x5C, 0x42, 0x39, 0x25, 0x51, 0x0A,
+
+  
   // tile 16: RIP start
   0x00, 0xF8, 0x04, 0xE6, 0xA2, 0x62, 0x02, 0xC2,
   // tile 17
