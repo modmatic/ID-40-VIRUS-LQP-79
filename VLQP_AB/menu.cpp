@@ -96,7 +96,12 @@ void stateMenuInfo()
 {
   arduboy.drawBitmap(30, 0, titleScreen02, 62, 32, WHITE);
   arduboy.drawBitmap(92, 0, titleScreen03, 6, 32, WHITE);
-  arduboy.drawBitmap(26, 34, madeBy01, 21, 8, WHITE);
+
+  arduboy.drawBitmap(39, 33, madeBy00, 57, 32, WHITE);
+  arduboy.drawBitmap(10, 33, madeBy01, 21, 8, WHITE);
+  arduboy.drawBitmap(10, 47, madeBy02, 16, 8, WHITE);
+  
+  
   if (buttons.justPressed(A_BUTTON | B_BUTTON)) gameState = STATE_MENU_MAIN;
 }
 
