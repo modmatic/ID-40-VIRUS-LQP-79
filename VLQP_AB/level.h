@@ -169,8 +169,8 @@ PROGMEM const unsigned char blocks[] =
   3, 0, 1, 0, 1, 0, 1, 0,
 };
 
-// format: <spawn x> <spawn y> <door x> <door y> <s1x> <s1y> <s2x> <s2y> <s3x> <s3y>
-PROGMEM const unsigned char levelInfo[16 * 14] = {
+// format: <spawn x> <spawn y> <door x> <door y> <s1x> <s1y> <s2x> <s2y> <s3x> <s3y> <s4x> <s4y> <s5x> <s5y>
+PROGMEM const unsigned char levelInfo[] = {
   1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
   1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
   1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
