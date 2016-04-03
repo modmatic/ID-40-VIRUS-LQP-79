@@ -22,6 +22,9 @@
 #define SCORE_SMALL_FONT          0
 #define SCORE_BIG_FONT            1
 
+#define BLOCK_OFFSET 64
+#define LEVEL_OFFSET 16
+
 // method prototypes /////////////////////////////////////////////////////////
 
 
@@ -33,9 +36,9 @@ void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h);
 
 // data //////////////////////////////////////////////////////////////////////
 
-
-PROGMEM const unsigned char block00[] =
+PROGMEM const unsigned char blocks[] =
 {
+  // BLOCK 0
   3, 3, 3, 3, 3, 3, 3, 3,
   3, 2, 2, 2, 2, 2, 2, 2,
   3, 0, 0, 0, 0, 0, 0, 0,
@@ -44,15 +47,8 @@ PROGMEM const unsigned char block00[] =
   3, 0, 1, 0, 1, 0, 1, 0,
   3, 0, 0, 1, 0, 1, 0, 1,
   3, 0, 1, 0, 1, 0, 1, 0,
-<<<<<<< HEAD
 
   // BLOCK 1
-=======
-};
-
-PROGMEM const unsigned char block01[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   3, 3, 3, 3, 3, 3, 3, 3,
   2, 2, 2, 2, 2, 2, 2, 2,
   0, 0, 0, 0, 0, 0, 0, 0,
@@ -61,15 +57,8 @@ PROGMEM const unsigned char block01[] =
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
-<<<<<<< HEAD
 
   // BLOCK 2
-=======
-};
-
-PROGMEM const unsigned char block02[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   3, 3, 3, 3, 3, 3, 3, 3,
   2, 2, 2, 2, 2, 2, 2, 3,
   0, 0, 0, 0, 0, 0, 0, 3,
@@ -78,15 +67,8 @@ PROGMEM const unsigned char block02[] =
   1, 0, 1, 0, 1, 0, 0, 3,
   0, 1, 0, 1, 0, 1, 0, 3,
   1, 0, 1, 0, 1, 0, 0, 3,
-<<<<<<< HEAD
 
   // BLOCK 3
-=======
-};
-
-PROGMEM const unsigned char block03[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   3, 0, 0, 1, 0, 1, 0, 1,
   3, 0, 1, 0, 1, 0, 1, 0,
   3, 0, 0, 1, 0, 1, 0, 1,
@@ -95,15 +77,8 @@ PROGMEM const unsigned char block03[] =
   3, 0, 1, 0, 1, 0, 1, 0,
   3, 0, 0, 1, 0, 1, 0, 1,
   3, 0, 1, 0, 1, 0, 1, 0,
-<<<<<<< HEAD
 
   // BLOCK 4
-=======
-};
-
-PROGMEM const unsigned char block04[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1,
@@ -112,15 +87,8 @@ PROGMEM const unsigned char block04[] =
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
-<<<<<<< HEAD
 
   // BLOCK 5
-=======
-};
-
-PROGMEM const unsigned char block05[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   0, 1, 0, 1, 0, 1, 0, 3,
   1, 0, 1, 0, 1, 0, 0, 3,
   0, 1, 0, 1, 0, 1, 0, 3,
@@ -129,15 +97,8 @@ PROGMEM const unsigned char block05[] =
   1, 0, 1, 0, 1, 0, 0, 3,
   0, 1, 0, 1, 0, 1, 0, 3,
   1, 0, 1, 0, 1, 0, 0, 3,
-<<<<<<< HEAD
 
   // BLOCK 6
-=======
-};
-
-PROGMEM const unsigned char block06[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   3, 0, 0, 1, 0, 1, 0, 1,
   3, 0, 1, 0, 1, 0, 1, 0,
   3, 0, 0, 1, 0, 1, 0, 1,
@@ -146,15 +107,8 @@ PROGMEM const unsigned char block06[] =
   3, 0, 1, 0, 1, 0, 1, 0,
   3, 0, 0, 0, 0, 0, 0, 0,
   3, 3, 3, 3, 3, 3, 3, 3,
-<<<<<<< HEAD
 
   // BLOCK 7
-=======
-};
-
-PROGMEM const unsigned char block07[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1,
@@ -163,15 +117,8 @@ PROGMEM const unsigned char block07[] =
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 0, 0, 0, 0, 0, 0, 0,
   3, 3, 3, 3, 3, 3, 3, 3,
-<<<<<<< HEAD
 
   // BLOCK 8
-=======
-};
-
-PROGMEM const unsigned char block08[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   0, 1, 0, 1, 0, 1, 0, 3,
   1, 0, 1, 0, 1, 0, 0, 3,
   0, 1, 0, 1, 0, 1, 0, 3,
@@ -180,15 +127,8 @@ PROGMEM const unsigned char block08[] =
   1, 0, 1, 0, 1, 0, 0, 3,
   0, 0, 0, 0, 0, 0, 0, 3,
   3, 3, 3, 3, 3, 3, 3, 3,
-<<<<<<< HEAD
 
   // BLOCK 9
-=======
-};
-
-PROGMEM const unsigned char block09[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 1, 4, 6, 10, 14, 0, 1,
@@ -197,15 +137,8 @@ PROGMEM const unsigned char block09[] =
   1, 0, 1, 9, 13, 0, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
-<<<<<<< HEAD
 
   // BLOCK A
-=======
-};
-
-PROGMEM const unsigned char block10[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 16, 18, 0, 1, 16, 18, 0,
   0, 17, 19, 1, 0, 17, 19, 1,
@@ -214,15 +147,8 @@ PROGMEM const unsigned char block10[] =
   1, 16, 18, 0, 1, 16, 18, 0,
   0, 17, 19, 1, 0, 17, 19, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
-<<<<<<< HEAD
 
   // BLOCK B
-=======
-};
-
-PROGMEM const unsigned char block11[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   0, 1, 0, 1, 0, 1, 0, 1,
   3, 3, 1, 0, 1, 0, 1, 3,
   2, 3, 0, 1, 0, 1, 0, 2,
@@ -231,15 +157,8 @@ PROGMEM const unsigned char block11[] =
   1, 0, 2, 0, 1, 3, 1, 0,
   0, 1, 0, 1, 0, 3, 0, 1,
   1, 0, 1, 0, 1, 2, 1, 0,
-<<<<<<< HEAD
 
   // BLOCK C
-=======
-};
-
-PROGMEM const unsigned char block12[] =
-{
->>>>>>> parent of ecb6822... reduced level format code size
   3, 1, 0, 1, 0, 1, 3, 1,
   3, 0, 1, 0, 1, 0, 2, 0,
   3, 1, 0, 1, 0, 3, 0, 1,
@@ -270,7 +189,6 @@ PROGMEM const unsigned char levelInfo[] = {
   1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
 };
 
-<<<<<<< HEAD
 /*
 
 PROGMEM const unsigned char levels[] = {
@@ -326,9 +244,6 @@ PROGMEM const unsigned char levels[] = {
 */
 
   PROGMEM const unsigned char * const levels[16][32] = {
-=======
-PROGMEM const unsigned char * const levels[16][32] = {
->>>>>>> parent of ecb6822... reduced level format code size
   {
     block00, block01, block01, block01, block01, block01, block01, block02,
     block03, block09, block10, block03, block04, block05, block04, block05,
@@ -410,11 +325,7 @@ PROGMEM const unsigned char * const levels[16][32] = {
     block03, block04, block04, block04, block04, block04, block04, block05,
     block06, block07, block07, block07, block07, block07, block07, block08
   }
-<<<<<<< HEAD
   };
-=======
-};
->>>>>>> parent of ecb6822... reduced level format code size
 
 
 PROGMEM const unsigned char tileset[] = {

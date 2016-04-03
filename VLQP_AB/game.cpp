@@ -58,17 +58,9 @@ void stateGamePrepareLevel()
   addSurvivor(readLevelData(4), readLevelData(5));
   addSurvivor(readLevelData(6), readLevelData(7));
   addSurvivor(readLevelData(8), readLevelData(9));
-<<<<<<< HEAD
   addSurvivor(readLevelData(10), readLevelData(11));
   addSurvivor(readLevelData(12), readLevelData(13));
   
-=======
-
-  
-  spawnZombie();
-  spawnZombie();
-
->>>>>>> parent of ecb6822... reduced level format code size
   gameState = STATE_GAME_NEXT_LEVEL;
 }
 
