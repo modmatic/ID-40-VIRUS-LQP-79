@@ -22,6 +22,9 @@
 #define SCORE_SMALL_FONT          0
 #define SCORE_BIG_FONT            1
 
+#define BLOCK_OFFSET 64
+#define LEVEL_OFFSET 16
+
 // method prototypes /////////////////////////////////////////////////////////
 
 
@@ -33,9 +36,9 @@ void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h);
 
 // data //////////////////////////////////////////////////////////////////////
 
-
-PROGMEM const unsigned char block00[] =
+PROGMEM const unsigned char blocks[] =
 {
+  // BLOCK 0
   3, 3, 3, 3, 3, 3, 3, 3,
   3, 2, 2, 2, 2, 2, 2, 2,
   3, 0, 0, 0, 0, 0, 0, 0,
@@ -44,10 +47,8 @@ PROGMEM const unsigned char block00[] =
   3, 0, 1, 0, 1, 0, 1, 0,
   3, 0, 0, 1, 0, 1, 0, 1,
   3, 0, 1, 0, 1, 0, 1, 0,
-};
-
-PROGMEM const unsigned char block01[] =
-{
+  
+  // BLOCK 1
   3, 3, 3, 3, 3, 3, 3, 3,
   2, 2, 2, 2, 2, 2, 2, 2,
   0, 0, 0, 0, 0, 0, 0, 0,
@@ -56,10 +57,8 @@ PROGMEM const unsigned char block01[] =
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
-};
-
-PROGMEM const unsigned char block02[] =
-{
+  
+  // BLOCK 2
   3, 3, 3, 3, 3, 3, 3, 3,
   2, 2, 2, 2, 2, 2, 2, 3,
   0, 0, 0, 0, 0, 0, 0, 3,
@@ -68,10 +67,8 @@ PROGMEM const unsigned char block02[] =
   1, 0, 1, 0, 1, 0, 0, 3,
   0, 1, 0, 1, 0, 1, 0, 3,
   1, 0, 1, 0, 1, 0, 0, 3,
-};
-
-PROGMEM const unsigned char block03[] =
-{
+  
+  // BLOCK 3
   3, 0, 0, 1, 0, 1, 0, 1,
   3, 0, 1, 0, 1, 0, 1, 0,
   3, 0, 0, 1, 0, 1, 0, 1,
@@ -80,10 +77,8 @@ PROGMEM const unsigned char block03[] =
   3, 0, 1, 0, 1, 0, 1, 0,
   3, 0, 0, 1, 0, 1, 0, 1,
   3, 0, 1, 0, 1, 0, 1, 0,
-};
-
-PROGMEM const unsigned char block04[] =
-{
+  
+  // BLOCK 4
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1,
@@ -92,10 +87,8 @@ PROGMEM const unsigned char block04[] =
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
-};
-
-PROGMEM const unsigned char block05[] =
-{
+  
+  // BLOCK 5
   0, 1, 0, 1, 0, 1, 0, 3,
   1, 0, 1, 0, 1, 0, 0, 3,
   0, 1, 0, 1, 0, 1, 0, 3,
@@ -104,10 +97,8 @@ PROGMEM const unsigned char block05[] =
   1, 0, 1, 0, 1, 0, 0, 3,
   0, 1, 0, 1, 0, 1, 0, 3,
   1, 0, 1, 0, 1, 0, 0, 3,
-};
-
-PROGMEM const unsigned char block06[] =
-{
+  
+  // BLOCK 6
   3, 0, 0, 1, 0, 1, 0, 1,
   3, 0, 1, 0, 1, 0, 1, 0,
   3, 0, 0, 1, 0, 1, 0, 1,
@@ -116,10 +107,8 @@ PROGMEM const unsigned char block06[] =
   3, 0, 1, 0, 1, 0, 1, 0,
   3, 0, 0, 0, 0, 0, 0, 0,
   3, 3, 3, 3, 3, 3, 3, 3,
-};
-
-PROGMEM const unsigned char block07[] =
-{
+  
+  // BLOCK 7
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1,
@@ -128,10 +117,8 @@ PROGMEM const unsigned char block07[] =
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 0, 0, 0, 0, 0, 0, 0,
   3, 3, 3, 3, 3, 3, 3, 3,
-};
-
-PROGMEM const unsigned char block08[] =
-{
+  
+  // BLOCK 8
   0, 1, 0, 1, 0, 1, 0, 3,
   1, 0, 1, 0, 1, 0, 0, 3,
   0, 1, 0, 1, 0, 1, 0, 3,
@@ -140,10 +127,8 @@ PROGMEM const unsigned char block08[] =
   1, 0, 1, 0, 1, 0, 0, 3,
   0, 0, 0, 0, 0, 0, 0, 3,
   3, 3, 3, 3, 3, 3, 3, 3,
-};
-
-PROGMEM const unsigned char block09[] =
-{
+  
+  // BLOCK 9
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
   0, 1, 4, 6, 10, 14, 0, 1,
@@ -152,10 +137,8 @@ PROGMEM const unsigned char block09[] =
   1, 0, 1, 9, 13, 0, 1, 0,
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
-};
-
-PROGMEM const unsigned char block10[] =
-{
+  
+  // BLOCK A
   0, 1, 0, 1, 0, 1, 0, 1,
   1, 16, 18, 0, 1, 16, 18, 0,
   0, 17, 19, 1, 0, 17, 19, 1,
@@ -164,10 +147,8 @@ PROGMEM const unsigned char block10[] =
   1, 16, 18, 0, 1, 16, 18, 0,
   0, 17, 19, 1, 0, 17, 19, 1,
   1, 0, 1, 0, 1, 0, 1, 0,
-};
-
-PROGMEM const unsigned char block11[] =
-{
+  
+  // BLOCK B
   0, 1, 0, 1, 0, 1, 0, 1,
   3, 3, 1, 0, 1, 0, 1, 3,
   2, 3, 0, 1, 0, 1, 0, 2,
@@ -176,10 +157,8 @@ PROGMEM const unsigned char block11[] =
   1, 0, 2, 0, 1, 3, 1, 0,
   0, 1, 0, 1, 0, 3, 0, 1,
   1, 0, 1, 0, 1, 2, 1, 0,
-};
-
-PROGMEM const unsigned char block12[] =
-{
+  
+  // BLOCK C
   3, 1, 0, 1, 0, 1, 3, 1,
   3, 0, 1, 0, 1, 0, 2, 0,
   3, 1, 0, 1, 0, 3, 0, 1,
@@ -209,6 +188,58 @@ PROGMEM const unsigned char levelInfo[16*10] = {
 	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
 	1, 1, 2, 1, 3, 1, 4, 1, 5, 1,
 };
+
+PROGMEM const unsigned char levels[] = {
+  0x01, 0x11, 0x11, 0x12, 0x39, 0xa3, 0x45, 0x45,
+  0x3a, 0x96, 0x78, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x04, 0x42, 0x45,
+  0x34, 0x67, 0x78, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x3b, 0x44, 0x44, 0xb5,
+  0xc4, 0x4b, 0xb4, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78,
+
+  0x01, 0x11, 0x11, 0x12, 0x34, 0x44, 0x44, 0x45,
+  0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78
+};
+
+/*
 
 PROGMEM const unsigned char * const levels[16][32] = {
   {
@@ -293,7 +324,7 @@ PROGMEM const unsigned char * const levels[16][32] = {
     block06, block07, block07, block07, block07, block07, block07, block08
   }
 };
-
+*/
 
 PROGMEM const unsigned char tileset[] = {
   // width, height

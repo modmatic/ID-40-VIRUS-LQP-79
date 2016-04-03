@@ -58,10 +58,6 @@ void stateGamePrepareLevel()
   addSurvivor(readLevelData(6), readLevelData(7));
   addSurvivor(readLevelData(8), readLevelData(9));
 
-  
-  spawnZombie();
-  spawnZombie();
-
   gameState = STATE_GAME_NEXT_LEVEL;
 }
 
