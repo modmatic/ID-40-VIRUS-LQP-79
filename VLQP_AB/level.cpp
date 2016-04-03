@@ -18,7 +18,7 @@ void newDraw()
   unsigned int lowerThreeX = mapPositionX & 0x07;
   unsigned int upperFiveY = mapPositionY >> 3;
   unsigned int lowerThreeY = mapPositionY & 0x07;
-  */
+  
   // loop 16 or 17 times, handle off-by-one: if lowerThreeX is zero, just 16
   for (byte x = 0; x < (lowerThreeX ? 17 : 16); x++) {
     
@@ -63,6 +63,7 @@ void newDraw()
       ;
     }
   }
+  */
 }
 
 // getTileType
