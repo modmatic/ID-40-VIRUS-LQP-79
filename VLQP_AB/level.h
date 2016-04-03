@@ -189,6 +189,8 @@ PROGMEM const unsigned char levelInfo[] = {
   1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1,
 };
 
+/*
+
 PROGMEM const unsigned char levels[] = {
   0x01, 0x11, 0x11, 0x12, 0x39, 0xa3, 0x45, 0x45,
   0x3a, 0x96, 0x78, 0x45, 0x67, 0x77, 0x77, 0x78,
@@ -239,7 +241,7 @@ PROGMEM const unsigned char levels[] = {
   0x34, 0x44, 0x44, 0x45, 0x67, 0x77, 0x77, 0x78
 };
 
-/*
+*/
 
   PROGMEM const unsigned char * const levels[16][32] = {
   {
@@ -324,7 +326,7 @@ PROGMEM const unsigned char levels[] = {
     block06, block07, block07, block07, block07, block07, block07, block08
   }
   };
-*/
+
 
 PROGMEM const unsigned char tileset[] = {
   // width, height
