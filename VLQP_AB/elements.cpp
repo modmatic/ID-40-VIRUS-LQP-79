@@ -117,7 +117,7 @@ void drawAmountSurvivors()
 {
   for (byte amountSurvivors = 0; amountSurvivors < countAmountActiveSurvivors(); amountSurvivors++) // needs the amount of active survivors
   {
-    sprites.drawPlusMask(40 + amountSurvivors * 10, 0, HUD_plus_mask, 1);
+    sprites.drawPlusMask(40 + amountSurvivors * 9, 0, HUD_plus_mask, 1);
   }
   if (!countAmountActiveSurvivors() && showHelp)
   {
