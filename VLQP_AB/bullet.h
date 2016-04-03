@@ -29,7 +29,7 @@ extern Bullet bullets[BULLET_MAX];
 
 // method prototypes /////////////////////////////////////////////////////////
 
-void setBullet(Bullet& obj, int x, int y, char vx, char vy);
+bool setBullet(Bullet& obj, int x, int y, char vx, char vy);
 void addBullet(int x, int y, byte direction, char vx, char vy);
 void updateBullet(Bullet& obj);
 void updateBullets();

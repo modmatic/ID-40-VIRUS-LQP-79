@@ -36,7 +36,7 @@ extern Element survivors[SURVIVOR_MAX];
 
 // method prototypes /////////////////////////////////////////////////////////
 
-void setSurvivor(Element& obj, int x, int y);
+bool setSurvivor(Element& obj, int x, int y);
 void addSurvivor(int x, int y);
 void updateSurvivors();
 void drawSurvivors();

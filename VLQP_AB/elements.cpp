@@ -15,11 +15,14 @@ byte amountActiveSurvivors = 0;
 
 // setZombie
 // sets the position of a survivor, and enables that instance
-void setSurvivor(Element& obj, int x, int y)
+bool setSurvivor(Element& obj, int x, int y)
 {
-  obj.x = x;
-  obj.y = y;
-  obj.active = true;
+  if(!obj.active)
+  {
+    obj.x = x;
+    obj.y = y;
+    obj.active = true;
+  }
 }
 
 
@@ -31,9 +34,8 @@ void addSurvivor(int x, int y)
 
   for (id = 0; id < SURVIVOR_MAX; id++)
   {
-    if (!survivors[id].active)
+    if(setSurvivor(survivors[id], x, y))
     {
-      setSurvivor(survivors[id], x, y);
       break;
     }
   }
@@ -60,9 +62,10 @@ void drawSurvivors()
   // draw the survivor!
   for (byte id = 0; id < SURVIVOR_MAX; id++)
   {
-    if (!survivors[id].active) continue;
-    sprites.drawPlusMask(survivors[id].x - mapPositionX, survivors[id].y - mapPositionY, survivor_plus_mask, survivorFrame);
-    if (showHelp)sprites.drawPlusMask(survivors[id].x + 16 - mapPositionX, survivors[id].y - 9 - mapPositionY, help_plus_mask, 0);
+    Element &surv = survivors[id];
+    if (!surv.active) continue;
+    sprites.drawPlusMask(surv.x - mapPositionX, surv.y - mapPositionY, survivor_plus_mask, survivorFrame);
+    if (showHelp)sprites.drawPlusMask(surv.x + 16 - mapPositionX, surv.y - 9 - mapPositionY, help_plus_mask, 0);
   }
 
 }

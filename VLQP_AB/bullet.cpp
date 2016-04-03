@@ -19,13 +19,16 @@ Bullet bullets[BULLET_MAX];
 
 // setBullet
 // sets the position and the velocity of a bullet
-void setBullet(Bullet& obj, int x, int y, char vx, char vy)
+bool setBullet(Bullet& obj, int x, int y, char vx, char vy)
 {
-  obj.x = x;
-  obj.y = y;
-  obj.vx = vx;
-  obj.vy = vy;
-  obj.active = true;
+  if(!obj.active)
+  {
+    obj.x = x;
+    obj.y = y;
+    obj.vx = vx;
+    obj.vy = vy;
+    obj.active = true;
+  }
 }
 
 // addBullet
@@ -36,15 +39,13 @@ void addBullet(int x, int y, byte direction, char vx, char vy)
   
   for(id=0; id<BULLET_MAX; id++)
   {
-    if(!bullets[id].active)
+    if(setBullet(
+      bullets[id],
+      x - BULLET_WIDTH/2,
+      y - BULLET_HEIGHT/2,
+      vx + BulletXVelocities[direction],
+      vy + BulletXVelocities[(direction+6)%8]))
     {
-      setBullet(
-        bullets[id],
-        x - BULLET_WIDTH/2,
-        y - BULLET_HEIGHT/2,
-        vx + BulletXVelocities[direction],
-        vy + BulletXVelocities[(direction+6)%8]
-      );
       arduboy.tunes.tone(440, 20);
       break;
     }
@@ -58,27 +59,30 @@ void updateBullet(Bullet& obj)
 {
   byte id;
   
-  // horizontal physics
-  obj.x += obj.vx;
-  
-  // vertical physics
-  obj.y += obj.vy;
-  
-  // collide with zombies
-  for(id=0; id<ZOMBIE_MAX; id++)
+  if(obj.active)
   {
-    if(zombieCollision(zombies[id], obj.x, obj.y, BULLET_WIDTH, BULLET_HEIGHT))
+    // horizontal physics
+    obj.x += obj.vx;
+    
+    // vertical physics
+    obj.y += obj.vy;
+    
+    // collide with zombies
+    for(id=0; id<ZOMBIE_MAX; id++)
+    {
+      if(zombieCollision(zombies[id], obj.x, obj.y, BULLET_WIDTH, BULLET_HEIGHT))
+      {
+        obj.active = false;
+        zombieHealthOffset(zombies[id], -1);
+        break;
+      }
+    }
+    
+    // delete if gone off screen
+    if((obj.x < mapPositionX) || (obj.y < mapPositionY) || (obj.x > WIDTH + mapPositionX) || (obj.y > HEIGHT + mapPositionY))
     {
       obj.active = false;
-      zombieHealthOffset(zombies[id], -1);
-      break;
     }
-  }
-  
-  // delete if gone off screen
-  if((obj.x < mapPositionX) || (obj.y < mapPositionY) || (obj.x > WIDTH + mapPositionX) || (obj.y > HEIGHT + mapPositionY))
-  {
-    obj.active = false;
   }
 }
 
@@ -91,10 +95,11 @@ void updateBullets()
   
   for(id=0; id<BULLET_MAX; id++)
   {
-    if(!bullets[id].active) continue;
     updateBullet(bullets[id]);
   }
 }
+
+
 
 
 // drawBullets
@@ -106,15 +111,14 @@ void drawBullets()
   
   for(id=0; id<BULLET_MAX; id++)
   {
-    if(!bullets[id].active) continue;
-    x = bullets[id].x - mapPositionX;
-    y = bullets[id].y - mapPositionY;
+    Bullet& bull = bullets[id];
+    
+    if(!bull.active) continue;
+    x = bull.x - mapPositionX;
+    y = bull.y - mapPositionY;
     if((x>0) && (y>0) && (x<WIDTH) && (y<HEIGHT))
     {
-      arduboy.drawPixel(x, y, 1);
-      arduboy.drawPixel(x+1, y, 1);
-      arduboy.drawPixel(x, y+1, 1);
-      arduboy.drawPixel(x+1, y+1, 1);
+      sprites.drawSelfMasked(x, y, dotMask, 0); 
     }
   }
 }
