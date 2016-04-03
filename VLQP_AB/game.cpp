@@ -23,12 +23,13 @@ void stateGamePlaying()
   // Draw
   drawLevel();
   drawDoor();
+  drawPickups();
   drawZombies();
   drawSurvivors();
   drawBullets();
   drawPlayer(coolGirl);
   //drawWeapons();
-  drawPickups();
+  
   drawNumbers(86, 0, 0, 0);
   drawLife(coolGirl);
   drawAmountSurvivors();
@@ -57,9 +58,11 @@ void stateGamePrepareLevel()
   addSurvivor(readLevelData(6), readLevelData(7));
   addSurvivor(readLevelData(8), readLevelData(9));
 
+  
+  spawnZombie();
+  spawnZombie();
+
   gameState = STATE_GAME_NEXT_LEVEL;
-  spawnZombie();
-  spawnZombie();
 }
 
 void stateGameNextLevel()

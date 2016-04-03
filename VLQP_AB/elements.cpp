@@ -14,7 +14,7 @@ byte amountActiveSurvivors = 0;
 // method implementations ////////////////////////////////////////////////////
 
 // setZombie
-// sets the position of a zombie, and enables that instance
+// sets the position of a survivor, and enables that instance
 void setSurvivor(Element& obj, int x, int y)
 {
   obj.x = x;

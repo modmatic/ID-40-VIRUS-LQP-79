@@ -182,6 +182,7 @@ void updateZombies()
   }
 }
 
+/*
 void drawZombieBlips()
 {
   short drawX, drawY;
@@ -225,6 +226,8 @@ void drawZombieBlips()
   }
   
 }
+*/
+
 
 // drawZombie
 // draws a single zombie

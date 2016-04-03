@@ -22,9 +22,6 @@
 #define SCORE_SMALL_FONT          0
 #define SCORE_BIG_FONT            1
 
-extern const unsigned char *levelmap01[][32];
-
-
 // method prototypes /////////////////////////////////////////////////////////
 
 
