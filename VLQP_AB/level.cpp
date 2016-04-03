@@ -7,14 +7,42 @@ int mapPositionY;
 byte level;
 
 
-void newDraw(unsigned posX, unsigned posY) {
+void newDraw()
+{
+  /*
+  // Separate the high and low parts of the position
+  // Only 3 bits are in the lower part because of the 8 pixel width of the tile
+  // To draw the tile, the lower three bits can be used as an offset
+  // The upper 5 bits are the section of the map the tile is on
+  unsigned int upperFiveX = mapPositionX >> 3;
+  unsigned int lowerThreeX = mapPositionX & 0x07;
+  unsigned int upperFiveY = mapPositionY >> 3;
+  unsigned int lowerThreeY = mapPositionY & 0x07;
   
-  unsigned int intX = posX >> 3, subX = posX & 0x07;
-  unsigned int intY = posY >> 3, subY = posY & 0x07;
-  for (byte x = 0; x < (subX ? 17 : 16); x++) {
-    for (byte y = 0; y < (subY ?  9 :  8); y++) {
-      /*sprites.drawSelfMasked(
-        ((int)x * 8) - subX, ((int)y * 8) - subY, tileset,
+  // loop 16 or 17 times, handle off-by-one: if lowerThreeX is zero, just 16
+  for (byte x = 0; x < (lowerThreeX ? 17 : 16); x++) {
+    
+    // loop 8 or 9 times, handle off-by-one: if lowerThreeY is zero, just 8
+    for (byte y = 0; y < (lowerThreeY ?  9 :  8); y++) {
+      
+      // Calculate block id
+      unsigned char blockId = pgm_read_byte(levels + (level-1)*LEVEL_OFFSET)
+      
+      // call mask drawing function
+      sprites.drawSelfMasked(
+      
+        // X position is tile position * tile width, plus lower bits
+        ((int)x * 8) - lowerThreeX,
+        
+        // X position is tile position * tile height, plus lower bits
+        ((int)y * 8) - lowerThreeY,
+        
+        // Use the tileset sprite
+        tileset,
+        
+        // Calculate the sprite to draw
+        
+        
         // Block:read tile index (byte) for tileset
         pgm_read_byte(&(
           // Levels:read pointer (word) to blockNN, cast for arry indexing
@@ -24,19 +52,18 @@ void newDraw(unsigned posX, unsigned posY) {
               level - 1
             ][
               // Levels:second index is map section (upper x/y bits)
-              ((intX + x) >> 3) + ((intY + y) & 0xF8)
+              ((upperFiveX + x) >> 3) + ((upperFiveY + y) & 0xF8)
             ]
           ))[
             // Block:first index is map tiles (lower x/y bits)
-            ((intX + x) & 0x07) + (((intY + y) & 0x07) * 8)
+            ((upperFiveX + x) & 0x07) + (((upperFiveY + y) & 0x07) * 8)
           ]
         ))
       );
-      */
       ;
     }
   }
-  
+  */
 }
 
 // getTileType
@@ -55,7 +82,7 @@ unsigned char getTileType(unsigned int posX, unsigned int posY)
   int tileBlockY = posY / BLOCK_HEIGHT;
   int blockIndex = tileBlockX + tileBlockY * LEVEL_BLOCK_WIDTH;
   unsigned char blockShift = (blockIndex % 2 == 0) ? 4 : 0;
-  unsigned char blockName = (pgm_read_word(&levels[(level-1) * LEVEL_OFFSET + blockIndex]) >> blockShift) & 0x0f;
+  unsigned char blockName = (((pgm_read_word(&levels[(level-1) * LEVEL_OFFSET + (blockIndex/2)])) >> blockShift)) & 0x0f;
 
   unsigned char tileID = pgm_read_byte(blocks + (blockName * BLOCK_OFFSET) + tileLocalIndex);
 
@@ -65,7 +92,7 @@ unsigned char getTileType(unsigned int posX, unsigned int posY)
 
 void drawLevel()
 {
-  newDraw (mapPositionX, mapPositionY);
+  newDraw();
 }
 
 
