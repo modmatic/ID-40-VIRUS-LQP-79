@@ -36,7 +36,6 @@ extern byte displayLevel;
 void stateGamePlaying();
 void stateGameNextLevel();
 void stateGamePrepareLevel();
-void stateGamePause();
 void stateGameOver();
 
 #endif

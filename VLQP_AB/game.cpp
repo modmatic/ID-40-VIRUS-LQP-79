@@ -77,16 +77,6 @@ void stateGameNextLevel()
   }
 }
 
-// stateGamePause
-// called each frame the gamestate is set to paused
-void stateGamePause()
-{
-  if (buttons.justPressed(A_BUTTON | B_BUTTON))
-  {
-    gameState = STATE_MENU_MAIN;
-  }
-}
-
 // stateGameOver
 // called each frame the gamestate is set to game over
 void stateGameOver()
