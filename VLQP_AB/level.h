@@ -38,7 +38,7 @@ void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h);
 
 #define NUM_LEVELS 2
 
-// format: <spawn x> <spawn y> <door x> <door y> <s1x> <s1y> <s2x> <s2y> <s3x> <s3y> <s4x> <s4y> <s5x> <s5y>
+// format: <player x> <player y> <exit x> <exit y> <s1x> <s1y> <s2x> <s2y> <s3x> <s3y> <s4x> <s4y> <s5x> <s5y>
 PROGMEM const unsigned char levelInfo[] = {
   2, 2,
   2, 2,
