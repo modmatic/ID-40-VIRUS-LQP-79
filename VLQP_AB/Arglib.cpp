@@ -1135,7 +1135,7 @@ uint8_t Arduboy::getInput()
   buttons = buttons | (((~PINF) & B11000000) >> 6);
 #endif
 */
-  uint8_t buttons;
+   uint8_t buttons;
   // down, left, up
   // down, up, left right
   buttons = ((~PINF) & B11110000);

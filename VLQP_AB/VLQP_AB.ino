@@ -1,15 +1,15 @@
 /*
- VIRUS LQP-79: http://www.team-arg.org/zmbt-manual.html
+  VIRUS LQP-79: http://www.team-arg.org/zmbt-manual.html
 
- Arduboy version 0.8:  http://www.team-arg.org/zmbt-downloads.html
+  Arduboy version 0.8:  http://www.team-arg.org/zmbt-downloads.html
 
- MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
+  MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
 
- 2016 - FUOPY - JO3RI - STG - JUSTIN CRY - CASTPIXEL
+  2016 - FUOPY - JO3RI - STG - CASTPIXEL - JUSTIN CRY
 
- Game License: MIT : https://opensource.org/licenses/MIT
+  Game License: MIT : https://opensource.org/licenses/MIT
 
- */
+*/
 
 //determine the game
 #define GAME_ID 40
