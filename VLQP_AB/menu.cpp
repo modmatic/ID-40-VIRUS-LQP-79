@@ -5,8 +5,6 @@
 
 byte menuSelection;
 byte counter = 0;
-boolean slideIn = false;
-boolean slideInToo = false;
 byte slideCount01 = 0;
 byte slideCount02 = 0;
 
@@ -22,22 +20,14 @@ void setSlidersToZero()
 {
   slideCount02 = 0;
   slideCount01 = 0;
-  slideIn = false;
-  slideInToo = false;
 }
 
-void setSlideInToZero()
-{
-  slideIn = false;
-  slideCount02 = 0;
-}
 
 void makeItSlide()
 {
   slideCount01++;
   if (slideCount01 > 22)
   {
-    slideInToo = true;
     slideCount02++;
     slideCount01 = 22;
   }
@@ -45,7 +35,6 @@ void makeItSlide()
   if (slideCount02 > 5)
   {
     slideCount02 = 5;
-    slideIn = true;
   }
 }
 
@@ -63,24 +52,24 @@ void stateMenuMain()
   {
     arduboy.drawBitmap(127 - slideCount01 + (8 * i) , 25, smallMask, 8, 8, BLACK);
   }
-  if (menuSelection == 2 && slideIn) arduboy.drawBitmap(98 , 25, smallMask, 8, 8, BLACK);
+  if (menuSelection == 2) arduboy.drawBitmap(98 , 25, smallMask, 8, 8, BLACK);
   for (byte i = 0; i < 4; i++)
   {
     if (((2 + i) - menuSelection) != 0)
     {
       sprites.drawSelfMasked(128 - slideCount01, 25 + (9 * i), menuText, i);
     }
-    if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(128 - slideCount01 - (2 * slideInToo) - (5 * slideIn), 25 + (9 * i), menuText, i);
+    if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(128 - slideCount01 - slideCount02, 25 + (9 * i), menuText, i);
   }
   if (buttons.justPressed(DOWN_BUTTON) && (menuSelection < 5))
   {
     menuSelection++;
-    setSlideInToZero();
+    slideCount02 = 0;
   }
   if (buttons.justPressed(UP_BUTTON) && (menuSelection > 2))
   {
     menuSelection--;
-    setSlideInToZero();
+    slideCount02 = 0;
   }
   if (buttons.justPressed(A_BUTTON | B_BUTTON))
   {
@@ -129,12 +118,12 @@ void stateMenuSoundfx()
   if (buttons.justPressed(DOWN_BUTTON))
   {
     soundYesNo = true;
-    setSlideInToZero();
+    slideCount02 = 0;
   }
   if (buttons.justPressed(UP_BUTTON))
   {
     soundYesNo = false;
-    setSlideInToZero();
+    slideCount02 = 0;
   }
   if (buttons.justPressed(A_BUTTON | B_BUTTON))
   {
@@ -147,14 +136,14 @@ void stateMenuSoundfx()
   if (soundYesNo == true)
   {
     arduboy.audio.on();
-    sprites.drawSelfMasked(128 - slideCount01, 25 + 9, menuText, 5);
-    sprites.drawSelfMasked(128 - slideCount01 - (2 * slideInToo) - (5 * slideIn), 25 + +9+9, menuText, 6);
+    sprites.drawSelfMasked(128 - slideCount01, 34, menuText, 5);
+    sprites.drawSelfMasked(128 - slideCount01 - slideCount02, 43, menuText, 6);
   }
   else
   {
     arduboy.audio.off();
-    sprites.drawSelfMasked(128 - slideCount01, 25 + 9 + 9, menuText, 6);
-    sprites.drawSelfMasked(128 - slideCount01 - (2 * slideInToo) - (5 * slideIn), 25 + 9, menuText, 5);
+    sprites.drawSelfMasked(128 - slideCount01, 43, menuText, 6);
+    sprites.drawSelfMasked(128 - slideCount01 - slideCount02, 34, menuText, 5);
   }
   makeItSlide();
 }
