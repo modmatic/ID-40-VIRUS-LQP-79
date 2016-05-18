@@ -26,7 +26,7 @@
 
 
 typedef void (*FunctionPointer) ();
-FunctionPointer mainGameLoop[] =
+const FunctionPointer PROGMEM mainGameLoop[] =
 {
   stateMenuIntro,
   stateMenuMain,
@@ -51,7 +51,7 @@ void loop() {
   if (!(arduboy.nextFrame())) return;
   buttons.poll();
   arduboy.clearDisplay();
-  mainGameLoop[gameState]();
+  ((FunctionPointer) pgm_read_word (&mainGameLoop[gameState]))();
   arduboy.display();
   if (soundYesNo == true) arduboy.audio.on();
   else arduboy.audio.off();

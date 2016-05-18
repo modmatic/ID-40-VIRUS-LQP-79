@@ -182,7 +182,7 @@ void updateZombies()
   }
 }
 
-/*
+
 void drawZombieBlips()
 {
   short drawX, drawY;
@@ -224,9 +224,8 @@ void drawZombieBlips()
       arduboy.drawPixel(drawX + ZOMBIE_HEIGHT/2+1, HEIGHT-2, drawColor);
     }
   }
-  
 }
-*/
+
 
 
 // drawZombie
