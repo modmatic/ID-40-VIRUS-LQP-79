@@ -3,7 +3,7 @@
 
 // globals ///////////////////////////////////////////////////////////////////
 
-byte menuSelection;
+byte menuSelection = STATE_MENU_PLAY;
 byte counter = 0;
 byte slideCount01 = 0;
 byte slideCount02 = 0;
