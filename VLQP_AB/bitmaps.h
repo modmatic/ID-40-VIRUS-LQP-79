@@ -475,7 +475,8 @@ PROGMEM const unsigned char heart_plus_mask[] = {
 
 
 PROGMEM const unsigned char dotMask[] = {
-// width, height 2, 8,
+// width, height
+2, 8,
 0x03, 0x03
 };
 

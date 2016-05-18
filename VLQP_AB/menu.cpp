@@ -129,7 +129,7 @@ void stateMenuSoundfx()
   if (buttons.justPressed(A_BUTTON | B_BUTTON))
   {
     setSlidersToZero();
-    arduboy.audio.save_on_off();
+    arduboy.audio.saveOnOff();
     gameState = STATE_MENU_MAIN;
   }
 

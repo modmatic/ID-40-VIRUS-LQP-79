@@ -47,8 +47,11 @@ void Arduboy::start()
   pinMode(PIN_A_BUTTON, INPUT_PULLUP);
   pinMode(PIN_B_BUTTON, INPUT_PULLUP);
   tunes.initChannel(PIN_SPEAKER_1);
+#ifdef AB_DEVKIT
+  tunes.initChannel(PIN_SPEAKER_1); // use the same pin for both channels
+#else
   tunes.initChannel(PIN_SPEAKER_2);
-
+#endif
 
   csport = portOutputRegister(digitalPinToPort(CS));
   cspinmask = digitalPinToBitMask(CS);
@@ -739,85 +742,6 @@ void Arduboy::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w,
   }
 }
 
-void Arduboy::drawSprite(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint8_t frame, uint8_t color) {
-  // no need to dar at all of we're offscreen
-  if (x + w < 0 || x > WIDTH - 1 || y + h < 0 || y > HEIGHT - 1)
-    return;
-  y = y - (frame * h);
-  int yOffset = abs(y) % 8;
-  int sRow = y / 8;
-  if (y < 0) {
-    sRow--;
-    yOffset = 8 - yOffset;
-  }
-  int rows = h / 8;
-  if (h % 8 != 0) rows++;
-  for (int a = 0 + (frame * rows); a < rows + (frame * rows); a++) {
-    int bRow = sRow + a;
-    if (bRow > (HEIGHT / 8) - 1) break;
-    if (bRow > -2) {
-      for (int iCol = 0; iCol < w; iCol++) {
-        if (iCol + x > (WIDTH - 1)) break;
-        if (iCol + x >= 0) {
-          if (bRow >= 0) {
-            if (color) this->sBuffer[ (bRow * WIDTH) + x + iCol  ]  |= pgm_read_byte(bitmap + (a * w) + iCol) << yOffset;
-            else this->sBuffer[ (bRow * WIDTH) + x + iCol  ]  &= ~(pgm_read_byte(bitmap + (a * w) + iCol) << yOffset);
-          }
-          if (yOffset && bRow < (HEIGHT / 8) - 1 && bRow > -2) {
-            if (color) this->sBuffer[ ((bRow + 1)*WIDTH) + x + iCol  ] |= pgm_read_byte(bitmap + (a * w) + iCol) >> (8 - yOffset);
-            else this->sBuffer[ ((bRow + 1)*WIDTH) + x + iCol  ] &= ~(pgm_read_byte(bitmap + (a * w) + iCol) >> (8 - yOffset));
-          }
-        }
-      }
-    }
-  }
-}
-
-void Arduboy::drawMaskedSprite(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, const uint8_t *mask, uint8_t frame, uint8_t color) {
-  // no need to dar at all of we're offscreen
-  if (x + w < 0 || x > WIDTH - 1 || y + h < 0 || y > HEIGHT - 1)
-    return;
-  y = y - (frame * h);
-  int yOffset = abs(y) % 8;
-  int sRow = y / 8;
-  if (y < 0) {
-    sRow--;
-    yOffset = 8 - yOffset;
-  }
-  int rows = h / 8;
-  if (h % 8 != 0) rows++;
-  for (int a = 0 + (frame * rows); a < rows + (frame * rows); a++) {
-    int bRow = sRow + a;
-    if (bRow > (HEIGHT / 8) - 1) break;
-    if (bRow > -2) {
-      for (int iCol = 0; iCol < w; iCol++) {
-        if (iCol + x > (WIDTH - 1)) break;
-        if (iCol + x >= 0) {
-          if (bRow >= 0) {
-            if (color) {
-              this->sBuffer[ (bRow * WIDTH) + x + iCol  ]  &= ~(pgm_read_byte(mask + (a * w) + iCol) << yOffset);
-              this->sBuffer[ (bRow * WIDTH) + x + iCol  ]  |= pgm_read_byte(bitmap + (a * w) + iCol) << yOffset;
-            }
-            else {
-              this->sBuffer[ (bRow * WIDTH) + x + iCol  ]  |= pgm_read_byte(mask + (a * w) + iCol) << yOffset;
-              this->sBuffer[ (bRow * WIDTH) + x + iCol  ]  &= ~(pgm_read_byte(bitmap + (a * w) + iCol) << yOffset);
-            }
-          }
-          if (yOffset && bRow < (HEIGHT / 8) - 1 && bRow > -2) {
-            if (color) {
-              this->sBuffer[ ((bRow + 1)*WIDTH) + x + iCol  ] &= ~(pgm_read_byte(mask + (a * w) + iCol) >> (8 - yOffset));
-              this->sBuffer[ ((bRow + 1)*WIDTH) + x + iCol  ] |= pgm_read_byte(bitmap + (a * w) + iCol) >> (8 - yOffset);
-            }
-            else {
-              this->sBuffer[ ((bRow + 1)*WIDTH) + x + iCol  ] |= pgm_read_byte(mask + (a * w) + iCol) >> (8 - yOffset);
-              this->sBuffer[ ((bRow + 1)*WIDTH) + x + iCol  ] &= ~(pgm_read_byte(bitmap + (a * w) + iCol) >> (8 - yOffset));
-            }
-          }
-        }
-      }
-    }
-  }
-}
 
 
 typedef struct CSESSION {
@@ -1124,25 +1048,24 @@ boolean Arduboy::not_pressed(uint8_t buttons)
 
 uint8_t Arduboy::getInput()
 {
+  uint8_t buttons;
+
   // using ports here is ~100 bytes smaller than digitalRead()
-  /*
-#ifdef DEVKIT
+#ifdef AB_DEVKIT
   // down, left, up
-  uint8_t buttons = ((~PINB) & B01110000);
+  buttons = ((~PINB) & B01110000);
   // right button
   buttons = buttons | (((~PINC) & B01000000) >> 4);
   // A and B
   buttons = buttons | (((~PINF) & B11000000) >> 6);
-#endif
-*/
-   uint8_t buttons;
-  // down, left, up
+#else
   // down, up, left right
   buttons = ((~PINF) & B11110000);
   // A (left)
   buttons = buttons | (((~PINE) & B01000000) >> 3);
   // B (right)
   buttons = buttons | (((~PINB) & B00010000) >> 2);
+#endif
 
   // b0dlu0rab - see button defines in Arduboy.h
   return buttons;
@@ -1196,7 +1119,7 @@ void ArduboyAudio::off() {
   power_timer3_disable();
 }
 
-void ArduboyAudio::save_on_off() {
+void ArduboyAudio::saveOnOff() {
   EEPROM.write(EEPROM_AUDIO_ON_OFF, audio_enabled);
 }
 
@@ -1873,5 +1796,24 @@ void Sprites::drawBitmap(int16_t x, int16_t y,
       break;
 
   }
+}
+
+/////////////////////////////////
+// Basic Collision by Dreamer3 //
+/////////////////////////////////
+
+bool Physics::collide(Point point, Rect rect)
+{
+  // does point fall within the bounds of rect
+  return ((point.x >= rect.x) && (point.x < rect.x + rect.width) &&
+      (point.y >= rect.y) && (point.y < rect.y + rect.height));
+}
+
+bool Physics::collide(Rect rect1, Rect rect2)
+{
+  return !( rect2.x                 >=  rect1.x + rect1.width    ||
+            rect2.x + rect2.width   <=  rect1.x                ||
+            rect2.y                 >=  rect1.y + rect1.height ||
+            rect2.y + rect2.height  <=  rect1.y);
 }
 

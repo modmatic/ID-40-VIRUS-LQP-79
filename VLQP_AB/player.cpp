@@ -161,7 +161,7 @@ void updatePlayer(Player& obj)
   {
     if(obj.shotDelay == 0)
     {
-      addBullet(obj.x + PLAYER_WIDTH/2, obj.y + PLAYER_HEIGHT/2, obj.direction, 0, 0);
+      addBullet(obj.x + 10, obj.y + 12, obj.direction, 0, 0);
       obj.shotDelay = 10;
     }
   }
