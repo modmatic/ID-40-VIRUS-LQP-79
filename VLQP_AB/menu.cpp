@@ -11,9 +11,9 @@ byte slideCount02 = 0;
 // method implementations ////////////////////////////////////////////////////
 void drawTitleScreen()
 {
-  arduboy.drawBitmap(0, 0, titleScreen00, 62, 64, WHITE);
-  arduboy.drawBitmap(62, 32, titleScreen01, 37, 32, WHITE);
-  arduboy.drawBitmap(66, 0, titleScreen02, 62, 32, WHITE);
+  sprites.drawSelfMasked(0, 0, titleScreen00, 0);
+  sprites.drawSelfMasked(62, 32, titleScreen01, 0);
+  sprites.drawSelfMasked(66, 0, titleScreen02, 0);
 }
 
 void setSlidersToZero()
@@ -40,7 +40,8 @@ void makeItSlide()
 
 void stateMenuIntro()
 {
-  arduboy.drawBitmap(0, 8, TEAMarg, 128, 48, WHITE);
+  for (byte i = 0; i < 4; i++) sprites.drawSelfMasked(32 * i, 10, TEAMarg, i);
+  sprites.drawSelfMasked(43, 50, TEAM_argPart5, 0);
   counter++;
   if (counter > 180) gameState = STATE_MENU_MAIN;
 }
@@ -50,9 +51,9 @@ void stateMenuMain()
   drawTitleScreen();
   for (byte i = 0; i < 3; i++)
   {
-    arduboy.drawBitmap(127 - slideCount01 + (8 * i) , 25, smallMask, 8, 8, BLACK);
+    sprites.drawOverwrite(127 - slideCount01 + (8 * i) , 25, smallMask, 0);
   }
-  if (menuSelection == 2) arduboy.drawBitmap(98 , 25, smallMask, 8, 8, BLACK);
+  if (menuSelection == 2) sprites.drawOverwrite(98 , 25, smallMask, 0);
   for (byte i = 0; i < 4; i++)
   {
     if (((2 + i) - menuSelection) != 0)
@@ -81,7 +82,7 @@ void stateMenuMain()
 
 void stateMenuHelp()
 {
-  arduboy.drawBitmap(32, 0, qrcode, 64, 64, WHITE);
+  for (byte i = 0; i < 2; i++) sprites.drawSelfMasked(32, 32 * i, qrcode, i);
   if (buttons.justPressed(A_BUTTON | B_BUTTON)) gameState = STATE_MENU_MAIN;
 }
 
@@ -96,12 +97,12 @@ void stateMenuPlay()
 
 void stateMenuInfo()
 {
-  arduboy.drawBitmap(30, 0, titleScreen02, 62, 32, WHITE);
-  arduboy.drawBitmap(92, 0, titleScreen03, 6, 32, WHITE);
+  sprites.drawSelfMasked(30, 0, titleScreen02, 0);
+  sprites.drawSelfMasked(92, 0, titleScreen03, 0);
 
-  arduboy.drawBitmap(39, 33, madeBy00, 57, 32, WHITE);
-  arduboy.drawBitmap(10, 33, madeBy01, 21, 8, WHITE);
-  arduboy.drawBitmap(10, 47, madeBy02, 16, 8, WHITE);
+  sprites.drawSelfMasked(39, 33, madeBy00, 0);
+  sprites.drawSelfMasked(10, 33, madeBy01, 0);
+  sprites.drawSelfMasked(10, 47, madeBy02, 0);
 
 
   if (buttons.justPressed(A_BUTTON | B_BUTTON)) gameState = STATE_MENU_MAIN;
@@ -112,9 +113,9 @@ void stateMenuSoundfx()
   drawTitleScreen();
   for (byte i = 0; i < 3; i++)
   {
-    arduboy.drawBitmap(127 - slideCount01 + (8 * i) , 25, smallMask, 8, 8, BLACK);
+    sprites.drawOverwrite(127 - slideCount01 + (8 * i) , 25, smallMask, 0);
   }
-  
+
   if (buttons.justPressed(DOWN_BUTTON))
   {
     soundYesNo = true;
@@ -131,7 +132,7 @@ void stateMenuSoundfx()
     arduboy.audio.save_on_off();
     gameState = STATE_MENU_MAIN;
   }
-  
+
   sprites.drawSelfMasked(128 - slideCount01, 25 , menuText, 4);
   if (soundYesNo == true)
   {
