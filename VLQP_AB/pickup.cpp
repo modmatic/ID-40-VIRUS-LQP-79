@@ -19,8 +19,10 @@ bool addPickup(int x, int y)
     {
       pickups[id].x = x;
       pickups[id].y = y;
-      pickups[id].frame = 0;
-      pickups[id].type = random(0, 3);
+      pickups[id].type = random(0, 10);
+      if (pickups[id].type < 6) pickups[id].type = PICKUP_TYPE_COIN;
+      if (pickups[id].type > 5) pickups[id].type = PICKUP_TYPE_HEART;
+      if (pickups[id].type > 7) pickups[id].type = PICKUP_TYPE_INACTIVE;
       return true;
     }
   }
@@ -36,15 +38,9 @@ void drawPickups()
   
   for(id=0; id < PICKUP_MAX; id++)
   {
-    if(!pickups[id].type) continue;
-    
     if (arduboy.everyXFrames(6)) pickups[id].frame++;
     if(pickups[id].frame > 3) pickups[id].frame = 0;
-    
-    if(pickups[id].type == PICKUP_TYPE_HEART)
-      sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, heart_plus_mask, pickups[id].frame);
-    else
-      sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, coin_plus_mask, pickups[id].frame);
+    if(!pickups[id].type)sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, collectables_plus_mask, pickups[id].frame + (6*(pickups[id].type - 1)));
   }
 }
 
