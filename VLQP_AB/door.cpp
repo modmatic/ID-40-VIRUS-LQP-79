@@ -33,6 +33,5 @@ bool checkDoorCollision()
 
 void drawDoor()
 {
-  if(!exitDoor.active) return;
-  arduboy.drawRect(exitDoor.x - mapPositionX, exitDoor.y - mapPositionY, DOOR_WIDTH, DOOR_HEIGHT, 1);
+  if(exitDoor.active) sprites.drawPlusMask(exitDoor.x - mapPositionX, exitDoor.y - mapPositionY,door_plus_mask, 0);
 }
