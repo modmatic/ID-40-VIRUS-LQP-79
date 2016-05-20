@@ -100,9 +100,9 @@ void stateMenuInfo()
   sprites.drawSelfMasked(30, 0, titleScreen02, 0);
   sprites.drawSelfMasked(92, 0, titleScreen03, 0);
 
-  sprites.drawSelfMasked(39, 33, madeBy00, 0);
-  sprites.drawSelfMasked(10, 33, madeBy01, 0);
-  sprites.drawSelfMasked(10, 47, madeBy02, 0);
+  sprites.drawSelfMasked(48, 33, madeBy00, 0);
+  sprites.drawSelfMasked(22, 33, madeBy01, 0);
+  sprites.drawSelfMasked(27, 47, madeBy02, 0);
 
 
   if (buttons.justPressed(A_BUTTON | B_BUTTON)) gameState = STATE_MENU_MAIN;
