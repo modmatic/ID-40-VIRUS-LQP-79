@@ -9,24 +9,23 @@ Pickup pickups[PICKUP_MAX];
 
 // addPickup
 // tries to add a pickup to the world. returns true if succsessful
+
+
 bool addPickup(int x, int y)
 {
-  byte id;
-  
-  for(id=0; id<PICKUP_MAX; id++)
+  for (byte id = 0; id < PICKUP_MAX; id++)
   {
-    if(!pickups[id].type)
+    if (!pickups[id].type)
     {
       pickups[id].x = x;
       pickups[id].y = y;
-      pickups[id].type = random(0, 10);
-      if (pickups[id].type < 6) pickups[id].type = PICKUP_TYPE_COIN;
-      if (pickups[id].type > 5) pickups[id].type = PICKUP_TYPE_HEART;
-      if (pickups[id].type > 7) pickups[id].type = PICKUP_TYPE_INACTIVE;
+      pickups[id].type = pickupsAvailable[pickupsCounter];
+      pickupsCounter++;
+      if (pickupsCounter > 9) pickupsCounter == 0;
       return true;
     }
   }
-  
+
   return false;
 }
 
@@ -34,13 +33,11 @@ bool addPickup(int x, int y)
 // draws the entire list of pickups
 void drawPickups()
 {
-  byte id;
-  
-  for(id=0; id < PICKUP_MAX; id++)
+  for (byte id = 0; id < PICKUP_MAX; id++)
   {
     if (arduboy.everyXFrames(6)) pickups[id].frame++;
-    if(pickups[id].frame > 3) pickups[id].frame = 0;
-    if(!pickups[id].type)sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, collectables_plus_mask, pickups[id].frame + (6*(pickups[id].type - 1)));
+    if (pickups[id].frame > 5) pickups[id].frame = 0;
+    if (pickups[id].type > PICKUP_TYPE_INACTIVE) sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, collectables_plus_mask, pickups[id].frame + (6 * (pickups[id].type - 1)));
   }
 }
 
@@ -48,17 +45,16 @@ void drawPickups()
 // checks for collision against the player, and handles it
 void pickupCollision(int x, int y)
 {
-  byte id;
-  for(id=0; id < PICKUP_MAX; id++)
+  for (byte id = 0; id < PICKUP_MAX; id++)
   {
-    if(
+    if (
       ( pickups[id].type ) &&
       ( pickups[id].x < x + PLAYER_WIDTH ) &&
       ( pickups[id].x + PICKUP_WIDTH > x ) &&
       ( pickups[id].y < y + PLAYER_HEIGHT ) &&
       ( pickups[id].y + PICKUP_HEIGHT > y ))
     {
-      if(pickups[id].type == PICKUP_TYPE_HEART)
+      if (pickups[id].type == PICKUP_TYPE_HEART)
       {
         arduboy.tunes.tone(660, 20);
         playerHealthOffset(coolGirl, 1);
@@ -77,9 +73,7 @@ void pickupCollision(int x, int y)
 // clears the entire list of pickups
 void clearPickups()
 {
-  byte id;
-  
-  for(id=0; id<PICKUP_MAX; id++)
+  for (byte id = 0; id < PICKUP_MAX; id++)
   {
     pickups[id].type = PICKUP_TYPE_INACTIVE;
   }

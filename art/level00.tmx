@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="8" height="4" tilewidth="64" tileheight="64" nextobjectid="1">
+ <tileset firstgid="1" name="blockset" tilewidth="64" tileheight="64" tilecount="16" columns="4">
+  <image source="blockset.png" width="256" height="256"/>
+ </tileset>
+ <layer name="LEVEL00" width="8" height="4">
+  <data encoding="csv">
+1,2,2,2,2,2,2,3,
+4,10,6,16,5,16,16,6,
+4,10,6,5,5,5,5,6,
+7,8,9,8,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL01" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,2,2,2,2,2,2,3,
+4,6,16,16,4,10,10,15,
+1,3,5,8,1,2,5,6,
+7,8,8,8,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL02" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,2,2,2,2,2,2,3,
+4,6,16,16,16,4,5,15,
+1,3,5,5,5,1,5,15,
+7,8,8,8,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL03" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,12,12,12,2,2,2,3,
+4,14,11,14,1,16,3,6,
+4,14,11,11,7,5,9,6,
+7,13,13,13,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL04" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,16,2,12,12,2,16,3,
+4,10,4,14,14,6,10,6,
+4,10,1,12,12,3,10,6,
+7,8,8,13,13,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL05" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,2,2,2,2,2,2,3,
+4,14,4,16,1,3,14,15,
+4,11,7,8,4,15,14,15,
+7,13,13,13,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL06" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,16,2,3,2,2,16,3,
+4,5,10,5,5,5,10,15,
+1,2,2,5,10,2,2,3,
+7,8,8,9,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL07" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,2,2,2,2,2,2,3,
+4,16,3,5,5,1,16,6,
+4,5,9,12,12,7,5,6,
+7,8,8,8,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL08" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,2,2,2,2,2,2,3,
+4,16,2,5,3,5,3,6,
+4,10,5,7,9,5,9,6,
+7,8,8,8,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL09" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,2,2,2,2,2,2,3,
+4,1,2,16,16,2,10,6,
+4,10,8,8,8,8,9,6,
+7,8,8,8,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL10" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,3,16,3,16,3,16,3,
+4,5,5,15,5,5,5,15,
+4,15,5,5,5,15,5,6,
+7,9,8,9,8,9,8,9
+</data>
+ </layer>
+ <layer name="LEVEL11" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,1,2,2,2,2,2,3,
+4,2,16,4,16,1,16,6,
+4,7,8,4,5,7,8,15,
+7,8,8,8,8,7,8,9
+</data>
+ </layer>
+ <layer name="LEVEL12" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,1,2,2,2,2,2,3,
+4,4,16,7,9,16,3,6,
+4,7,8,8,8,8,9,6,
+7,8,8,8,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL13" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,16,1,16,1,16,2,3,
+4,5,4,5,4,5,5,6,
+4,2,4,5,5,3,11,15,
+7,8,8,8,7,9,13,9
+</data>
+ </layer>
+ <layer name="LEVEL14" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,2,2,2,2,2,2,3,
+7,9,16,2,16,3,10,15,
+4,5,5,8,8,9,10,15,
+7,8,8,8,8,8,8,9
+</data>
+ </layer>
+ <layer name="LEVEL15" width="8" height="4" visible="0">
+  <data encoding="csv">
+1,16,1,16,1,16,1,3,
+4,8,4,8,4,8,4,15,
+4,10,5,10,5,10,5,15,
+7,8,8,8,8,8,8,9
+</data>
+ </layer>
+</map>

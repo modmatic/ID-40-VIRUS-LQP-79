@@ -8,6 +8,8 @@
 Player coolGirl;
 
 int rollingScore = 0;
+byte pickupsAvailable[]= {PICKUP_TYPE_COIN, PICKUP_TYPE_COIN, PICKUP_TYPE_COIN, PICKUP_TYPE_INACTIVE, PICKUP_TYPE_COIN, PICKUP_TYPE_HEART, PICKUP_TYPE_INACTIVE, PICKUP_TYPE_COIN, PICKUP_TYPE_INACTIVE, PICKUP_TYPE_COIN};
+byte pickupsCounter;
 
 // method implementations  ///////////////////////////////////////////////////
 

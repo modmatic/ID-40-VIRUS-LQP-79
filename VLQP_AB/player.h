@@ -55,6 +55,8 @@ struct Player
 
 extern Player coolGirl;
 extern int rollingScore;
+extern byte pickupsAvailable[10];
+extern byte pickupsCounter;
 
 // method prototypes /////////////////////////////////////////////////////////
 

@@ -20,7 +20,7 @@ unsigned char getTileType(unsigned int posX, unsigned int posY) {
 			// Levels:read index (byte) poso block[] array
 			(pgm_read_byte(
 				// Levels:first index is level
-				&levels[level - 1]
+				&maps[level - 1]
 				// Levels:second index is map section (upper x/y bits)
 				[((posX >> 3) + (posY & 0xF8)) >> 1]
 			) & ((posX & 8) ? 0x0F:0xFF)) >> ((posX & 8) ? 0:4)
@@ -113,7 +113,7 @@ void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h)
   {
     for(tiley = y/TILE_HEIGHT; tiley < y/TILE_HEIGHT + 2 + tileYMax; tiley++)
     {
-      if(getTileType(tilex, tiley) > 2)
+      if(getTileType(tilex, tiley) > 10)
       {
         if(horizontal)
         {

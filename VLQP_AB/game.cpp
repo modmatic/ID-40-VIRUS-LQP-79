@@ -38,7 +38,7 @@ void stateGamePlaying()
 
 int readLevelData(unsigned char index)
 {
-  return pgm_read_byte(levelInfo + ((int)level-1) * 14 + (int)index) * PLAYER_WIDTH;
+  return pgm_read_byte(levelInfo + ((int)level-1) * 14 + (int)index) * TILE_WIDTH; //PLAYER_WIDTH
 }
 
 // stateGameNextLevel
@@ -62,6 +62,8 @@ void stateGamePrepareLevel()
   addSurvivor(readLevelData(8), readLevelData(9));
   addSurvivor(readLevelData(10), readLevelData(11));
   addSurvivor(readLevelData(12), readLevelData(13));
+
+  pickupsCounter = 0;
   
   gameState = STATE_GAME_NEXT_LEVEL;
 }
