@@ -9,8 +9,6 @@ Pickup pickups[PICKUP_MAX];
 
 // addPickup
 // tries to add a pickup to the world. returns true if succsessful
-
-
 bool addPickup(int x, int y)
 {
   for (byte id = 0; id < PICKUP_MAX; id++)
@@ -21,13 +19,13 @@ bool addPickup(int x, int y)
       pickups[id].y = y;
       pickups[id].type = pickupsAvailable[pickupsCounter];
       pickupsCounter++;
-      if (pickupsCounter > 9) pickupsCounter == 0;
+      if (pickupsCounter > 9) pickupsCounter = 0;
       return true;
     }
   }
-
   return false;
 }
+
 
 // drawPickups
 // draws the entire list of pickups
@@ -40,6 +38,7 @@ void drawPickups()
     if (pickups[id].type > PICKUP_TYPE_INACTIVE) sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, collectables_plus_mask, pickups[id].frame + (6 * (pickups[id].type - 1)));
   }
 }
+
 
 // pickupCollision
 // checks for collision against the player, and handles it
@@ -68,6 +67,7 @@ void pickupCollision(int x, int y)
     }
   }
 }
+
 
 // clearPickups
 // clears the entire list of pickups
