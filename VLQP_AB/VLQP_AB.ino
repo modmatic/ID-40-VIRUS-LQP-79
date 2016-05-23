@@ -49,7 +49,7 @@ void setup()
 
 void loop() {
   if (!(arduboy.nextFrame())) return;
-  buttons.poll();
+  arduboy.poll();
   arduboy.clearDisplay();
   ((FunctionPointer) pgm_read_word (&mainGameLoop[gameState]))();
   arduboy.display();

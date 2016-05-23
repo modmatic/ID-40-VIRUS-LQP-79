@@ -24,7 +24,6 @@
 
 extern Arduboy arduboy;
 extern Sprites sprites;
-extern SimpleButtons buttons;
 extern byte gameState;
 extern unsigned long scorePlayer;
 extern boolean soundYesNo;

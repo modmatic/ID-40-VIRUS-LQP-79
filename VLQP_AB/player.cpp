@@ -42,13 +42,13 @@ void updatePlayer(Player& obj)
   // input //
   ///////////
 
-  bool left = buttons.pressed(LEFT_BUTTON);
-  bool right = buttons.pressed(RIGHT_BUTTON);
-  bool up = buttons.pressed(UP_BUTTON);
-  bool down = buttons.pressed(DOWN_BUTTON);
+  bool left = arduboy.pressed(LEFT_BUTTON);
+  bool right = arduboy.pressed(RIGHT_BUTTON);
+  bool up = arduboy.pressed(UP_BUTTON);
+  bool down = arduboy.pressed(DOWN_BUTTON);
   
-  bool rungun = buttons.pressed(A_BUTTON);
-  bool standgun = buttons.pressed(B_BUTTON);
+  bool rungun = arduboy.pressed(A_BUTTON);
+  bool standgun = arduboy.pressed(B_BUTTON);
   bool strafegun = rungun;
   
   obj.walking = up || down || left || right;

@@ -116,15 +116,9 @@
 #define SPRITE_MASKED 1
 #define SPRITE_UNMASKED 2
 #define SPRITE_OVERWRITE 2
-// PLUS_MASK means that the mask data is included in the bitmap itself
-// 1st byte image, 2nd byte mask, 3rd byte image, 4th byte mask, etc.
-// The 2nd byte ask provides the masking data for the 1st byte of
-// image data.
 #define SPRITE_PLUS_MASK 3
 #define SPRITE_IS_MASK 250
 #define SPRITE_IS_MASK_ERASE 251
-// will select SPRITE_MASKED or SPRITE_UNMASKED depending on the presence
-// of mask (if one was passed to the draw function)
 #define SPRITE_AUTO_MODE 255
 
 class ArduboyAudio
@@ -174,8 +168,10 @@ class Arduboy : public Print
     void LCDCommandMode();
 
     uint8_t getInput();
+    void poll();
     boolean pressed(uint8_t buttons);
-    boolean not_pressed(uint8_t buttons);
+    boolean notPressed(uint8_t buttons);
+    boolean justPressed(uint8_t buttons);
     void start();
     void saveMuchPower();
     void idle();
@@ -202,11 +198,6 @@ class Arduboy : public Print
     void fillTriangle (int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint8_t color);
     void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint8_t color);
     void drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap, uint8_t color);
-    void drawSlowXYBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint8_t color);
-    void drawChar(int16_t x, int16_t y, unsigned char c, uint8_t color, uint8_t bg, uint8_t size);
-    void setCursor(int16_t x, int16_t y);
-    void setTextSize(uint8_t s);
-    void setTextWrap(boolean w);
     unsigned char* getBuffer();
     uint8_t width();
     uint8_t height();
@@ -240,6 +231,8 @@ class Arduboy : public Print
     uint16_t rawADC(byte adc_bits);
     volatile uint8_t *mosiport, *clkport, *csport, *dcport;
     uint8_t mosipinmask, clkpinmask, cspinmask, dcpinmask;
+    uint8_t currentButtonState = 0;
+    uint8_t previousButtonState = 0;
 
     // Adafruit stuff
   protected:
@@ -250,52 +243,14 @@ class Arduboy : public Print
 };
 
 
-class SimpleButtons
-{
-  public:
-    SimpleButtons(Arduboy &arduboy);
-
-    /// Poll the hardware buttons and tracks state over time
-    /**
-      This must be called before any of the other button member functions.  It should be called either in your main `loop()` or as part of the frame system (called pre-frame).
-    */
-    void poll();
-    boolean pressed(uint8_t buttons);
-    boolean notPressed(uint8_t buttons);
-    boolean justPressed(uint8_t button);
-
-  private:
-    uint8_t currentButtonState = 0;
-    uint8_t previousButtonState = 0;
-
-    Arduboy *arduboy;
-};
-
-/// base struct other Sprites inherit from
-struct SimpleSprite
-{
-  SimpleSprite(int x, int y, const uint8_t *bitmap);
-  int x, y;
-  const uint8_t *bitmap;
-  uint8_t frame = 0;
-  uint8_t drawMode = SPRITE_AUTO_MODE;
-};
-
-struct Sprite : public SimpleSprite
-{
-  Sprite(int x, int y, const uint8_t *bitmap);
-  Sprite(int x, int y, const uint8_t *bitmap, const uint8_t *mask);
-  const uint8_t *mask;
-  uint8_t maskFrame = 0;
-};
-
+/////////////////////////////////
+//      sprites by Dreamer3    //
+/////////////////////////////////
 class Sprites
 {
   public:
     Sprites(Arduboy &arduboy);
 
-    void draw(Sprite sprite);
-    void draw(SimpleSprite sprite);
     void draw(int16_t x, int16_t y, const uint8_t *bitmap);
     void draw(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask);
     void draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame);

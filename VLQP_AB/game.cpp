@@ -73,7 +73,7 @@ void stateGameNextLevel()
   drawNumbers(36, 36, 1, 0);
   sprites.drawSelfMasked(30, 8, nextLevel, 0);
   drawNumbers(82, 8, 1, 1);
-  if (buttons.justPressed(A_BUTTON | B_BUTTON))
+  if (arduboy.justPressed(A_BUTTON | B_BUTTON))
   {
     gameState = STATE_GAME_PLAYING;
   }
@@ -85,7 +85,7 @@ void stateGameOver()
 {
   sprites.drawSelfMasked(22, 8, gameOver, 0);
   drawNumbers(36, 36, 1, 0);
-  if (buttons.justPressed(A_BUTTON | B_BUTTON))
+  if (arduboy.justPressed(A_BUTTON | B_BUTTON))
   {
     gameState = STATE_MENU_MAIN;
   }

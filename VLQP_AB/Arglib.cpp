@@ -24,12 +24,6 @@ volatile const byte *score_cursor = 0;
 
 Arduboy::Arduboy() { }
 
-// store current and previous buttons state for frame based button events
-// you should be using nextFrame() in almost all cases, not calling this
-// directly
-SimpleButtons::SimpleButtons(Arduboy &a) {
-  arduboy = &a;
-}
 
 void Arduboy::start()
 {
@@ -74,6 +68,7 @@ void Arduboy::start()
   if (pressed(LEFT_BUTTON + UP_BUTTON))
     safeMode();
 #endif
+
 
   audio.setup();
   saveMuchPower();
@@ -878,101 +873,9 @@ void Arduboy::drawCompressed(int16_t sx, int16_t sy, const uint8_t *bitmap, uint
   }
 }
 
-// Draw images that are bit-oriented horizontally
-//
-// This requires a lot of additional CPU power and will draw images much
-// more slowly than drawBitmap where the images are stored in a format that
-// allows them to be directly written to the screen hardware fast. It is
-// recommended you use drawBitmap when possible.
-void Arduboy::drawSlowXYBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint8_t color) {
-  // no need to dar at all of we're offscreen
-  if (x + w < 0 || x > WIDTH - 1 || y + h < 0 || y > HEIGHT - 1)
-    return;
-
-  int16_t xi, yi, byteWidth = (w + 7) / 8;
-  for (yi = 0; yi < h; yi++) {
-    for (xi = 0; xi < w; xi++ ) {
-      if (pgm_read_byte(bitmap + yi * byteWidth + xi / 8) & (128 >> (xi & 7))) {
-        drawPixel(x + xi, y + yi, color);
-      }
-    }
-  }
-}
-
-
-void Arduboy::drawChar
-(int16_t x, int16_t y, unsigned char c, uint8_t color, uint8_t bg, uint8_t size)
-{
-
-  if ((x >= WIDTH) ||         // Clip right
-      (y >= HEIGHT) ||        // Clip bottom
-      ((x + 5 * size - 1) < 0) ||   // Clip left
-      ((y + 8 * size - 1) < 0)    // Clip top
-     )
-  {
-    return;
-  }
-
-  for (int8_t i = 0; i < 6; i++ )
-  {
-    uint8_t line;
-    if (i == 5)
-    {
-      line = 0x0;
-    }
-    else
-    {
-      // line = pgm_read_byte(font+(c*5)+i);
-    }
-
-    for (int8_t j = 0; j < 8; j++)
-    {
-      if (line & 0x1)
-      {
-        if (size == 1) // default size
-        {
-          drawPixel(x + i, y + j, color);
-        }
-        else  // big size
-        {
-          fillRect(x + (i * size), y + (j * size), size, size, color);
-        }
-      }
-      else if (bg != color)
-      {
-        if (size == 1) // default size
-        {
-          drawPixel(x + i, y + j, bg);
-        }
-        else
-        { // big size
-          fillRect(x + i * size, y + j * size, size, size, bg);
-        }
-      }
-
-      line >>= 1;
-    }
-  }
-}
-
-void Arduboy::setCursor(int16_t x, int16_t y)
-{
-  cursor_x = x;
-  cursor_y = y;
-}
-
-void Arduboy::setTextSize(uint8_t s)
-{
-  textsize = (s > 0) ? s : 1;
-}
-
-void Arduboy::setTextWrap(boolean w)
-{
-  wrap = w;
-}
 
 size_t Arduboy::write(uint8_t c)
-{
+{/*
   if (c == '\n')
   {
     cursor_y += textsize * 8;
@@ -984,7 +887,7 @@ size_t Arduboy::write(uint8_t c)
   }
   else
   {
-    drawChar(cursor_x, cursor_y, c, 1, 0, textsize);
+    //drawChar(cursor_x, cursor_y, c, 1, 0, textsize);
     cursor_x += textsize * 6;
     if (wrap && (cursor_x > (WIDTH - textsize * 6)))
     {
@@ -992,6 +895,7 @@ size_t Arduboy::write(uint8_t c)
       cursor_x = 0;
     }
   }
+  */
 }
 
 void Arduboy::display()
@@ -1027,6 +931,13 @@ uint8_t Arduboy::height() {
   return HEIGHT;
 }
 
+
+void Arduboy::poll()
+{
+  previousButtonState = currentButtonState;
+  currentButtonState = getInput();
+}
+
 // returns true if the button mask passed in is pressed
 //
 //   if (pressed(LEFT_BUTTON + A_BUTTON))
@@ -1039,11 +950,21 @@ boolean Arduboy::pressed(uint8_t buttons)
 // returns true if the button mask passed in not pressed
 //
 //   if (not_pressed(LEFT_BUTTON))
-boolean Arduboy::not_pressed(uint8_t buttons)
+boolean Arduboy::notPressed(uint8_t buttons)
 {
   uint8_t button_state = getInput();
   return (button_state & buttons) == 0;
 }
+
+// returns true if a button has just been pressed
+// if the button has been held down for multiple frames this will return
+// false.  You should only use this to poll a single button.
+boolean Arduboy::justPressed(uint8_t button)
+{
+  uint8_t button_state = getInput();
+  return (!(previousButtonState & button) && (currentButtonState & button));
+}
+
 
 
 uint8_t Arduboy::getInput()
@@ -1077,29 +998,6 @@ void Arduboy::swap(int16_t& a, int16_t& b) {
   b = temp;
 }
 
-
-void SimpleButtons::poll()
-{
-  previousButtonState = currentButtonState;
-  currentButtonState = arduboy->getInput();
-}
-// returns true if a button has just been pressed
-// if the button has been held down for multiple frames this will return
-// false.  You should only use this to poll a single button.
-boolean SimpleButtons::justPressed(uint8_t button)
-{
-  return (!(previousButtonState & button) && (currentButtonState & button));
-}
-
-boolean SimpleButtons::pressed(uint8_t buttons)
-{
-  return (currentButtonState & buttons) == buttons;
-}
-
-boolean SimpleButtons::notPressed(uint8_t buttons)
-{
-  return (currentButtonState & buttons) == 0;
-}
 
 /* AUDIO */
 
@@ -1389,24 +1287,16 @@ ISR(TIMER3_COMPA_vect) {  // TIMER 3
 }
 
 
-///////////////
+
+
+
+/////////////////////////
+// Sprites by Dreamer3 //
+/////////////////////////
 Sprites::Sprites(Arduboy &a)
 {
   arduboy = &a;
   sBuffer = arduboy->getBuffer();
-}
-
-SimpleSprite::SimpleSprite(int x, int y, const uint8_t *bitmap) :
-  x(x), y(y), bitmap(bitmap)
-{
-}
-
-Sprite::Sprite(int x, int y, const uint8_t *bitmap) :
-  SimpleSprite(x, y, bitmap) {
-}
-
-Sprite::Sprite(int x, int y, const uint8_t *bitmap, const uint8_t *mask) :
-  SimpleSprite(x, y, bitmap), mask(mask) {
 }
 
 // new API
@@ -1438,40 +1328,7 @@ void Sprites::drawPlusMask(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t 
 }
 
 
-// older api and common functions
-
-void Sprites::draw(Sprite sprite)
-{
-  draw(sprite.x, sprite.y,
-       sprite.bitmap, sprite.frame,
-       sprite.mask, sprite.maskFrame,
-       sprite.drawMode);
-}
-
-void Sprites::draw(SimpleSprite sprite)
-{
-  draw(sprite.x, sprite.y,
-       sprite.bitmap, sprite.frame,
-       NULL, 0,
-       sprite.drawMode);
-}
-
-void Sprites::draw(int16_t x, int16_t y, const uint8_t *bitmap)
-{
-  draw(x, y, bitmap, 0, NULL, 0, SPRITE_AUTO_MODE);
-}
-
-void Sprites::draw(int16_t x, int16_t y, const uint8_t *bitmap, const uint8_t *mask)
-{
-  draw(x, y, bitmap, 0, mask, 0, SPRITE_AUTO_MODE);
-}
-
-void Sprites::draw(int16_t x, int16_t y, const uint8_t *bitmap, uint8_t frame)
-{
-  draw(x, y, bitmap, frame, NULL, 0, SPRITE_AUTO_MODE);
-}
-
-
+//common functions
 void Sprites::draw(int16_t x, int16_t y,
                    const uint8_t *bitmap, uint8_t frame,
                    const uint8_t *mask, uint8_t sprite_frame,
@@ -1505,11 +1362,6 @@ void Sprites::draw(int16_t x, int16_t y,
 
   drawBitmap(x, y, bitmap, mask, width, height, drawMode);
 }
-
-// should we still even support these modes?
-// void Sprites::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint8_t color) {
-// drawComplexBitmap(x, y, bitmap, NULL, w, h, color ? SPRITE_IS_MASK : SPRITE_IS_MASK_ERASE);
-// }
 
 void Sprites::drawBitmap(int16_t x, int16_t y,
                          const uint8_t *bitmap, const uint8_t *mask,
@@ -1790,7 +1642,6 @@ void Sprites::drawBitmap(int16_t x, int16_t y,
         [sprite_ofs_jump] "r" ((w-rendered_width)*2),
         [yOffset] "r" (yOffset),
         [mul_amt] "r" (mul_amt)
-
         :
       );
       break;
@@ -1798,10 +1649,10 @@ void Sprites::drawBitmap(int16_t x, int16_t y,
   }
 }
 
+
 /////////////////////////////////
 // Basic Collision by Dreamer3 //
 /////////////////////////////////
-
 bool Physics::collide(Point point, Rect rect)
 {
   // does point fall within the bounds of rect
