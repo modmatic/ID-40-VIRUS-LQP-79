@@ -217,7 +217,7 @@ void playerHealthOffset(Player& obj, char amount)
     if(amount < 0)
     {
       obj.flashTime = PLAYER_FLASH_TIME;
-      arduboy.tunes.tone(880, 20);
+      arduboy.audio.tone(880, 20);
     }
     
     if(obj.health > PLAYER_MAXHEALTH)

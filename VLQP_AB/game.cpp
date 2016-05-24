@@ -38,7 +38,7 @@ void stateGamePlaying()
 
 int readLevelData(unsigned char index)
 {
-  return pgm_read_byte(levelInfo + ((int)level-1) * 14 + (int)index) * TILE_WIDTH; //PLAYER_WIDTH
+  return pgm_read_byte(survivorLocation + ((int)level-1) * 14 + (int)index) * TILE_WIDTH; //PLAYER_WIDTH
 }
 
 // stateGameNextLevel

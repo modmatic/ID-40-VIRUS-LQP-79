@@ -93,7 +93,7 @@ bool collectSurvivor(Element& obj)
 {
   byte id;
   obj.active = false;
-  arduboy.tunes.tone(660, 20);
+  arduboy.audio.tone(660, 20);
 
   for (id = 0; id < SURVIVOR_MAX; id++)
   {

@@ -48,7 +48,7 @@ void addBullet(int x, int y, byte direction, char vx, char vy)
       vx + BulletXVelocities[direction],
       vy + BulletXVelocities[(direction+6)%8]))
     {
-      arduboy.tunes.tone(440, 20);
+      arduboy.audio.tone(440, 20);
       break;
     }
   }

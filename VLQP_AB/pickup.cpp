@@ -55,12 +55,12 @@ void pickupCollision(int x, int y)
     {
       if (pickups[id].type == PICKUP_TYPE_HEART)
       {
-        arduboy.tunes.tone(660, 20);
+        arduboy.audio.tone(660, 20);
         playerHealthOffset(coolGirl, 1);
       }
       else
       {
-        arduboy.tunes.tone(880, 20);
+        arduboy.audio.tone(880, 20);
         rollingScore += 100;
       }
       pickups[id].type = PICKUP_TYPE_INACTIVE;
