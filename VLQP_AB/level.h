@@ -41,7 +41,7 @@ void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h);
 
 // format: <survivor1x> <survivor1y> <survivor2x> <survivor2y> <survivor3x> <survivor3y> <survivor4x> <survivor4y> <survivor5x> <survivor5y>
 PROGMEM const unsigned char survivorLocation[] = {
-  24, 29, 17, 16, 47, 11,  2, 28, 58, 28,
+  24, 29, 4, 12, 47, 11,  2, 28, 58, 28,
   4,  6, 10,  9,  0,  0,  0,  0,  0,  0,
   8, 12,  2,  9,  0,  0,  0,  0,  0,  0,
   4,  6, 10,  9,  0,  0,  0,  0,  0,  0,
@@ -64,7 +64,7 @@ PROGMEM const unsigned char survivorLocation[] = {
 PROGMEM const unsigned char playerAndExitLocation[] =
 {
   // first run
-  2,  2, 10, 0,
+  16,  15, 21, 0,
   10, 1, 4,  2,
   4,  2, 10, 1,
   10, 1, 4,  2,
