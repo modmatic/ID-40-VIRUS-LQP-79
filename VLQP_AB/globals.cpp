@@ -35,3 +35,4 @@ short burp(short start, short goal, unsigned char step)
   
   return start;
 }
+

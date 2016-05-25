@@ -29,16 +29,21 @@ void stateGamePlaying()
   drawBullets();
   drawPlayer(coolGirl);
   //drawWeapons();
-  
+
   drawNumbers(86, 0, 0, 0);
   drawLife(coolGirl);
   drawAmountSurvivors();
   //drawZombieBlips();
 }
 
-int readLevelData(unsigned char index)
+int readSurvivorData(unsigned char index)
 {
-  return pgm_read_byte(survivorLocation + ((int)level-1) * 14 + (int)index) * TILE_WIDTH; //PLAYER_WIDTH
+  return pgm_read_byte(survivorLocation + ((int)level - 1) * 10 + (int)index) * TILE_WIDTH; //PLAYER_WIDTH
+}
+
+int readPlayerAndExitData(unsigned char index)
+{
+  return pgm_read_byte(playerAndExitLocation + ((int)level - 1) * 4 + (int)index) * TILE_WIDTH; //PLAYER_WIDTH
 }
 
 // stateGameNextLevel
@@ -50,21 +55,20 @@ void stateGamePrepareLevel()
   clearZombies();
 
   level++;
-  level = (level-1)%NUM_LEVELS + 1;
+  level = (level - 1) % NUM_LEVELS + 1;
   displayLevel++;
 
-  coolGirl.x = readLevelData(0);
-  coolGirl.y = readLevelData(1);
-  setDoorPosition(readLevelData(2), readLevelData(3));
-  
-  addSurvivor(readLevelData(4), readLevelData(5));
-  addSurvivor(readLevelData(6), readLevelData(7));
-  addSurvivor(readLevelData(8), readLevelData(9));
-  addSurvivor(readLevelData(10), readLevelData(11));
-  addSurvivor(readLevelData(12), readLevelData(13));
+  coolGirl.x = readPlayerAndExitData(0);
+  coolGirl.y = readPlayerAndExitData(1);
+  setDoorPosition(readPlayerAndExitData(2), readPlayerAndExitData(3));
+
+  for (byte i = 0; i < SURVIVOR_MAX; i++)
+  {
+    addSurvivor(readSurvivorData(2 * i), readSurvivorData((2 * i) + 1));
+  }
 
   pickupsCounter = 0;
-  
+
   gameState = STATE_GAME_NEXT_LEVEL;
 }
 
