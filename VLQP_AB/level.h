@@ -25,7 +25,7 @@
 #define BLOCK_OFFSET              64
 #define LEVEL_OFFSET              16
 
-#define NUM_LEVELS                64
+#define NUM_LEVELS                16
 
 // method prototypes /////////////////////////////////////////////////////////
 

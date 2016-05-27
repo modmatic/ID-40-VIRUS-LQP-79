@@ -7,12 +7,12 @@
 Door exitDoor;
 
 // method implementations ////////////////////////////////////////////////////
-byte checkDoorOrientation()
+int checkDoorOrientation()
 {
-  if (exitDoor.y == 0) return EXIT_FACING_SOUTH;
-  if (exitDoor.x == 62) return EXIT_FACING_WEST;
-  if (exitDoor.y == 30) return EXIT_FACING_NORTH;
-  if (exitDoor.x == 0) return EXIT_FACING_EAST;
+  if (exitDoor.y == EXIT_ON_SOUTH_BORDER) return EXIT_FACING_SOUTH;
+  if (exitDoor.x == EXIT_ON_WEST_BORDER) return EXIT_FACING_WEST;
+  if (exitDoor.y == EXIT_ON_NORTH_BORDER) return EXIT_FACING_NORTH;
+  if (exitDoor.x == EXIT_ON_EAST_BORDER) return EXIT_FACING_EAST;
 }
 
 void setDoorPosition(int x, int y)

@@ -13,6 +13,12 @@
 #define EXIT_FACING_NORTH       2
 #define EXIT_FACING_EAST        3
 
+#define EXIT_ON_SOUTH_BORDER    0
+#define EXIT_ON_WEST_BORDER     496
+#define EXIT_ON_NORTH_BORDER    240
+#define EXIT_ON_EAST_BORDER     0
+
+
 // structures ////////////////////////////////////////////////////////////////
 
 struct Door {

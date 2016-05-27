@@ -53,16 +53,16 @@ void stateGamePrepareLevel()
   clearSurvivors();
   clearPickups();
   clearZombies();
-
+  
   level++;
   level = (level - 1) % NUM_LEVELS + 1;
   displayLevel++;
-
+  
   coolGirl.x = readPlayerAndExitData(0);
   coolGirl.y = readPlayerAndExitData(1);
   setDoorPosition(readPlayerAndExitData(2), readPlayerAndExitData(3));
 
-  for (byte i = 0; i < SURVIVOR_MAX; i++)
+  for (byte i = 0; i < ((displayLevel-1) /NUM_LEVELS) + 2; i++)
   {
     addSurvivor(readSurvivorData(2 * i), readSurvivorData((2 * i) + 1));
   }
