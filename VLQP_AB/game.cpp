@@ -28,7 +28,6 @@ void stateGamePlaying()
   drawSurvivors();
   drawBullets();
   drawPlayer(coolGirl);
-  //drawWeapons();
 
   drawNumbers(86, 0, 0, 0);
   drawLife(coolGirl);

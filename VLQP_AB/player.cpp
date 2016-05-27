@@ -52,7 +52,7 @@ void updatePlayer(Player& obj)
   bool strafegun = rungun;
   
   obj.walking = up || down || left || right;
-  obj.walking = (standgun && !rungun) ? false : obj.walking;
+  //obj.walking = (standgun && !rungun) ? false : obj.walking;
   
   ////////////
   // timers //
@@ -78,7 +78,7 @@ void updatePlayer(Player& obj)
     vx = 1;
  
   // update position
-  if(strafegun || !standgun)
+  //if(strafegun || !standgun)
     obj.x += vx;
   
   // collide with zombies
@@ -98,7 +98,7 @@ void updatePlayer(Player& obj)
     vy = 1;
   
   // update position
-  if(strafegun || !standgun)
+  //if(strafegun || !standgun)
     obj.y += vy;
   
   // collide with zombies
