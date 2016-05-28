@@ -15,6 +15,8 @@ bool addPickup(int x, int y)
   {
     if (!pickups[id].type)
     {
+      pickups[id].isVisible = true;
+      pickups[id].counter = 0;
       pickups[id].x = x;
       pickups[id].y = y;
       pickups[id].type = pickupsAvailable[pickupsCounter];
@@ -33,9 +35,15 @@ void drawPickups()
 {
   for (byte id = 0; id < PICKUP_MAX; id++)
   {
-    if (arduboy.everyXFrames(6)) pickups[id].frame++;
+    if (arduboy.everyXFrames(6))
+    {
+      pickups[id].counter++;
+      pickups[id].frame++;
+    }
+    if ((arduboy.everyXFrames(2)) && (pickups[id].counter > 25)) pickups[id].isVisible = !pickups[id].isVisible;
+    if (pickups[id].counter > 30) pickups[id].type = PICKUP_TYPE_INACTIVE;
     if (pickups[id].frame > 5) pickups[id].frame = 0;
-    if (pickups[id].type > PICKUP_TYPE_INACTIVE) sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, collectables_plus_mask, pickups[id].frame + (6 * (pickups[id].type - 1)));
+    if ((pickups[id].type > PICKUP_TYPE_INACTIVE) && pickups[id].isVisible) sprites.drawPlusMask(pickups[id].x - mapPositionX, pickups[id].y - mapPositionY, collectables_plus_mask, pickups[id].frame + (6 * (pickups[id].type - 1)));
   }
 }
 

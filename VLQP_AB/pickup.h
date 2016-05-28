@@ -23,6 +23,8 @@ struct Pickup
   int y;
   byte type;
   byte frame;
+  byte counter;
+  boolean isVisible;
 };
 
 
