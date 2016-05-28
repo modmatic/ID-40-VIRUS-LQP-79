@@ -32,6 +32,7 @@ void stateGamePlaying()
   drawNumbers(86, 0, FONT_SMALL, DATA_SCORE);
   drawLife(coolGirl);
   drawAmountSurvivors();
+  drawCoolDown();
   //drawZombieBlips();
 }
 

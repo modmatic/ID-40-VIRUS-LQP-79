@@ -21,16 +21,18 @@ extern int mapPositionY;
 #define PLAYER_FACING_EAST        6
 #define PLAYER_FACING_SOUTHEAST   7
 
-#define PLAYER_WIDTH  16
-#define PLAYER_HEIGHT 16
+#define PLAYER_WIDTH              16
+#define PLAYER_HEIGHT             16
 
-#define PLAYER_SCREEN_XMIN        (64-12)
-#define PLAYER_SCREEN_XMAX        (64+4)
-#define PLAYER_SCREEN_YMIN        (32-8)
-#define PLAYER_SCREEN_YMAX        (32-8)
+#define PLAYER_SCREEN_XMIN        52 //(64-12)
+#define PLAYER_SCREEN_XMAX        68 //(64+4)
+#define PLAYER_SCREEN_YMIN        24 //(32-8)
+#define PLAYER_SCREEN_YMAX        24 //(32-8)
 
-#define PLAYER_FLASH_TIME 60
-#define PLAYER_MAXHEALTH 4
+#define PLAYER_FLASH_TIME         60
+#define PLAYER_MAXHEALTH          4
+
+#define WEAPON_OVERHEAT           35
 
 
 // structures ////////////////////////////////////////////////////////////////
@@ -48,6 +50,9 @@ struct Player
     byte flashTime;
     byte camDirection;
     byte diagonalTime;
+    boolean coolDownVisible;
+    boolean overHeated;
+    byte coolDownCounter;
 };
 
 
@@ -65,5 +70,6 @@ void drawPlayer(Player& obj);
 void playerHealthOffset(Player& obj, char amount);
 void initializePlayer(Player& obj);
 void drawLife(Player& obj);
+void drawCoolDown();
 
 #endif
