@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "globals.h"
 #include "bitmaps.h"
+#include "door.h"
 
 // constants /////////////////////////////////////////////////////////////////
 
@@ -19,8 +20,13 @@
 #define TILE_WIDTH                8
 #define TILE_HEIGHT               8
 
-#define SCORE_SMALL_FONT          0
-#define SCORE_BIG_FONT            1
+#define FONT_TINY                 0
+#define FONT_SMALL                1
+#define FONT_BIG                  2
+
+#define DATA_TIMER                0
+#define DATA_SCORE                1
+#define DATA_LEVEL                2
 
 #define BLOCK_OFFSET              64
 #define LEVEL_OFFSET              16
@@ -32,8 +38,10 @@
 
 void drawLevel();
 unsigned char getTileType(unsigned int x, unsigned int y);
-void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, boolean ScoreOrLevel);
+void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, byte timerOrScoreOrLevel);
 void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h);
+
+extern Door exitDoor;
 
 
 // data //////////////////////////////////////////////////////////////////////

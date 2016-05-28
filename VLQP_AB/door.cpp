@@ -1,5 +1,4 @@
 #include "door.h"
-
 #include "player.h"
 
 // globals ///////////////////////////////////////////////////////////////////
@@ -21,6 +20,8 @@ void setDoorPosition(int x, int y)
   exitDoor.y = y;
   exitDoor.orientation = checkDoorOrientation();
   exitDoor.active = false;
+  exitDoor.counter = 255;
+  exitDoor.loseLifeCounter = 255;
 }
 
 void showDoor()
@@ -42,13 +43,30 @@ void drawDoor()
 {
   if (exitDoor.active)
   {
-    if (arduboy.everyXFrames(10))exitDoor.frame++;
+    if ((!exitDoor.counter) && (exitDoor.loseLifeCounter > 0))
+    {
+      exitDoor.loseLifeCounter--;
+    }
+    if (exitDoor.loseLifeCounter < 1)
+    {
+      playerHealthOffset(coolGirl, -1);
+      exitDoor.loseLifeCounter = 255;
+    }
+    if (arduboy.everyXFrames(10))
+    {
+      exitDoor.frame++;
+      if (exitDoor.counter > 0)
+      {
+        exitDoor.counter--;
+      }
+    }
+    if (exitDoor.counter == 1) playerHealthOffset(coolGirl, -1);
     if (exitDoor.frame > 3)exitDoor.frame = 0;
     for (byte x = 0; x < 2; x++)
     {
       for (byte y = 0; y < 2; y++)
       {
-        sprites.drawPlusMask(exitDoor.x - mapPositionX +(x*8), exitDoor.y - mapPositionY + (y*8), exit_plus_mask, exitDoor.frame + 4 * exitDoor.orientation);
+        sprites.drawPlusMask(exitDoor.x - mapPositionX + (x * 8), exitDoor.y - mapPositionY + (y * 8), exit_plus_mask, exitDoor.frame + 4 * exitDoor.orientation);
       }
     }
   }

@@ -18,7 +18,7 @@ byte amountActiveSurvivors = 0;
 // sets the position of a survivor, and enables that instance
 bool setSurvivor(Element& obj, int x, int y)
 {
-  if(!obj.active && (!(x==0 && y==0)))
+  if (!obj.active && (!(x == 0 && y == 0)))
   {
     obj.x = x;
     obj.y = y;
@@ -37,7 +37,7 @@ void addSurvivor(int x, int y)
 
   for (id = 0; id < SURVIVOR_MAX; id++)
   {
-    if(setSurvivor(survivors[id], x, y))
+    if (setSurvivor(survivors[id], x, y))
     {
       break;
     }
@@ -122,11 +122,16 @@ void drawAmountSurvivors()
   {
     sprites.drawPlusMask(40 + amountSurvivors * 9, 0, HUD_plus_mask, 1);
   }
-  if (!countAmountActiveSurvivors() && showHelp)
+  if (!countAmountActiveSurvivors())
   {
-    
-    sprites.drawPlusMask(55, 0, HUD_plus_mask, 2);
-    sprites.drawPlusMask(64, 0, HUD_plus_mask, 3);
+    if (showHelp)
+    {
+    sprites.drawPlusMask(45, 0, HUD_plus_mask, 2);  //55
+    sprites.drawPlusMask(54, 0, HUD_plus_mask, 3);  //64
+    }
+    sprites.drawPlusMask(65, 0, HUD_plus_mask, 4);
+    sprites.drawPlusMask(74, 0, HUD_plus_mask, 5);
+    drawNumbers(68, 1, FONT_TINY, DATA_TIMER);
   }
 }
 
@@ -145,12 +150,12 @@ byte countAmountActiveSurvivors()
 void survivorCollide(int x, int y)
 {
   byte id;
-  
-  for(id=0; id<SURVIVOR_MAX; id++)
+
+  for (id = 0; id < SURVIVOR_MAX; id++)
   {
-    if(survivorCollision(survivors[id], x, y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if (survivorCollision(survivors[id], x, y, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      if(collectSurvivor(survivors[id]))
+      if (collectSurvivor(survivors[id]))
       {
         showDoor();
       }

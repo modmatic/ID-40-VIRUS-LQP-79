@@ -27,6 +27,8 @@ struct Door {
   byte active;
   byte orientation;
   byte frame;
+  byte counter;
+  byte loseLifeCounter;
 };
 
 // globals ///////////////////////////////////////////////////////////////////
