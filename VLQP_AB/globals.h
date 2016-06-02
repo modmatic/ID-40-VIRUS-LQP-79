@@ -27,6 +27,7 @@ extern Sprites sprites;
 extern byte gameState;
 extern unsigned long scorePlayer;
 extern boolean soundYesNo;
+extern byte globalCounter;
 
 #endif
 

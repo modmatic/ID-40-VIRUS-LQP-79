@@ -4,9 +4,7 @@
 // globals ///////////////////////////////////////////////////////////////////
 
 byte menuSelection = STATE_MENU_PLAY;
-byte counter = 0;
-byte slideCount01 = 0;
-byte slideCount02 = 0;
+byte slideCounter = 0;
 
 // method implementations ////////////////////////////////////////////////////
 void drawTitleScreen()
@@ -18,23 +16,23 @@ void drawTitleScreen()
 
 void setSlidersToZero()
 {
-  slideCount02 = 0;
-  slideCount01 = 0;
+  globalCounter = 0;
+  slideCounter = 0;
 }
 
 
 void makeItSlide()
 {
-  slideCount01++;
-  if (slideCount01 > 22)
+  slideCounter++;
+  if (slideCounter > 22)
   {
-    slideCount02++;
-    slideCount01 = 22;
+    globalCounter++;
+    slideCounter = 22;
   }
 
-  if (slideCount02 > 5)
+  if (globalCounter > 5)
   {
-    slideCount02 = 5;
+    globalCounter = 5;
   }
 }
 
@@ -42,8 +40,12 @@ void stateMenuIntro()
 {
   for (byte i = 0; i < 4; i++) sprites.drawSelfMasked(32 * i, 10, TEAMarg, i);
   sprites.drawSelfMasked(43, 50, TEAM_argPart5, 0);
-  counter++;
-  if (counter > 180) gameState = STATE_MENU_MAIN;
+  globalCounter++;
+  if (globalCounter > 180)
+  {
+    globalCounter = 0;
+    gameState = STATE_MENU_MAIN;
+  }
 }
 
 void stateMenuMain()
@@ -51,26 +53,26 @@ void stateMenuMain()
   drawTitleScreen();
   for (byte i = 0; i < 3; i++)
   {
-    sprites.drawOverwrite(127 - slideCount01 + (8 * i) , 25, smallMask, 0);
+    sprites.drawOverwrite(127 - slideCounter + (8 * i) , 25, smallMask, 0);
   }
   if (menuSelection == 2) sprites.drawOverwrite(98 , 25, smallMask, 0);
   for (byte i = 0; i < 4; i++)
   {
     if (((2 + i) - menuSelection) != 0)
     {
-      sprites.drawSelfMasked(128 - slideCount01, 25 + (9 * i), menuText, i);
+      sprites.drawSelfMasked(128 - slideCounter, 25 + (9 * i), menuText, i);
     }
-    if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(128 - slideCount01 - slideCount02, 25 + (9 * i), menuText, i);
+    if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(128 - slideCounter - globalCounter, 25 + (9 * i), menuText, i);
   }
   if (arduboy.justPressed(DOWN_BUTTON) && (menuSelection < 5))
   {
     menuSelection++;
-    slideCount02 = 0;
+    globalCounter = 0;
   }
   if (arduboy.justPressed(UP_BUTTON) && (menuSelection > 2))
   {
     menuSelection--;
-    slideCount02 = 0;
+    globalCounter = 0;
   }
   if (arduboy.justPressed(A_BUTTON | B_BUTTON))
   {
@@ -113,18 +115,18 @@ void stateMenuSoundfx()
   drawTitleScreen();
   for (byte i = 0; i < 3; i++)
   {
-    sprites.drawOverwrite(127 - slideCount01 + (8 * i) , 25, smallMask, 0);
+    sprites.drawOverwrite(127 - slideCounter + (8 * i) , 25, smallMask, 0);
   }
 
   if (arduboy.justPressed(DOWN_BUTTON))
   {
     soundYesNo = true;
-    slideCount02 = 0;
+    globalCounter = 0;
   }
   if (arduboy.justPressed(UP_BUTTON))
   {
     soundYesNo = false;
-    slideCount02 = 0;
+    globalCounter = 0;
   }
   if (arduboy.justPressed(A_BUTTON | B_BUTTON))
   {
@@ -133,18 +135,18 @@ void stateMenuSoundfx()
     gameState = STATE_MENU_MAIN;
   }
 
-  sprites.drawSelfMasked(128 - slideCount01, 25 , menuText, 4);
+  sprites.drawSelfMasked(128 - slideCounter, 25 , menuText, 4);
   if (soundYesNo == true)
   {
     arduboy.audio.on();
-    sprites.drawSelfMasked(128 - slideCount01, 34, menuText, 5);
-    sprites.drawSelfMasked(128 - slideCount01 - slideCount02, 43, menuText, 6);
+    sprites.drawSelfMasked(128 - slideCounter, 34, menuText, 5);
+    sprites.drawSelfMasked(128 - slideCounter - globalCounter, 43, menuText, 6);
   }
   else
   {
     arduboy.audio.off();
-    sprites.drawSelfMasked(128 - slideCount01, 43, menuText, 6);
-    sprites.drawSelfMasked(128 - slideCount01 - slideCount02, 34, menuText, 5);
+    sprites.drawSelfMasked(128 - slideCounter, 43, menuText, 6);
+    sprites.drawSelfMasked(128 - slideCounter - globalCounter, 34, menuText, 5);
   }
   makeItSlide();
 }
