@@ -21,7 +21,7 @@ Bullet bullets[BULLET_MAX];
 // sets the position and the velocity of a bullet
 bool setBullet(Bullet& obj, int x, int y, char vx, char vy)
 {
-  if(!obj.active)
+  if (!obj.active)
   {
     obj.x = x;
     obj.y = y;
@@ -38,15 +38,15 @@ bool setBullet(Bullet& obj, int x, int y, char vx, char vy)
 void addBullet(int x, int y, byte direction, char vx, char vy)
 {
   byte id;
-  
-  for(id=0; id<BULLET_MAX; id++)
+
+  for (id = 0; id < BULLET_MAX; id++)
   {
-    if(setBullet(
-      bullets[id],
-      x - BULLET_WIDTH/2,
-      y - BULLET_HEIGHT/2,
-      vx + BulletXVelocities[direction],
-      vy + BulletXVelocities[(direction+6)%8]))
+    if (setBullet(
+          bullets[id],
+          x - BULLET_WIDTH / 2,
+          y - BULLET_HEIGHT / 2,
+          vx + BulletXVelocities[direction],
+          vy + BulletXVelocities[(direction + 6) % 8]))
     {
       arduboy.audio.tone(440, 20);
       break;
@@ -60,28 +60,34 @@ void addBullet(int x, int y, byte direction, char vx, char vy)
 void updateBullet(Bullet& obj)
 {
   byte id;
-  
-  if(obj.active)
+
+  if (obj.active)
   {
     // horizontal physics
     obj.x += obj.vx;
-    
+
     // vertical physics
     obj.y += obj.vy;
-    
+
     // collide with zombies
-    for(id=0; id<ZOMBIE_MAX; id++)
+    for (id = 0; id < ZOMBIE_MAX; id++)
     {
-      if(zombieCollision(zombies[id], obj.x, obj.y, BULLET_WIDTH, BULLET_HEIGHT))
+      if (zombieCollision(zombies[id], obj.x, obj.y, BULLET_WIDTH, BULLET_HEIGHT))
       {
         obj.active = false;
         zombieHealthOffset(zombies[id], -1);
         break;
       }
     }
-    
+
+
+    if (getTileType(obj.x / TILE_WIDTH, obj.y / TILE_HEIGHT) > 10)
+    {
+      obj.active = false;
+    }
+
     // delete if gone off screen
-    if((obj.x < mapPositionX) || (obj.y < mapPositionY) || (obj.x > WIDTH + mapPositionX) || (obj.y > HEIGHT + mapPositionY))
+    if ((obj.x < mapPositionX) || (obj.y < mapPositionY) || (obj.x > WIDTH + mapPositionX) || (obj.y > HEIGHT + mapPositionY))
     {
       obj.active = false;
     }
@@ -94,14 +100,12 @@ void updateBullet(Bullet& obj)
 void updateBullets()
 {
   byte id;
-  
-  for(id=0; id<BULLET_MAX; id++)
+
+  for (id = 0; id < BULLET_MAX; id++)
   {
     updateBullet(bullets[id]);
   }
 }
-
-
 
 
 // drawBullets
@@ -110,17 +114,17 @@ void drawBullets()
 {
   byte id;
   int x, y;
-  
-  for(id=0; id<BULLET_MAX; id++)
+
+  for (id = 0; id < BULLET_MAX; id++)
   {
     Bullet& bull = bullets[id];
-    
-    if(!bull.active) continue;
+
+    if (!bull.active) continue;
     x = bull.x - mapPositionX;
     y = bull.y - mapPositionY;
-    if((x>0) && (y>0) && (x<WIDTH) && (y<HEIGHT))
+    if ((x > 0) && (y > 0) && (x < WIDTH) && (y < HEIGHT))
     {
-      sprites.drawSelfMasked(x, y, dotMask, 0); 
+      sprites.drawSelfMasked(x, y, dotMask, 0);
     }
   }
 }
@@ -131,8 +135,8 @@ void drawBullets()
 void clearBullets()
 {
   byte id;
-  
-  for(id=0; id<BULLET_MAX; id++)
+
+  for (id = 0; id < BULLET_MAX; id++)
   {
     bullets[id].active = false;
   }

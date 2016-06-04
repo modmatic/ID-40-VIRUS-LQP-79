@@ -127,11 +127,6 @@ void nextLevelSlideToMiddle()
   else gameOverAndStageFase++;
 }
 
-void nextLevelFlicker()
-{
-  nextLevelVisible = !nextLevelVisible;
-  nextLevelWait();
-}
 
 void nextLevelEnd()
 {
@@ -162,7 +157,6 @@ const FunctionPointer PROGMEM nextLevelFases[] =
   nextLevelWait,
   nextLevelSlideToMiddle,
   nextLevelWait,
-  nextLevelFlicker,
   nextLevelEnd,
 };
 

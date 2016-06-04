@@ -136,7 +136,7 @@ void stateMenuSoundfx()
   }
 
   sprites.drawSelfMasked(128 - slideCounter, 25 , menuText, 4);
-  if (arduboy.audio.enabled() == true)
+  if (arduboy.audio.enabled())
   {
     sprites.drawSelfMasked(128 - slideCounter, 34, menuText, 5);
     sprites.drawSelfMasked(128 - slideCounter - globalCounter, 43, menuText, 6);
