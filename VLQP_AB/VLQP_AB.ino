@@ -44,7 +44,6 @@ void setup()
 {
   arduboy.start();
   arduboy.setFrameRate(60);
-  if (EEPROM.read(EEPROM_AUDIO_ON_OFF)) soundYesNo = true;
 }
 
 void loop() {
@@ -53,7 +52,5 @@ void loop() {
   arduboy.clearDisplay();
   ((FunctionPointer) pgm_read_word (&mainGameLoop[gameState]))();
   arduboy.display();
-  if (soundYesNo == true) arduboy.audio.on();
-  else arduboy.audio.off();
 }
 

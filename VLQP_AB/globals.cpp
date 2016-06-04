@@ -5,7 +5,6 @@
 Arduboy arduboy;
 Sprites sprites(arduboy);
 unsigned long scorePlayer;
-boolean soundYesNo;
 byte gameState  = STATE_MENU_INTRO;
 byte globalCounter = 0;
 

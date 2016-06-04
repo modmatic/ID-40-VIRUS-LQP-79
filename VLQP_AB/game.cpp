@@ -97,6 +97,7 @@ void nextLevelBonusCount()
   {
     exitDoor.counter--;
     scorePlayer += 5;
+    arduboy.audio.tone(3951, 5);
   }
   else
   {

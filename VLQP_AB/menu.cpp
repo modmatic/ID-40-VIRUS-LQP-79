@@ -120,12 +120,12 @@ void stateMenuSoundfx()
 
   if (arduboy.justPressed(DOWN_BUTTON))
   {
-    soundYesNo = true;
+    arduboy.audio.on();
     globalCounter = 0;
   }
   if (arduboy.justPressed(UP_BUTTON))
   {
-    soundYesNo = false;
+    arduboy.audio.off();
     globalCounter = 0;
   }
   if (arduboy.justPressed(A_BUTTON | B_BUTTON))
@@ -136,15 +136,13 @@ void stateMenuSoundfx()
   }
 
   sprites.drawSelfMasked(128 - slideCounter, 25 , menuText, 4);
-  if (soundYesNo == true)
+  if (arduboy.audio.enabled() == true)
   {
-    arduboy.audio.on();
     sprites.drawSelfMasked(128 - slideCounter, 34, menuText, 5);
     sprites.drawSelfMasked(128 - slideCounter - globalCounter, 43, menuText, 6);
   }
   else
   {
-    arduboy.audio.off();
     sprites.drawSelfMasked(128 - slideCounter, 43, menuText, 6);
     sprites.drawSelfMasked(128 - slideCounter - globalCounter, 34, menuText, 5);
   }
