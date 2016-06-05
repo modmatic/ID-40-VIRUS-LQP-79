@@ -90,8 +90,8 @@ void stateMenuHelp()
 
 void stateMenuPlay()
 {
-  level = 0;
-  displayLevel = 0;
+  level = levelToStartWith -1;
+  displayLevel = level;
   scorePlayer = 0;
   gameState = STATE_GAME_PREPARE_LEVEL;
   initializePlayer(coolGirl);
