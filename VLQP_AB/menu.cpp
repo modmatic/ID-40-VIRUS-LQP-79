@@ -90,7 +90,7 @@ void stateMenuHelp()
 
 void stateMenuPlay()
 {
-  level = levelToStartWith -1;
+  level = LEVEL_TO_START_WITH -1;
   displayLevel = level;
   scorePlayer = 0;
   gameState = STATE_GAME_PREPARE_LEVEL;

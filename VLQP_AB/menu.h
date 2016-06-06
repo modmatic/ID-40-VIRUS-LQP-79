@@ -6,8 +6,6 @@
 
 // globals ///////////////////////////////////////////////////////////////////
 
-#define levelToStartWith 1
-
 extern byte menuSelection;
 extern byte level;
 extern byte displayLevel;

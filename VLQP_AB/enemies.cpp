@@ -183,39 +183,6 @@ void updateZombies()
 }
 
 
-void drawZombieBlips()
-{
-  short drawX, drawY;
-  byte id;
-  
-  for(id=0; id<ZOMBIE_MAX; id++)
-  {
-    if(!zombies[id].active) continue;
-    drawX = zombies[id].x - mapPositionX;
-    drawY = zombies[id].y - mapPositionY;
-    byte drawColor = (arduboy.frameCount % 16) < 8;
-
-    if(drawX < 0 && drawX > -WIDTH/2)
-    {
-      sprites.drawSelfMasked(1, drawY + ZOMBIE_HEIGHT/2, dotMask, 0);
-    }
-    else if(drawX > WIDTH && drawX < WIDTH/2+WIDTH)
-    {
-      sprites.drawSelfMasked(WIDTH-1, drawY + ZOMBIE_HEIGHT/2, dotMask, 0);
-    }
-    else if(drawY < 0 && drawY > -HEIGHT/2)
-    {
-      sprites.drawSelfMasked(drawX + ZOMBIE_WIDTH/2, 1, dotMask, 0);
-    }
-    else if(drawY > HEIGHT && drawY < HEIGHT/2+HEIGHT)
-    {
-      sprites.drawSelfMasked(drawX + ZOMBIE_HEIGHT/2, HEIGHT-1, dotMask, 0);
-    }
-  }
-}
-
-
-
 // drawZombie
 // draws a single zombie
 void drawZombie(Enemy& obj)
