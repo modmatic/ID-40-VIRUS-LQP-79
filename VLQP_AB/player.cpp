@@ -20,7 +20,7 @@ void initializePlayer(Player& obj)
   scorePlayer = 0;
   rollingScore = 0;
   obj.direction = PLAYER_FACING_SOUTH;
-  obj.health = 3;
+  obj.health = PLAYER_START_HEALTH;
   obj.flashTime = 0;
   obj.shotDelay = 10;
   obj.coolDownVisible = true;
@@ -178,7 +178,7 @@ void updatePlayer(Player& obj)
     }
   }
 
-  if ((obj.overHeated == true) && (obj.coolDownCounter <2))
+  if ((obj.overHeated == true) && (obj.coolDownCounter < 2))
   {
     obj.overHeated = false;
     obj.coolDownVisible = true;
@@ -252,14 +252,21 @@ void playerHealthOffset(Player& obj, char amount)
 void drawPlayer(Player& obj)
 {
   if ((obj.flashTime % 8) < 4)
-    sprites.drawPlusMask(obj.x - mapPositionX, obj.y - mapPositionY, player_plus_mask, obj.frame + 4 * obj.direction);
+  {
+    sprites.drawErase(obj.x - mapPositionX, obj.y - mapPositionY, playerAmyMask, obj.direction);
+    sprites.drawSelfMasked(obj.x - mapPositionX, obj.y - mapPositionY, playerAmy, obj.frame + 4 * obj.direction);
+  }
 }
 
 void drawLife(Player& obj)
 {
   for (byte amountLife = 0; amountLife < obj.health; amountLife++)
   {
-    sprites.drawPlusMask(amountLife * 10, 0, HUD_plus_mask, 0);
+    sprites.drawPlusMask((amountLife/2) * 10, 0, HUD_plus_mask, 0);
+  }
+  for (byte amountLife = 0; amountLife < obj.health / 2; amountLife++)
+  {
+    sprites.drawPlusMask(amountLife * 10, 0, HUD_plus_mask, 1);
   }
 }
 

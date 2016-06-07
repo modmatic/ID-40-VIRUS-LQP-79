@@ -198,8 +198,8 @@ void drawZombie(Enemy& obj)
     {
       drawX = obj.x - mapPositionX;
       drawY = obj.y - mapPositionY;
-      
-      sprites.drawPlusMask(drawX, drawY, zombie_plus_mask, obj.frame + 8*obj.direction);
+      sprites.drawErase(drawX, drawY, enemyZombieMask, obj.direction);
+      sprites.drawSelfMasked(drawX, drawY, enemyZombie, obj.frame + 8*obj.direction);
     }
   }
   else if(obj.flashTime > 0)

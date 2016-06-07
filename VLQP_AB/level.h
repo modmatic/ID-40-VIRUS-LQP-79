@@ -32,7 +32,7 @@
 #define LEVEL_OFFSET              16
 
 #define NUM_MAPS                  16
-#define LEVEL_TO_START_WITH       1
+#define LEVEL_TO_START_WITH       1         // normal game starts with level 1
 
 // method prototypes /////////////////////////////////////////////////////////
 

@@ -18,5 +18,7 @@ void stateGamePlaying();
 void stateGameNextLevel();
 void stateGamePrepareLevel();
 void stateGameOver();
+void stateGamePause();
+void checkPause();
 
 #endif

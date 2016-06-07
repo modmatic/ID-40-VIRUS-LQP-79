@@ -24,10 +24,6 @@ void setDoorPosition(int x, int y)
   exitDoor.loseLifeCounter = 255;
 }
 
-void showDoor()
-{
-  exitDoor.active = true;
-}
 
 bool checkDoorCollision()
 {
@@ -66,8 +62,14 @@ void drawDoor()
     {
       for (byte y = 0; y < 2; y++)
       {
-        sprites.drawPlusMask(exitDoor.x - mapPositionX + (x * 8), exitDoor.y - mapPositionY + (y * 8), exit_plus_mask, exitDoor.frame + 4 * exitDoor.orientation);
+        sprites.drawErase(exitDoor.x - mapPositionX + (x * 8), exitDoor.y - mapPositionY + (y * 8), exitOpenMask, 0);
+        sprites.drawSelfMasked(exitDoor.x - mapPositionX + (x * 8), exitDoor.y - mapPositionY + (y * 8), exitOpen, exitDoor.frame + 4 * exitDoor.orientation);
       }
     }
+  }
+  else
+  {
+    sprites.drawErase(exitDoor.x - mapPositionX, exitDoor.y - mapPositionY, exitClosedMask, 0);
+    sprites.drawSelfMasked(exitDoor.x - mapPositionX, exitDoor.y - mapPositionY, exitClosed, exitDoor.orientation);
   }
 }

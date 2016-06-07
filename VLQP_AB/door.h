@@ -38,7 +38,6 @@ extern Door exitDoor;
 // method prototypes /////////////////////////////////////////////////////////
 
 void setDoorPosition(int x, int y);
-void showDoor();
 void drawDoor();
 bool checkDoorCollision();
 

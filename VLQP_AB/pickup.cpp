@@ -64,7 +64,7 @@ void pickupCollision(int x, int y)
       if (pickups[id].type == PICKUP_TYPE_HEART)
       {
         arduboy.audio.tone(660, 20);
-        playerHealthOffset(coolGirl, 1);
+        playerHealthOffset(coolGirl, 2);
       }
       else
       {

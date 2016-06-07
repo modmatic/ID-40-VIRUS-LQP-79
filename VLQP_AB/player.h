@@ -30,7 +30,8 @@ extern int mapPositionY;
 #define PLAYER_SCREEN_YMAX        24 //(32-8)
 
 #define PLAYER_FLASH_TIME         60
-#define PLAYER_MAXHEALTH          4
+#define PLAYER_MAXHEALTH          8
+#define PLAYER_START_HEALTH       5
 
 #define WEAPON_OVERHEAT           35
 
