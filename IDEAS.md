@@ -44,8 +44,8 @@
 - Fourth pass = 5 surivors
 
 ## todo list
-- correct the bullet
-- correct the way the levels work.
-- when shooting a zombie the chance for getting nothing are 2 out of 10
-- when shooting a zombie the chance for getting a coin are 7 out of 10
-- when shooting a zombie the chance for getting a heart are 1 out of 10
+- ~~correct the bullet~~
+- ~~correct the way the levels work.~~
+- ~~when shooting a zombie the chance for getting nothing are 2 out of 10~~
+- ~~when shooting a zombie the chance for getting a coin are 7 out of 10~~
+- ~~when shooting a zombie the chance for getting a heart are 1 out of 10~~
