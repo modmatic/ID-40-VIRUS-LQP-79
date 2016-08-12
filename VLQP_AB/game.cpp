@@ -104,7 +104,7 @@ void nextLevelBonusCount()
   }
   else
   {
-    if (displayLevel < 64) gameOverAndStageFase++;
+    if (displayLevel < 65) gameOverAndStageFase++;
     else
     {
       gameState = STATE_GAME_OVER;
