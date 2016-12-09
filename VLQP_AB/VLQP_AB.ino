@@ -1,7 +1,7 @@
 /*
   VIRUS LQP-79: http://www.team-arg.org/zmbt-manual.html
 
-  Arduboy version 1.2:  http://www.team-arg.org/zmbt-downloads.html
+  Arduboy version 1.3:  http://www.team-arg.org/zmbt-downloads.html
 
   MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
 
@@ -14,7 +14,6 @@
 //determine the game
 #define GAME_ID 40
 
-#include "Arglib.h"
 #include "globals.h"
 #include "menu.h"
 #include "player.h"
@@ -43,14 +42,14 @@ const FunctionPointer PROGMEM mainGameLoop[] =
 
 void setup()
 {
-  arduboy.start();
+  arduboy.begin();
   arduboy.setFrameRate(60);
 }
 
 void loop() {
   if (!(arduboy.nextFrame())) return;
-  arduboy.poll();
-  arduboy.clearDisplay();
+  arduboy.pollButtons();
+  arduboy.clear();
   ((FunctionPointer) pgm_read_word (&mainGameLoop[gameState]))();
   arduboy.display();
 }

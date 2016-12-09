@@ -2,8 +2,9 @@
 
 // globals ///////////////////////////////////////////////////////////////////
 
-Arduboy arduboy;
-Sprites sprites(arduboy);
+Arduboy2Base arduboy;
+Sprites sprites;
+ArduboyTones sound(arduboy.audio.enabled);
 unsigned long scorePlayer;
 byte gameState  = STATE_MENU_INTRO;
 byte globalCounter = 0;
