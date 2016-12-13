@@ -1,7 +1,8 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#include "Arglib.h"
+#include <Arduboy2.h>
+#include <ArduboyTones.h>
 
 // constants /////////////////////////////////////////////////////////////////
 
@@ -23,8 +24,9 @@
 
 // globals ///////////////////////////////////////////////////////////////////
 
-extern Arduboy arduboy;
+extern Arduboy2Base arduboy;
 extern Sprites sprites;
+extern ArduboyTones sound;
 extern byte gameState;
 extern unsigned long scorePlayer;
 extern byte globalCounter;

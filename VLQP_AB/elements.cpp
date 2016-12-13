@@ -94,7 +94,7 @@ bool collectSurvivor(Element& obj)
 {
   byte id;
   obj.active = false;
-  arduboy.audio.tone(660, 20);
+  sound.tone(660, 20);
   rollingScore += 500;
 
   for (id = 0; id < SURVIVOR_MAX; id++)

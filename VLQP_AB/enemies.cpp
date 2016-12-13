@@ -234,7 +234,7 @@ bool zombieHealthOffset(Enemy& obj, char amount)
   // killed
   if(obj.health <= 0)
   {
-    arduboy.audio.tone(220, 20);
+    sound.tone(220, 20);
     obj.flashTime = ZOMBIE_FLASH_TIME;
     obj.active = false;
     rollingScore += 100;
@@ -243,7 +243,7 @@ bool zombieHealthOffset(Enemy& obj, char amount)
   else if(amount < 0)
   {
     obj.flashTime = ZOMBIE_FLASH_TIME;
-    arduboy.audio.tone(640, 20);
+    sound.tone(640, 20);
   }
 }
 

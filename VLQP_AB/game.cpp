@@ -17,7 +17,7 @@ byte rightX;
 void stateGamePlaying()
 {
   // Update Level
-  if (!(arduboy.frameCount % (60 * 3))) {
+  if (arduboy.everyXFrames(60 * 3)) {
     spawnZombie();
   }
 
