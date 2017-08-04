@@ -72,7 +72,7 @@ void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, byte timerOrScoreO
     case DATA_LEVEL:
       itoa(displayLevel, buf, 10);
       charLen = strlen(buf);
-      pad = 2 - charLen;
+      pad = 3 - charLen;
       break;
   }
 

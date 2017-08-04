@@ -77,8 +77,8 @@ void stateGamePrepareLevel()
 
 void nextLevelStart()
 {
-  leftX = -52;
-  rightX = 164;
+  leftX = -50;
+  rightX = 154;
   if (displayLevel > 1)
   {
     bonusVisible = true;
@@ -127,7 +127,7 @@ void nextLevelSlideToMiddle()
 {
   bonusVisible = false;
   nextLevelVisible = true;
-  if (leftX < 27)
+  if (leftX < 21)
   {
     leftX += 4;
     rightX -= 4;
@@ -146,8 +146,8 @@ void nextLevelEnd()
     bonusVisible = false;
     nextLevelVisible = false;
     pressKeyVisible = false;
-    leftX = -52;
-    rightX = 164;
+    leftX = -50;
+    rightX = 154;
 
     coolGirl.x = readPlayerAndExitData(0);
     coolGirl.y = readPlayerAndExitData(1);

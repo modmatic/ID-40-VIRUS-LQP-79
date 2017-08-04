@@ -67,8 +67,8 @@ void drawSurvivors()
   {
     Element &surv = survivors[id];
     if (!surv.active) continue;
-    sprites.drawErase(surv.x - mapPositionX, surv.y - mapPositionY, survivorMask, 0);
-    sprites.drawSelfMasked(surv.x - mapPositionX, surv.y - mapPositionY, survivor, survivorFrame);
+    sprites.drawErase(surv.x - mapPositionX, surv.y - mapPositionY, survivorMask,id);
+    sprites.drawSelfMasked(surv.x - mapPositionX, surv.y - mapPositionY, survivor, survivorFrame + (4 * id));
     if (showHelp)sprites.drawPlusMask(surv.x + 16 - mapPositionX, surv.y - 9 - mapPositionY, help_plus_mask, 0);
   }
 
@@ -128,8 +128,8 @@ void drawAmountSurvivors()
   {
     if (showHelp)
     {
-    sprites.drawPlusMask(45, 0, HUD_plus_mask, 3);  //55
-    sprites.drawPlusMask(54, 0, HUD_plus_mask, 4);  //64
+      sprites.drawPlusMask(45, 0, HUD_plus_mask, 3);  //55
+      sprites.drawPlusMask(54, 0, HUD_plus_mask, 4);  //64
     }
     sprites.drawPlusMask(65, 0, HUD_plus_mask, 5);
     sprites.drawPlusMask(74, 0, HUD_plus_mask, 6);
