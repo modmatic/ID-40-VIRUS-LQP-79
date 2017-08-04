@@ -219,6 +219,14 @@ void stateGameOver()
   if (pressKeyVisible) sprites.drawSelfMasked(37, 56, pressKey, 0);
 }
 
+void stateGameEnd()
+{
+  ((FunctionPointer) pgm_read_word (&gameOverFases[gameOverAndStageFase]))();
+  //sprites.drawSelfMasked(16, 8, gameOver, 0);
+  drawNumbers(36, 32, FONT_BIG, DATA_SCORE);
+  if (pressKeyVisible) sprites.drawSelfMasked(37, 56, pressKey, 0);
+}
+
 void stateGamePause()
 {
   sprites.drawSelfMasked(30, 0, titleScreen02, 0);

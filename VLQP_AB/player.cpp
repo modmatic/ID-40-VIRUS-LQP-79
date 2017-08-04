@@ -262,7 +262,7 @@ void drawLife(Player& obj)
 {
   for (byte amountLife = 0; amountLife < obj.health; amountLife++)
   {
-    sprites.drawPlusMask((amountLife/2) * 10, 0, HUD_plus_mask, 0);
+    sprites.drawPlusMask((amountLife / 2) * 10, 0, HUD_plus_mask, 0);
   }
   for (byte amountLife = 0; amountLife < obj.health / 2; amountLife++)
   {
@@ -274,7 +274,7 @@ void drawCoolDown()
 {
   if (coolGirl.coolDownVisible)
   {
-    for (byte i; i < coolGirl.coolDownCounter; i++)
+    for (byte i = 0; i < coolGirl.coolDownCounter; i++)
     {
       sprites.drawPlusMask(i, 7, coolDownLine_plus_mask, 0);
     }

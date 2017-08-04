@@ -38,11 +38,14 @@ const FunctionPointer PROGMEM mainGameLoop[] =
   stateGamePlaying,
   stateGameOver,
   stateGamePause,
+  stateGameEnd,
 };
 
 void setup()
 {
-  arduboy.begin();
+  arduboy.boot();                                           // begin with the boot logo en setting up the device to work
+  arduboy.audio.begin();
+  arduboy.bootLogoSpritesSelfMasked();
   arduboy.setFrameRate(60);
 }
 

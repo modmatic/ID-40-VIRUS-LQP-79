@@ -21,6 +21,7 @@
 #define STATE_GAME_PLAYING       8
 #define STATE_GAME_OVER          9
 #define STATE_GAME_PAUSE         10
+#define STATE_GAME_END           11
 
 // globals ///////////////////////////////////////////////////////////////////
 
