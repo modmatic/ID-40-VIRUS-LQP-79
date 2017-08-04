@@ -1,7 +1,7 @@
 /*
   VIRUS LQP-79: http://www.team-arg.org/zmbt-manual.html
 
-  Arduboy version 1.3:  http://www.team-arg.org/zmbt-downloads.html
+  Arduboy version 1.3.1:  http://www.team-arg.org/zmbt-downloads.html
 
   MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
 
