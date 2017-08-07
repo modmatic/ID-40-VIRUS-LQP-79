@@ -28,10 +28,7 @@
 #define DATA_SCORE                1
 #define DATA_LEVEL                2
 
-#define BLOCK_OFFSET              64
-#define LEVEL_OFFSET              16
-
-#define NUM_MAPS                  16
+#define NUM_MAPS                  32
 #define LEVEL_TO_START_WITH       1         // normal game starts with level 1
 
 // method prototypes /////////////////////////////////////////////////////////
@@ -66,6 +63,23 @@ PROGMEM const unsigned char survivorLocation[] = {
   18,  2,  5,  2, 29, 28, 51, 23, 38,  2, // MAP13
   55, 15, 24, 10, 44, 10,  2,  5,  2, 18, // MAP14
   34,  2,  2, 28, 29, 12, 60, 28,  2,  2, // MAP15
+  19,  7,  1, 29, 43, 19, 61, 20, 11, 23, // MAP16
+  43,  7, 28, 28, 50, 28, 17,  2,  8, 21, // MAP17
+  50,  2, 23, 18, 60, 18, 10,  2,  2, 28, // MAP18
+  42, 10, 11, 28, 31, 15, 11,  5, 20, 10, // MAP19
+  // MAP20
+  // MAP21
+  // MAP22
+  // MAP23
+  // MAP24
+  // MAP25
+  // MAP26
+  // MAP27
+  // MAP28
+  // MAP29
+  // MAP30
+  // MAP31
+
 };
 
 
@@ -73,76 +87,144 @@ PROGMEM const unsigned char survivorLocation[] = {
 PROGMEM const unsigned char playerAndExitLocation[] =
 {
   // first run
-  56, 23, 21,  0,  //LEVEL01
-  23, 10,  0, 18,  //LEVEL02
-  2 ,  2, 62, 23,  //LEVEL03
-  19,  7, 55,  0,  //LEVEL04
-  31,  2,  0, 21,  //LEVEL05
-  34, 10, 38, 30,  //LEVEL06
-  55, 13, 56,  0,  //LEVEL07
-  25, 13, 62, 28,  //LEVEL08
-  36, 20, 18, 30,  //LEVEL09
-  48, 13,  7,  0,  //LEVEL10
-  5 , 21, 43,  0,  //LEVEL11
-  4 ,  3,  2,  0,  //LEVEL12
-  10, 20, 29,  0,  //LEVEL13
-  44, 28,  0, 28,  //LEVEL14
-  44, 10, 24, 30,  //LEVEL15
-  29, 12, 50,  0,  //LEVEL16
+  56, 23, 21,  0,  //LEVEL001
+  23, 10,  0, 18,  //LEVEL002
+  2 ,  2, 62, 23,  //LEVEL003
+  19,  7, 55,  0,  //LEVEL004
+  31,  2,  0, 21,  //LEVEL005
+  34, 10, 38, 30,  //LEVEL006
+  55, 13, 56,  0,  //LEVEL007
+  25, 13, 62, 28,  //LEVEL008
+  36, 20, 18, 30,  //LEVEL009
+  48, 13,  7,  0,  //LEVEL010
+  5 , 21, 43,  0,  //LEVEL011
+  4 ,  3,  2,  0,  //LEVEL012
+  10, 20, 29,  0,  //LEVEL013
+  44, 28,  0, 28,  //LEVEL014
+  44, 10, 24, 30,  //LEVEL015
+  29, 12, 50,  0,  //LEVEL016
+
+  50,  6, 60,  0,  //LEVEL017
+   3, 19, 33,  0,  //LEVEL018
+  33, 10,  0,  2,  //LEVEL019
+  //LEVEL020
+  //LEVEL021
+  //LEVEL022
+  //LEVEL023
+  //LEVEL024
+  //LEVEL025
+  //LEVEL026
+  //LEVEL027
+  //LEVEL028
+  //LEVEL029
+  //LEVEL030
+  //LEVEL031
 
   //second run
-  2 , 28, 62, 28,  //LEVEL17
-  36,  9, 36,  0,  //LEVEL18
-  53, 22, 30, 30,  //LEVEL19
-  26, 11, 62, 22,  //LEVEL20
-  7 , 24, 56,  0,  //LEVEL21
-  11, 23, 62, 28,  //LEVEL22
-  14, 24,  0, 18,  //LEVEL23
-  59,  2, 13, 30,  //LEVEL24
-  17, 17,  2,  0,  //LEVEL25
-  60,  2, 48, 30,  //LEVEL26
-  60, 28, 26,  0,  //LEVEL27
-  20, 20, 35,  0,  //LEVEL28
-  3 ,  5,  3,  0,  //LEVEL29
-  59, 28, 44, 30,  //LEVEL30
-  9 , 11,  0, 11,  //LEVEL31
-  50, 21,  0,  6,  //LEVEL32
+  2 , 28, 62, 28,  //LEVEL032
+  36,  9, 36,  0,  //LEVEL033
+  53, 22, 30, 30,  //LEVEL034
+  26, 11, 62, 22,  //LEVEL035
+  7 , 24, 56,  0,  //LEVEL036
+  11, 23, 62, 28,  //LEVEL037
+  14, 24,  0, 18,  //LEVEL038
+  59,  2, 13, 30,  //LEVEL039
+  17, 17,  2,  0,  //LEVEL040
+  60,  2, 48, 30,  //LEVEL041
+  60, 28, 26,  0,  //LEVEL042
+  20, 20, 35,  0,  //LEVEL043
+  3 ,  5,  3,  0,  //LEVEL044
+  59, 28, 44, 30,  //LEVEL045
+  9 , 11,  0, 11,  //LEVEL046
+  50, 21,  0,  6,  //LEVEL047
 
+  60, 28,  2,  0,  //LEVEL048
+  60,  2,  0,  6,  //LEVEL049
+  18, 13, 37, 30,  //LEVEL050
+  //LEVEL051
+  //LEVEL052
+  //LEVEL053
+  //LEVEL054
+  //LEVEL055
+  //LEVEL056
+  //LEVEL057
+  //LEVEL058
+  //LEVEL059
+  //LEVEL060
+  //LEVEL061
+  //LEVEL062
+  //LEVEL063
+  
   //third run
-  17,  7, 59,  0,  //LEVEL33
-  56, 22,  2, 30,  //LEVEL34
-  24,  4,  0, 14,  //LEVEL35
-  34, 20, 21,  0,  //LEVEL36
-  21, 12, 25, 30,  //LEVEL37
-  28, 20, 27,  0,  //LEVEL38
-  51, 24, 62, 28,  //LEVEL39
-  59, 28,  0,  3,  //LEVEL40
-  59,  2, 62,  2,  //LEVEL41
-  3 ,  5,  0, 28,  //LEVEL42
-  24,  2, 17, 30,  //LEVEL43
-  32, 25, 10,  0,  //LEVEL44
-  11, 20,  3,  0,  //LEVEL45
-  38,  2,  0, 27,  //LEVEL46
-  2 , 18, 62, 28,  //LEVEL47
-  2 ,  2, 62,  4,  //LEVEL48
+  17,  7, 59,  0,  //LEVEL064
+  56, 22,  2, 30,  //LEVEL065
+  24,  4,  0, 14,  //LEVEL066
+  34, 20, 21,  0,  //LEVEL067
+  21, 12, 25, 30,  //LEVEL068
+  28, 20, 27,  0,  //LEVEL069
+  51, 24, 62, 28,  //LEVEL070
+  59, 28,  0,  3,  //LEVEL071
+  59,  2, 62,  2,  //LEVEL072
+  3 ,  5,  0, 28,  //LEVEL073
+  24,  2, 17, 30,  //LEVEL074
+  32, 25, 10,  0,  //LEVEL075
+  11, 20,  3,  0,  //LEVEL076
+  38,  2,  0, 27,  //LEVEL077
+  2 , 18, 62, 28,  //LEVEL078
+  2 ,  2, 62,  4,  //LEVEL079
+
+  31,  8, 31, 30,  //LEVEL080
+  33,  2, 43, 30,  //LEVEL081
+   2, 28, 37,  0,  //LEVEL082
+  //LEVEL083
+  //LEVEL084
+  //LEVEL085
+  //LEVEL086
+  //LEVEL087
+  //LEVEL088
+  //LEVEL089
+  //LEVEL090
+  //LEVEL091
+  //LEVEL092
+  //LEVEL093
+  //LEVEL094
+  //LEVEL095
 
   //fourth run
-  35, 17, 19, 30,  //LEVEL49
-  12, 13, 62, 12,  //LEVEL50
-  23, 10, 43,  0,  //LEVEL51
-  60, 28,  0,  7,  //LEVEL52
-  43, 27, 31,  0,  //LEVEL53
-  20,  6, 38, 30,  //LEVEL54
-  31, 15, 26, 30,  //LEVEL55
-  31, 12, 12,  0,  //LEVEL56
-  2 , 28, 62, 28,  //LEVEL57
-  31, 11,  8,  0,  //LEVEL58
-  2 , 28, 62, 28,  //LEVEL59
-  10,  2, 42, 30,  //LEVEL60
-  25,  3, 10,  0,  //LEVEL61
-  6 , 25, 58,  0,  //LEVEL62
-  44, 28, 59,  0,  //LEVEL63
-  59,  2, 18,  0,  //LEVEL64
+  35, 17, 19, 30,  //LEVEL096
+  12, 13, 62, 12,  //LEVEL097
+  23, 10, 43,  0,  //LEVEL098
+  60, 28,  0,  7,  //LEVEL099
+  43, 27, 31,  0,  //LEVEL100
+  20,  6, 38, 30,  //LEVEL101
+  31, 15, 26, 30,  //LEVEL102
+  31, 12, 12,  0,  //LEVEL103
+  2 , 28, 62, 28,  //LEVEL104
+  31, 11,  8,  0,  //LEVEL105
+  2 , 28, 62, 28,  //LEVEL106
+  10,  2, 42, 30,  //LEVEL107
+  25,  3, 10,  0,  //LEVEL108
+  6 , 25, 58,  0,  //LEVEL109
+  44, 28, 59,  0,  //LEVEL110
+  59,  2, 18,  0,  //LEVEL111
+
+   2,  2, 62,  7,  //LEVEL112
+  25, 14, 62, 28,  //LEVEL113
+  36, 28, 31,  0,  //LEVEL114
+  //LEVEL114
+  //LEVEL115
+  //LEVEL116
+  //LEVEL117
+  //LEVEL118
+  //LEVEL119
+  //LEVEL120
+  //LEVEL121
+  //LEVEL122
+  //LEVEL123
+  //LEVEL124
+  //LEVEL125
+  //LEVEL126
+  //LEVEL127
 };
 
 
@@ -464,7 +546,7 @@ PROGMEM const unsigned char maps[][16] = {
     0x01, 0x11, 0x11, 0xB2,
     0x30, 0x19, 0x02, 0xA5,
     0x33, 0x09, 0x25, 0xF2,
-    0x67, 0x76, 0x77, 0x78
+    0x67, 0x87, 0x77, 0x78
   }, {
     // map 25
     0x0B, 0xBF, 0xBB, 0xB2,
