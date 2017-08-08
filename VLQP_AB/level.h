@@ -63,12 +63,13 @@ PROGMEM const unsigned char survivorLocation[] = {
   18,  2,  5,  2, 29, 28, 51, 23, 38,  2, // MAP13
   55, 15, 24, 10, 44, 10,  2,  5,  2, 18, // MAP14
   34,  2,  2, 28, 29, 12, 60, 28,  2,  2, // MAP15
+  
   19,  7,  1, 29, 43, 19, 61, 20, 11, 23, // MAP16
   43,  7, 28, 28, 50, 28, 17,  2,  8, 21, // MAP17
   50,  2, 23, 18, 60, 18, 10,  2,  2, 28, // MAP18
   42, 10, 11, 28, 31, 15, 11,  5, 20, 10, // MAP19
-  // MAP20
-  // MAP21
+  60, 18, 47,  3, 23, 19, 15,  3,  2, 28, // MAP20
+  19,  3, 56, 27,  9, 20, 56,  3, 39, 15, // MAP21
   // MAP22
   // MAP23
   // MAP24
@@ -107,9 +108,9 @@ PROGMEM const unsigned char playerAndExitLocation[] =
   50,  6, 60,  0,  //LEVEL017
    3, 19, 33,  0,  //LEVEL018
   33, 10,  0,  2,  //LEVEL019
-  //LEVEL020
-  //LEVEL021
-  //LEVEL022
+  51, 28, 22,  0,  //LEVEL020
+  31,  3,  0, 18,  //LEVEL021
+  39, 15, 15,  0,  //LEVEL022
   //LEVEL023
   //LEVEL024
   //LEVEL025
@@ -141,9 +142,9 @@ PROGMEM const unsigned char playerAndExitLocation[] =
   60, 28,  2,  0,  //LEVEL048
   60,  2,  0,  6,  //LEVEL049
   18, 13, 37, 30,  //LEVEL050
-  //LEVEL051
-  //LEVEL052
-  //LEVEL053
+  11,  2, 51, 30,  //LEVEL051
+  38, 22, 15,  0,  //LEVEL052
+  47,  2, 62,  2,  //LEVEL053
   //LEVEL054
   //LEVEL055
   //LEVEL056
@@ -176,9 +177,9 @@ PROGMEM const unsigned char playerAndExitLocation[] =
   31,  8, 31, 30,  //LEVEL080
   33,  2, 43, 30,  //LEVEL081
    2, 28, 37,  0,  //LEVEL082
-  //LEVEL083
-  //LEVEL084
-  //LEVEL085
+  31, 26,  0, 16,  //LEVEL083
+  35, 11, 57,  0,  //LEVEL084
+   2, 28, 31, 30,  //LEVEL085
   //LEVEL086
   //LEVEL087
   //LEVEL088
@@ -211,10 +212,9 @@ PROGMEM const unsigned char playerAndExitLocation[] =
    2,  2, 62,  7,  //LEVEL112
   25, 14, 62, 28,  //LEVEL113
   36, 28, 31,  0,  //LEVEL114
-  //LEVEL114
-  //LEVEL115
-  //LEVEL116
-  //LEVEL117
+  56,  1, 18,  0,  //LEVEL115
+   2,  2, 62, 13,  //LEVEL116
+  31, 24,  0,  6,  //LEVEL117
   //LEVEL118
   //LEVEL119
   //LEVEL120
