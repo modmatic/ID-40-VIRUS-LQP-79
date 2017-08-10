@@ -39,6 +39,7 @@ void newDraw(unsigned posX, unsigned posY) {
       sprites.drawSelfMasked(
         ((int)x << 3) - subX, ((int)y << 3) - subY, tileset,
         getTileType(intX + x, intY + y)
+        + (40 * (level %2))
       );
     }
   }
