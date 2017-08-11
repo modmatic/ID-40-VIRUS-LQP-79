@@ -19,7 +19,7 @@ void setZombie(Enemy& obj, int x, int y, byte type)
   obj.x = x;
   obj.y = y;
   obj.type = type;
-  if (!obj.type) obj.health = 2;
+  if (obj.type) obj.health = 2;
   else obj.health = 3;
   obj.flashTime = 0;
 }
@@ -200,7 +200,7 @@ void drawZombie(Enemy& obj)
     {
       drawX = obj.x - mapPositionX;
       drawY = obj.y - mapPositionY;
-      if (!obj.type)
+      if (obj.type)
       {
         sprites.drawErase(drawX, drawY, enemyZombieMask, obj.direction);
         sprites.drawSelfMasked(drawX, drawY, enemyZombie, obj.frame + 8 * obj.direction);
