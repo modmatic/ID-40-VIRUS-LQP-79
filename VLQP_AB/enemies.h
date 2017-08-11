@@ -22,6 +22,7 @@
 
 #define ZOMBIE_FLASH_TIME        5
 
+
 // structures ////////////////////////////////////////////////////////////////
 
 struct Enemy
@@ -34,6 +35,7 @@ struct Enemy
     byte health;
     byte active;
     byte flashTime;
+    byte type;
 };
 
 // globals ///////////////////////////////////////////////////////////////////
@@ -43,7 +45,7 @@ extern Enemy zombies[ZOMBIE_MAX];
 
 // method prototypes /////////////////////////////////////////////////////////
 
-void setZombie(Enemy& obj, int x, int y);
+void setZombie(Enemy& obj, int x, int y, byte type);
 bool spawnZombie();
 bool addZombie(int x, int y);
 void updateZombie(Enemy& obj);

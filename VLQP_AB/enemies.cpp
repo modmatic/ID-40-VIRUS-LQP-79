@@ -11,14 +11,16 @@ Enemy zombies[ZOMBIE_MAX];
 
 // setZombie
 // sets the position of a zombie, and enables that instance
-void setZombie(Enemy& obj, int x, int y)
+void setZombie(Enemy& obj, int x, int y, byte type)
 {
   obj.frame = 0;
   obj.active = true;
   obj.direction = ENEMY_FACING_WEST;
   obj.x = x;
   obj.y = y;
-  obj.health = 2;
+  obj.type = type;
+  if (!obj.type) obj.health = 2;
+  else obj.health = 3;
   obj.flashTime = 0;
 }
 
@@ -27,14 +29,14 @@ void setZombie(Enemy& obj, int x, int y)
 // returns true if success, false if failure
 bool spawnZombie()
 {
-  int x = random(16, LEVEL_WIDTH-ZOMBIE_WIDTH-16);
-  int y = random(16, LEVEL_HEIGHT-ZOMBIE_HEIGHT-16);
-  
-  if((x < coolGirl.x - WIDTH) || (x > coolGirl.x + WIDTH) || (y < coolGirl.y - HEIGHT) || (y > coolGirl.y + HEIGHT))
+  int x = random(16, LEVEL_WIDTH - ZOMBIE_WIDTH - 16);
+  int y = random(16, LEVEL_HEIGHT - ZOMBIE_HEIGHT - 16);
+
+  if ((x < coolGirl.x - WIDTH) || (x > coolGirl.x + WIDTH) || (y < coolGirl.y - HEIGHT) || (y > coolGirl.y + HEIGHT))
   {
     return addZombie(x, y);
   }
-  
+
   return false;
 }
 
@@ -45,17 +47,17 @@ bool spawnZombie()
 bool addZombie(int x, int y)
 {
   byte id;
-  
-  for(id=0; id<ZOMBIE_MAX; id++)
+
+  for (id = 0; id < ZOMBIE_MAX; id++)
   {
-    if(!zombies[id].active)
+    if (!zombies[id].active)
     {
-      setZombie(zombies[id], x, y);
+      setZombie(zombies[id], x, y, random(3));
       return true;
       break;
     }
   }
-  
+
   return false;
 }
 
@@ -67,92 +69,92 @@ void updateZombie(Enemy& obj)
 {
   char vx = 0;
   char vy = 0;
-  
+
   if (arduboy.everyXFrames(ZOMBIE_STEP_DELAY))
   {
     ///////////
     // input //
     ///////////
-    
+
     // chase player
-    if(obj.x < coolGirl.x) vx = ZOMBIE_SPEED;
-    if(obj.x > coolGirl.x) vx = -ZOMBIE_SPEED;
-    
-    if(obj.y < coolGirl.y) vy = ZOMBIE_SPEED;
-    if(obj.y > coolGirl.y) vy = -ZOMBIE_SPEED;
-    
+    if (obj.x < coolGirl.x) vx = ZOMBIE_SPEED;
+    if (obj.x > coolGirl.x) vx = -ZOMBIE_SPEED;
+
+    if (obj.y < coolGirl.y) vy = ZOMBIE_SPEED;
+    if (obj.y > coolGirl.y) vy = -ZOMBIE_SPEED;
+
     // if out of bounds, delete this
-    if((obj.x < 0) || (obj.y < 0) || (obj.x >= LEVEL_WIDTH) || (obj.y >= LEVEL_HEIGHT))
+    if ((obj.x < 0) || (obj.y < 0) || (obj.x >= LEVEL_WIDTH) || (obj.y >= LEVEL_HEIGHT))
     {
       obj.active = false;
       return;
     }
-  
+
     // update orientation
-    if(vx < 0)
+    if (vx < 0)
       obj.direction = ENEMY_FACING_WEST;
-    else if(vx > 0)
+    else if (vx > 0)
       obj.direction = ENEMY_FACING_EAST;
-    
+
     ////////////////////////
     // horizontal physics //
     ////////////////////////
-    
+
     // update position
     obj.x += vx;
-    
+
     // collide with other zombies
     zombieCollide(obj.x, obj.y, true, vx, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-    
+
     // collide with player
-    if(zombieCollision(obj, coolGirl.x, coolGirl.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if (zombieCollision(obj, coolGirl.x, coolGirl.y, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      if(vx > 0)
+      if (vx > 0)
         obj.x = coolGirl.x - ZOMBIE_WIDTH;
-      else if(vx < 0)
+      else if (vx < 0)
         obj.x = coolGirl.x + PLAYER_WIDTH;
-      
+
       playerHealthOffset(coolGirl, -1);
       vx = 0;
     }
-    
+
     // collide with walls
     mapCollide(obj.x, obj.y, true, vx, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-  
+
     //////////////////////
     // vertical physics //
     //////////////////////
-    
+
     // update position
     obj.y += vy;
-    
+
     // collide with other zombies
     zombieCollide(obj.x, obj.y, false, vy, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-    
+
     // collide with player
-    if(zombieCollision(obj, coolGirl.x, coolGirl.y, PLAYER_WIDTH, PLAYER_HEIGHT))
+    if (zombieCollision(obj, coolGirl.x, coolGirl.y, PLAYER_WIDTH, PLAYER_HEIGHT))
     {
-      if(vy > 0)
+      if (vy > 0)
         obj.y = coolGirl.y - ZOMBIE_HEIGHT;
-      else if(vy < 0)
+      else if (vy < 0)
         obj.y = coolGirl.y + PLAYER_HEIGHT;
-      
+
       playerHealthOffset(coolGirl, -1);
       vy = 0;
     }
-    
+
     // collide with walls
     mapCollide(obj.x, obj.y, false, vy, ZOMBIE_WIDTH, ZOMBIE_HEIGHT);
-    
+
     ///////////////
     // animation //
     ///////////////
-    
-    if(vx || vy)
+
+    if (vx || vy)
     {
       // Advance animation frame
       if (arduboy.everyXFrames(ZOMBIE_FRAME_SKIP)) obj.frame++;
-      
+
       // Just 4 frames
       if (obj.frame >= ZOMBIE_FRAME_COUNT ) obj.frame = 0;
     }
@@ -161,8 +163,8 @@ void updateZombie(Enemy& obj)
       obj.frame = 0;
     }
   }
-  
-  if(obj.health == 0)
+
+  if (obj.health == 0)
   {
     obj.active = false;
   }
@@ -174,10 +176,10 @@ void updateZombie(Enemy& obj)
 void updateZombies()
 {
   byte i;
-  
-  for(i=0; i<ZOMBIE_MAX; i++)
+
+  for (i = 0; i < ZOMBIE_MAX; i++)
   {
-    if(!zombies[i].active) continue;
+    if (!zombies[i].active) continue;
     updateZombie(zombies[i]);
   }
 }
@@ -188,24 +190,32 @@ void updateZombies()
 void drawZombie(Enemy& obj)
 {
   short drawX, drawY;
-  if(obj.active)
+  if (obj.active)
   {
-    if(obj.flashTime > 0)
+    if (obj.flashTime > 0)
     {
       obj.flashTime--;
     }
-    if((obj.flashTime % 4) < 2)
+    if ((obj.flashTime % 4) < 2)
     {
       drawX = obj.x - mapPositionX;
       drawY = obj.y - mapPositionY;
-      sprites.drawErase(drawX, drawY, enemyZombieMask, obj.direction);
-      sprites.drawSelfMasked(drawX, drawY, enemyZombie, obj.frame + 8*obj.direction);
+      if (!obj.type)
+      {
+        sprites.drawErase(drawX, drawY, enemyZombieMask, obj.direction);
+        sprites.drawSelfMasked(drawX, drawY, enemyZombie, obj.frame + 8 * obj.direction);
+      }
+      else
+      {
+        sprites.drawErase(drawX, drawY, zombieTwoMask, obj.direction);
+        sprites.drawSelfMasked(drawX, drawY, zombieTwo, (obj.frame%2) + 2 * obj.direction);
+      }
     }
   }
-  else if(obj.flashTime > 0)
+  else if (obj.flashTime > 0)
   {
     obj.flashTime--;
-    arduboy.drawCircle(obj.x - mapPositionX + ZOMBIE_WIDTH/2, obj.y - mapPositionY + ZOMBIE_HEIGHT/2, 12 - obj.flashTime*2, 1);
+    arduboy.drawCircle(obj.x - mapPositionX + ZOMBIE_WIDTH / 2, obj.y - mapPositionY + ZOMBIE_HEIGHT / 2, 12 - obj.flashTime * 2, 1);
   }
 }
 
@@ -215,9 +225,9 @@ void drawZombie(Enemy& obj)
 void drawZombies()
 {
   byte id;
-  
+
   // Draw all the zombies!
-  for (id=0; id<ZOMBIE_MAX; id++)
+  for (id = 0; id < ZOMBIE_MAX; id++)
   {
     drawZombie(zombies[id]);
   }
@@ -230,9 +240,9 @@ void drawZombies()
 bool zombieHealthOffset(Enemy& obj, char amount)
 {
   obj.health += amount;
-  
+
   // killed
-  if(obj.health <= 0)
+  if (obj.health <= 0)
   {
     sound.tone(220, 20);
     obj.flashTime = ZOMBIE_FLASH_TIME;
@@ -240,7 +250,7 @@ bool zombieHealthOffset(Enemy& obj, char amount)
     rollingScore += 100;
     addPickup(obj.x + 4, obj.y + 4);
   }
-  else if(amount < 0)
+  else if (amount < 0)
   {
     obj.flashTime = ZOMBIE_FLASH_TIME;
     sound.tone(640, 20);
@@ -255,9 +265,9 @@ bool zombieCollision(Enemy& obj, int x, int y, char w, char h)
 {
   return
     ( obj.active ) &&
-    ( obj.x < x+w ) &&
+    ( obj.x < x + w ) &&
     ( obj.x + ZOMBIE_WIDTH > x ) &&
-    ( obj.y < y+h ) &&
+    ( obj.y < y + h ) &&
     ( obj.y + ZOMBIE_HEIGHT > y );
 }
 
@@ -266,8 +276,8 @@ bool zombieCollision(Enemy& obj, int x, int y, char w, char h)
 void clearZombies()
 {
   byte id;
-  
-  for(id=0; id<ZOMBIE_MAX; id++)
+
+  for (id = 0; id < ZOMBIE_MAX; id++)
   {
     zombies[id].active = false;
   }
@@ -276,23 +286,23 @@ void clearZombies()
 void zombieCollide(int &x, int &y, bool horizontal, char &vel, char w, char h)
 {
   byte id;
-  for(id=0; id<ZOMBIE_MAX; id++)
+  for (id = 0; id < ZOMBIE_MAX; id++)
   {
-    if(zombieCollision(zombies[id], x, y, w, h))
+    if (zombieCollision(zombies[id], x, y, w, h))
     {
-      if(x == zombies[id].x && y == zombies[id].y) continue;
-      if(horizontal)
+      if (x == zombies[id].x && y == zombies[id].y) continue;
+      if (horizontal)
       {
-        if(vel > 0)
+        if (vel > 0)
           x = zombies[id].x - w;
-        else if(vel < 0)
+        else if (vel < 0)
           x = zombies[id].x + ZOMBIE_WIDTH;
       }
       else
       {
-        if(vel > 0)
+        if (vel > 0)
           y = zombies[id].y - h;
-        else if(vel < 0)
+        else if (vel < 0)
           y = zombies[id].y + ZOMBIE_HEIGHT;
       }
       vel = 0;
