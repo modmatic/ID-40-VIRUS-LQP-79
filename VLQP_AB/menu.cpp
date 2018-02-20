@@ -96,11 +96,6 @@ void stateMenuHelp()
 
 void stateMenuPlay()
 {
-  /*
-    drawBadge();
-    if (arduboy.justPressed(B_BUTTON)) gameState = STATE_GAME_NEW;
-    else if (arduboy.justPressed(A_BUTTON)) gameState = STATE_MENU_MAIN;
-  */
 
   drawTitleScreen();
   for (byte i = 0; i < 3; i++)
@@ -112,9 +107,9 @@ void stateMenuPlay()
   {
     if (((2 + i) - menuSelection) != 0)
     {
-      sprites.drawSelfMasked(128 - slideCounter, 25 + (9 * i), menuText, i);
+      sprites.drawSelfMasked(128 - slideCounter, 25 + (9 * i), menuText, i + 7);
     }
-    if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(128 - slideCounter - globalCounter, 25 + (9 * i), menuText, i);
+    if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(128 - slideCounter - globalCounter, 25 + (9 * i), menuText, i + 7);
   }
   if (arduboy.justPressed(DOWN_BUTTON) && (menuSelection < 4))
   {
