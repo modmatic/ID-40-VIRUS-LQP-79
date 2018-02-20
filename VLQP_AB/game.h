@@ -21,5 +21,8 @@ void stateGameOver();
 void stateGamePause();
 void stateGameEnd();
 void checkPause();
+void stateGameNew();
+void stateGameContinue();
+void stateGameMayhem();
 
 #endif

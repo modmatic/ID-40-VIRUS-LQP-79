@@ -39,6 +39,9 @@ const FunctionPointer PROGMEM mainGameLoop[] =
   stateGameOver,
   stateGamePause,
   stateGameEnd,
+  stateGameNew,
+  stateGameContinue,
+  stateGameMayhem,
 };
 
 void setup()

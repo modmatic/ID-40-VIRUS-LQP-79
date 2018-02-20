@@ -14,6 +14,12 @@ void drawTitleScreen()
   sprites.drawSelfMasked(66, 0, titleScreen02, 0);
 }
 
+void drawBadge()
+{
+  sprites.drawSelfMasked(30, 0, titleScreen02, 0);
+  sprites.drawSelfMasked(92, 0, titleScreen03, 0);
+}
+
 void setSlidersToZero()
 {
   globalCounter = 0;
@@ -40,7 +46,7 @@ void stateMenuIntro()
 {
   globalCounter++;
   sprites.drawSelfMasked(34, 4, T_arg, 0);
-  if (globalCounter > 120) 
+  if (globalCounter > 120)
   {
     globalCounter = 0;
     gameState = STATE_MENU_MAIN;
@@ -77,6 +83,7 @@ void stateMenuMain()
   {
     setSlidersToZero();
     gameState = menuSelection;
+    menuSelection = STATE_GAME_NEW - 10;
   }
   makeItSlide();
 }
@@ -89,17 +96,54 @@ void stateMenuHelp()
 
 void stateMenuPlay()
 {
-  level = LEVEL_TO_START_WITH -1;
-  displayLevel = level;
-  scorePlayer = 0;
-  gameState = STATE_GAME_PREPARE_LEVEL;
-  initializePlayer(coolGirl);
+  /*
+    drawBadge();
+    if (arduboy.justPressed(B_BUTTON)) gameState = STATE_GAME_NEW;
+    else if (arduboy.justPressed(A_BUTTON)) gameState = STATE_MENU_MAIN;
+  */
+
+  drawTitleScreen();
+  for (byte i = 0; i < 3; i++)
+  {
+    sprites.drawOverwrite(127 - slideCounter + (8 * i) , 25, smallMask, 0);
+  }
+  if (menuSelection == 2) sprites.drawOverwrite(98 , 25, smallMask, 0);
+  for (byte i = 0; i < 3; i++)
+  {
+    if (((2 + i) - menuSelection) != 0)
+    {
+      sprites.drawSelfMasked(128 - slideCounter, 25 + (9 * i), menuText, i);
+    }
+    if (((2 + i) - menuSelection) == 0) sprites.drawSelfMasked(128 - slideCounter - globalCounter, 25 + (9 * i), menuText, i);
+  }
+  if (arduboy.justPressed(DOWN_BUTTON) && (menuSelection < 4))
+  {
+    menuSelection++;
+    globalCounter = 0;
+  }
+  if (arduboy.justPressed(UP_BUTTON) && (menuSelection > 2))
+  {
+    menuSelection--;
+    globalCounter = 0;
+  }
+  if (arduboy.justPressed(B_BUTTON))
+  {
+    setSlidersToZero();
+    gameState = STATE_GAME_NEW;
+    //gameState = menuSelection;
+  }
+  else if (arduboy.justPressed(A_BUTTON))
+  {
+    setSlidersToZero();
+    gameState = STATE_MENU_MAIN;
+  }
+  makeItSlide();
 }
+
 
 void stateMenuInfo()
 {
-  sprites.drawSelfMasked(30, 0, titleScreen02, 0);
-  sprites.drawSelfMasked(92, 0, titleScreen03, 0);
+  drawBadge();
 
   sprites.drawSelfMasked(48, 33, madeBy00, 0);
   sprites.drawSelfMasked(22, 33, madeBy01, 0);

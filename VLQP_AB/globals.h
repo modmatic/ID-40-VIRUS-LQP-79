@@ -23,6 +23,11 @@
 #define STATE_GAME_PAUSE         10
 #define STATE_GAME_END           11
 
+#define STATE_GAME_NEW           12
+#define STATE_GAME_CONTINUE      13
+#define STATE_GAME_MAYHEM        14
+
+
 // globals ///////////////////////////////////////////////////////////////////
 
 extern Arduboy2Base arduboy;

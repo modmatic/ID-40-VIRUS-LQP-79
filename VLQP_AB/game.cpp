@@ -8,6 +8,7 @@ boolean nextLevelVisible;
 boolean pressKeyVisible;
 int leftX;
 byte rightX;
+byte gameType = STATE_GAME_NEW;
 
 
 // method implementations ////////////////////////////////////////////////////
@@ -245,6 +246,28 @@ void stateGamePause()
     sprites.drawSelfMasked(22, 32, gameOver, 0);
   }
 }
+
+
+void stateGameNew()
+{
+  level = LEVEL_TO_START_WITH - 1;
+  displayLevel = level;
+  scorePlayer = 0;
+  gameState = STATE_GAME_PREPARE_LEVEL;
+  initializePlayer(coolGirl);
+}
+
+
+void stateGameContinue()
+{
+
+}
+
+void stateGameMayhem()
+{
+
+}
+
 
 void checkPause()
 {
