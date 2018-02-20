@@ -15,26 +15,11 @@ byte survivorType[5] = {0, 1, 2, 3, 4};
 
 // method implementations ////////////////////////////////////////////////////
 
-// setZombie
-// sets the position of a survivor, and enables that instance
-bool setSurvivor(Element& obj, int x, int y)
-{
-  if (!obj.active && (!(x == 0 && y == 0)))
-  {
-    obj.x = x;
-    obj.y = y;
-    obj.active = true;
-    return true;
-  }
-  return false;
-}
-
-
 // addSurvivor
 // searches the survivor list for an empty slot, adds one if available
 void swapSurvivorPool()
 {
-  for (byte i = 0; i<5; i++)
+  for (byte i = 0; i < 5; i++)
   {
     byte k = random (5);
     byte temp = survivorType[i];
@@ -43,20 +28,17 @@ void swapSurvivorPool()
   }
 }
 
-void addSurvivor(int x, int y)
+/*
+void setSurvivors()
 {
-  byte id;
-
-  for (id = 0; id < SURVIVOR_MAX; id++)
+  for (byte id = 0; id < ((displayLevel - 1) / NUM_MAPS) + 2; id++)
   {
-    if (setSurvivor(survivors[id], x, y))
-    {
-      break;
-    }
+    Element &surv = survivors[id];
+    surv.x = readSurvivorData(2 * id);
+    surv.y = readSurvivorData((2 * id) + 1));
   }
 }
-
-
+*/
 // updateSurvivors
 // updates the survivor states
 void updateSurvivors()
@@ -80,7 +62,7 @@ void drawSurvivors()
   {
     Element &surv = survivors[id];
     if (!surv.active) continue;
-    sprites.drawErase(surv.x - mapPositionX, surv.y - mapPositionY, survivorMask,survivorType[id]);
+    sprites.drawErase(surv.x - mapPositionX, surv.y - mapPositionY, survivorMask, survivorType[id]);
     sprites.drawSelfMasked(surv.x - mapPositionX, surv.y - mapPositionY, survivor, survivorFrame + (4 * survivorType[id]));
     if (showHelp)sprites.drawPlusMask(surv.x + 16 - mapPositionX, surv.y - 9 - mapPositionY, help_plus_mask, 0);
   }

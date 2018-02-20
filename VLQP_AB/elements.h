@@ -37,8 +37,6 @@ extern Element survivors[SURVIVOR_MAX];
 // method prototypes /////////////////////////////////////////////////////////
 
 void swapSurvivorPool();
-bool setSurvivor(Element& obj, int x, int y);
-void addSurvivor(int x, int y);
 void updateSurvivors();
 void drawSurvivors();
 bool survivorCollision(Element& obj, int x, int y, char w, char h);

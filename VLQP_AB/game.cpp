@@ -153,9 +153,12 @@ void nextLevelEnd()
     coolGirl.y = readPlayerAndExitData(1);
     setDoorPosition(readPlayerAndExitData(2), readPlayerAndExitData(3));
     swapSurvivorPool();
-    for (byte i = 0; i < ((displayLevel - 1) / NUM_MAPS) + 2; i++)
+    for (byte id = 0; id < ((displayLevel - 1) / NUM_MAPS) + 2; id++)
     {
-      addSurvivor(readSurvivorData(2 * i), readSurvivorData((2 * i) + 1));
+      Element &surv = survivors[id];
+      surv.x = readSurvivorData(2 * id);
+      surv.y = readSurvivorData((2 * id) + 1);
+      surv.active = true;
     }
   }
 }
