@@ -11,6 +11,7 @@ Element survivors[SURVIVOR_MAX];
 byte survivorFrame = 0;
 boolean showHelp = true;
 byte amountActiveSurvivors = 0;
+byte survivorType[5] = {0, 1, 2, 3, 4};
 
 // method implementations ////////////////////////////////////////////////////
 
@@ -31,6 +32,17 @@ bool setSurvivor(Element& obj, int x, int y)
 
 // addSurvivor
 // searches the survivor list for an empty slot, adds one if available
+void swapSurvivorPool()
+{
+  for (byte i = 0; i<5; i++)
+  {
+    byte k = random (5);
+    byte temp = survivorType[i];
+    survivorType[i] = survivorType[k];
+    survivorType[k] = temp;
+  }
+}
+
 void addSurvivor(int x, int y)
 {
   byte id;
@@ -57,6 +69,7 @@ void updateSurvivors()
 }
 
 
+
 // drawSurvivors
 // draws every active survivor in the list to the display
 void drawSurvivors()
@@ -67,8 +80,8 @@ void drawSurvivors()
   {
     Element &surv = survivors[id];
     if (!surv.active) continue;
-    sprites.drawErase(surv.x - mapPositionX, surv.y - mapPositionY, survivorMask,id);
-    sprites.drawSelfMasked(surv.x - mapPositionX, surv.y - mapPositionY, survivor, survivorFrame + (4 * id));
+    sprites.drawErase(surv.x - mapPositionX, surv.y - mapPositionY, survivorMask,survivorType[id]);
+    sprites.drawSelfMasked(surv.x - mapPositionX, surv.y - mapPositionY, survivor, survivorFrame + (4 * survivorType[id]));
     if (showHelp)sprites.drawPlusMask(surv.x + 16 - mapPositionX, surv.y - 9 - mapPositionY, help_plus_mask, 0);
   }
 

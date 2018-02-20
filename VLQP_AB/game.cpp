@@ -152,7 +152,7 @@ void nextLevelEnd()
     coolGirl.x = readPlayerAndExitData(0);
     coolGirl.y = readPlayerAndExitData(1);
     setDoorPosition(readPlayerAndExitData(2), readPlayerAndExitData(3));
-
+    swapSurvivorPool();
     for (byte i = 0; i < ((displayLevel - 1) / NUM_MAPS) + 2; i++)
     {
       addSurvivor(readSurvivorData(2 * i), readSurvivorData((2 * i) + 1));
