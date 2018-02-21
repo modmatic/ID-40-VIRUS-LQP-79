@@ -7,6 +7,7 @@ Sprites sprites;
 ArduboyTones sound(arduboy.audio.enabled);
 unsigned long scorePlayer;
 byte gameState  = STATE_MENU_INTRO;
+byte gameType = STATE_GAME_NEW;
 byte globalCounter = 0;
 
 // function implementations //////////////////////////////////////////////////

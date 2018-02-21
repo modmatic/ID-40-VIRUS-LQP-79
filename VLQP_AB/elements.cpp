@@ -28,17 +28,6 @@ void swapSurvivorPool()
   }
 }
 
-/*
-void setSurvivors()
-{
-  for (byte id = 0; id < ((displayLevel - 1) / NUM_MAPS) + 2; id++)
-  {
-    Element &surv = survivors[id];
-    surv.x = readSurvivorData(2 * id);
-    surv.y = readSurvivorData((2 * id) + 1));
-  }
-}
-*/
 // updateSurvivors
 // updates the survivor states
 void updateSurvivors()

@@ -9,8 +9,9 @@
 #include "bullet.h"
 #include "door.h"
 
-extern byte level;
-extern byte displayLevel;
+extern int level;
+extern int displayLevel;
+extern int mayhemLevel;
 
 // methods prototypes ////////////////////////////////////////////////////////
 

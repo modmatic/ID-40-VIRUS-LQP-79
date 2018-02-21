@@ -8,7 +8,6 @@ boolean nextLevelVisible;
 boolean pressKeyVisible;
 int leftX;
 byte rightX;
-byte gameType = STATE_GAME_NEW;
 
 
 // method implementations ////////////////////////////////////////////////////
@@ -139,6 +138,7 @@ void nextLevelSlideToMiddle()
 
 void nextLevelEnd()
 {
+  byte maxId;
   if (arduboy.everyXFrames(30)) pressKeyVisible = !pressKeyVisible;
   if (arduboy.justPressed(A_BUTTON | B_BUTTON))
   {
@@ -154,7 +154,11 @@ void nextLevelEnd()
     coolGirl.y = readPlayerAndExitData(1);
     setDoorPosition(readPlayerAndExitData(2), readPlayerAndExitData(3));
     swapSurvivorPool();
-    for (byte id = 0; id < ((displayLevel - 1) / NUM_MAPS) + 2; id++)
+
+    if (gameType != STATE_GAME_MAYHEM) maxId = ((displayLevel - 1) / NUM_MAPS) + 2;
+    else maxId = 5;
+    
+    for (byte id = 0; id < maxId; id++)
     {
       Element &surv = survivors[id];
       surv.x = readSurvivorData(2 * id);
@@ -260,12 +264,20 @@ void stateGameNew()
 
 void stateGameContinue()
 {
-
+  level = LEVEL_TO_START_WITH - 1;
+  displayLevel = level;
+  scorePlayer = 0;
+  gameState = STATE_GAME_PREPARE_LEVEL;
+  initializePlayer(coolGirl);
 }
 
 void stateGameMayhem()
 {
-
+  level = MAYHEM_LEVEL_TO_START_WITH - 1;
+  displayLevel = 0;
+  scorePlayer = 0;
+  gameState = STATE_GAME_PREPARE_LEVEL;
+  initializePlayer(coolGirl);
 }
 
 

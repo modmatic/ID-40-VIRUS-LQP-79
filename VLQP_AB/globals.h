@@ -34,6 +34,7 @@ extern Arduboy2Base arduboy;
 extern Sprites sprites;
 extern ArduboyTones sound;
 extern byte gameState;
+extern byte gameType;
 extern unsigned long scorePlayer;
 extern byte globalCounter;
 

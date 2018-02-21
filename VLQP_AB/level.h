@@ -8,35 +8,36 @@
 
 // constants /////////////////////////////////////////////////////////////////
 
-#define LEVEL_WIDTH               512
-#define LEVEL_HEIGHT              256
+#define LEVEL_WIDTH                   512
+#define LEVEL_HEIGHT                  256
 
-#define LEVEL_BLOCK_WIDTH         8
-#define LEVEL_BLOCK_HEIGHT        4
+#define LEVEL_BLOCK_WIDTH             8
+#define LEVEL_BLOCK_HEIGHT            4
 
-#define BLOCK_WIDTH               8
-#define BLOCK_HEIGHT              8
+#define BLOCK_WIDTH                   8
+#define BLOCK_HEIGHT                  8
 
-#define TILE_WIDTH                8
-#define TILE_HEIGHT               8
+#define TILE_WIDTH                    8
+#define TILE_HEIGHT                   8
 
-#define FONT_TINY                 0
-#define FONT_SMALL                1
-#define FONT_BIG                  2
+#define FONT_TINY                     0
+#define FONT_SMALL                    1
+#define FONT_BIG                      2
 
-#define DATA_TIMER                0
-#define DATA_SCORE                1
-#define DATA_LEVEL                2
+#define DATA_TIMER                    0
+#define DATA_SCORE                    1
+#define DATA_LEVEL                    2
 
-#define NUM_MAPS                  32
-#define LEVEL_TO_START_WITH       1         // normal game starts with level 1
+#define NUM_MAPS                      32
+#define LEVEL_TO_START_WITH           1               // normal game starts with level 1
+#define MAYHEM_LEVEL_TO_START_WITH    (3*NUM_MAPS)
 
 // method prototypes /////////////////////////////////////////////////////////
 
 
 void drawLevel();
 unsigned char getTileType(unsigned int x, unsigned int y);
-void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, byte timerOrScoreOrLevel);
+void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, int timerOrScoreOrLevel);
 void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h);
 
 extern Door exitDoor;
@@ -69,7 +70,7 @@ PROGMEM const unsigned char survivorLocation[] = {
   42, 10, 11, 28, 31, 15, 11,  5, 20, 10, // MAP20
   60, 18, 47,  3, 23, 19, 15,  3,  2, 28, // MAP21
   19,  3, 56, 27,  9, 20, 56,  3, 39, 15, // MAP22
-  3, 27, 48, 13, 30,  4,  9,  2, 42, 20, // MAP23
+  3 , 27, 48, 13, 30,  4,  9,  2, 42, 20, // MAP23
   24, 10,  2, 28, 42, 19, 13, 19, 51,  7, // MAP24
   51,  7, 25, 28, 10, 10, 34, 10,  2, 28, // MAP25
   51, 23, 27, 28,  4,  4, 24, 15, 43,  7, // MAP26

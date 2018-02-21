@@ -124,8 +124,8 @@ void stateMenuPlay()
   if (arduboy.justPressed(B_BUTTON))
   {
     setSlidersToZero();
-    gameState = STATE_GAME_NEW;
-    //gameState = menuSelection;
+    gameState = menuSelection + 10;
+    gameType = gameState;
   }
   else if (arduboy.justPressed(A_BUTTON))
   {

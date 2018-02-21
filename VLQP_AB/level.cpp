@@ -4,8 +4,9 @@
 
 int mapPositionX;
 int mapPositionY;
-byte level;
-byte displayLevel;
+int level;
+int mayhemLevel;
+int displayLevel;
 
 
 // getTileType
@@ -52,7 +53,7 @@ void drawLevel()
 }
 
 
-void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, byte timerOrScoreOrLevel)
+void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, int timerOrScoreOrLevel)
 {
   char buf[10];
   char charLen;
