@@ -115,14 +115,7 @@ void updatePlayer(Player& obj)
   survivorCollide(obj.x, obj.y);
 
   // collide with door
-  if (checkDoorCollision())
-  {
-    EEPROM.write(EEPROM_START, gameID);
-    EEPROM.put(EEPROM_START + 1, level);
-    EEPROM.put(EEPROM_START + 3, scorePlayer);
-    EEPROM.put(EEPROM_START + 7, coolGirl.health);
-    gameState = STATE_GAME_PREPARE_LEVEL;
-  }
+  if (checkDoorCollision()) gameState = STATE_GAME_PREPARE_LEVEL;
 
   // collide with pickup
   pickupCollision(obj.x, obj.y);

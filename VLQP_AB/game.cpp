@@ -88,19 +88,19 @@ void nextLevelStart()
 {
   leftX = -50;
   rightX = 154;
-  if (displayLevel > 1)
-  {
-    bonusVisible = true;
-    nextLevelVisible = false;
-    pressKeyVisible = false;
-    gameOverAndStageFase++;
-  }
-  else
+  if ((displayLevel == 1) || (gameType == STATE_GAME_MAYHEM))
   {
     bonusVisible = false;
     nextLevelVisible = true;
     pressKeyVisible = false;
     gameOverAndStageFase = 4;
+  }
+  else
+    {
+    bonusVisible = true;
+    nextLevelVisible = false;
+    pressKeyVisible = false;
+    gameOverAndStageFase++;
   }
 }
 
@@ -164,7 +164,14 @@ void nextLevelEnd()
     setDoorPosition(readPlayerAndExitData(2), readPlayerAndExitData(3));
     swapSurvivorPool();
 
-    if (gameType != STATE_GAME_MAYHEM) maxId = (((displayLevel % TOTAL_LEVEL_AMOUNT) - 1) / NUM_MAPS) + 2;
+    if (gameType != STATE_GAME_MAYHEM)
+    {
+      EEPROM.write(EEPROM_START, gameID);
+      EEPROM.put(EEPROM_START + 1, level - 1);
+      EEPROM.put(EEPROM_START + 3, scorePlayer);
+      EEPROM.put(EEPROM_START + 7, coolGirl.health);
+      maxId = (((displayLevel % TOTAL_LEVEL_AMOUNT) - 1) / NUM_MAPS) + 2;
+    }
     else maxId = 5;
 
     for (byte id = 0; id < maxId; id++)
