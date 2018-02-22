@@ -24,7 +24,7 @@ void stateGamePlaying()
     spawnZombie();
   }
 
-  // Check fo Pause
+  // Check for Pause
   checkPause();
 
   // Update Objects
@@ -88,7 +88,7 @@ void nextLevelStart()
 {
   leftX = -50;
   rightX = 154;
-  if ((displayLevel == 1) || (gameType == STATE_GAME_MAYHEM))
+  if ((displayLevel == 1) || (gameType == STATE_GAME_CONTINUE))
   {
     bonusVisible = false;
     nextLevelVisible = true;
