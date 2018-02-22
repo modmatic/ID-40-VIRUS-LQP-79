@@ -12,7 +12,7 @@
 */
 
 //determine the game
-#define GAME_ID 40
+#define GAME_ID                  40
 
 #include "globals.h"
 #include "menu.h"
@@ -50,6 +50,7 @@ void setup()
   arduboy.audio.begin();
   arduboy.bootLogoSpritesSelfMasked();
   arduboy.setFrameRate(60);
+  gameID = GAME_ID;
   //Serial.begin(9600);
 }
 

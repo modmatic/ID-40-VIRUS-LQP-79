@@ -6,6 +6,9 @@
 
 // constants /////////////////////////////////////////////////////////////////
 
+
+#define EEPROM_START             16
+
 //define menu states (on main menu)
 #define STATE_MENU_INTRO         0
 #define STATE_MENU_MAIN          1

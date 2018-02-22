@@ -11,7 +11,7 @@
 
 extern int level;
 extern int displayLevel;
-extern int mayhemLevel;
+extern byte gameID;
 
 // methods prototypes ////////////////////////////////////////////////////////
 

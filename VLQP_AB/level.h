@@ -30,7 +30,8 @@
 
 #define NUM_MAPS                      32
 #define LEVEL_TO_START_WITH           1               // normal game starts with level 1
-#define MAYHEM_LEVEL_TO_START_WITH    (3*NUM_MAPS)
+#define TOTAL_LEVEL_AMOUNT            (NUM_MAPS * 4)
+
 
 // method prototypes /////////////////////////////////////////////////////////
 

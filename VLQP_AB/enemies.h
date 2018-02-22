@@ -13,7 +13,7 @@
 
 #define ZOMBIE_FRAME_SKIP        2
 #define ZOMBIE_FRAME_COUNT       8
-#define ZOMBIE_MAX               16
+#define ZOMBIE_MAX               24
 #define ZOMBIE_WIDTH             16
 #define ZOMBIE_HEIGHT            16
 

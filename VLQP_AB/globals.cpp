@@ -6,6 +6,7 @@ Arduboy2Base arduboy;
 Sprites sprites;
 ArduboyTones sound(arduboy.audio.enabled);
 unsigned long scorePlayer;
+byte gameID;
 byte gameState  = STATE_MENU_INTRO;
 byte gameType = STATE_GAME_NEW;
 byte globalCounter = 0;
@@ -20,21 +21,21 @@ short burp(short start, short goal, unsigned char step)
   short a = goal;
   short b = start;
   char sign = 0;
-  
-  if(start > goal)
+
+  if (start > goal)
   {
     a = start;
     b = goal;
     sign = -1;
   }
-  else if(start < goal)
+  else if (start < goal)
   {
     sign = 1;
   }
-  
-  start += sign*(1+((a-b) * step)/16);
-  if(a < b) return goal;
-  
+
+  start += sign * (1 + ((a - b) * step) / 16);
+  if (a < b) return goal;
+
   return start;
 }
 

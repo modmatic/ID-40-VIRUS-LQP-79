@@ -5,7 +5,6 @@
 int mapPositionX;
 int mapPositionY;
 int level;
-int mayhemLevel;
 int displayLevel;
 
 

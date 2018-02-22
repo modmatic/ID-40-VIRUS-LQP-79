@@ -17,7 +17,10 @@ byte rightX;
 void stateGamePlaying()
 {
   // Update Level
-  if (arduboy.everyXFrames(60 * 3)) {
+  byte spawnTime;
+  if (gameType != STATE_GAME_MAYHEM) spawnTime = 60;
+  else spawnTime = 1;
+  if (arduboy.everyXFrames(spawnTime * 3)) {
     spawnZombie();
   }
 
@@ -52,7 +55,11 @@ int readSurvivorData(unsigned char index)
 
 int readPlayerAndExitData(unsigned char index)
 {
-  return pgm_read_byte(playerAndExitLocation + ((int)displayLevel - 1) * 4 + (int)index) * TILE_WIDTH; //PLAYER_WIDTH
+  // work
+  byte tempLevel;
+  if (gameType != STATE_GAME_MAYHEM)tempLevel = displayLevel;
+  else tempLevel = level;
+  return pgm_read_byte(playerAndExitLocation + ((int)tempLevel - 1) * 4 + (int)index) * TILE_WIDTH; //PLAYER_WIDTH
 }
 
 // stateGameNextLevel
@@ -64,7 +71,9 @@ void stateGamePrepareLevel()
   clearZombies();
 
   level++;
-  level = (level - 1) % NUM_MAPS + 1;
+
+  if (gameType != STATE_GAME_MAYHEM) level = (level - 1) % NUM_MAPS + 1;
+  else level = random(NUM_MAPS) + 1;
   displayLevel++;
 
   pickupsCounter = 0;
@@ -104,7 +113,7 @@ void nextLevelBonusCount()
   }
   else
   {
-    if (displayLevel < 129) gameOverAndStageFase++;
+    if ((displayLevel < 129) || (gameType == STATE_GAME_MAYHEM)) gameOverAndStageFase++;
     else
     {
       gameState = STATE_GAME_END;
@@ -155,9 +164,9 @@ void nextLevelEnd()
     setDoorPosition(readPlayerAndExitData(2), readPlayerAndExitData(3));
     swapSurvivorPool();
 
-    if (gameType != STATE_GAME_MAYHEM) maxId = ((displayLevel - 1) / NUM_MAPS) + 2;
+    if (gameType != STATE_GAME_MAYHEM) maxId = (((displayLevel % TOTAL_LEVEL_AMOUNT) - 1) / NUM_MAPS) + 2;
     else maxId = 5;
-    
+
     for (byte id = 0; id < maxId; id++)
     {
       Element &surv = survivors[id];
@@ -256,26 +265,29 @@ void stateGameNew()
 {
   level = LEVEL_TO_START_WITH - 1;
   displayLevel = level;
-  scorePlayer = 0;
-  gameState = STATE_GAME_PREPARE_LEVEL;
   initializePlayer(coolGirl);
+  gameState = STATE_GAME_PREPARE_LEVEL;
 }
 
 
 void stateGameContinue()
 {
-  level = LEVEL_TO_START_WITH - 1;
-  displayLevel = level;
-  scorePlayer = 0;
-  gameState = STATE_GAME_PREPARE_LEVEL;
-  initializePlayer(coolGirl);
+  if (EEPROM.read(EEPROM_START) == gameID)
+  {
+    initializePlayer(coolGirl);
+    EEPROM.get(EEPROM_START + 1, level);
+    displayLevel = level;
+    EEPROM.get(EEPROM_START + 3, scorePlayer);
+    EEPROM.get(EEPROM_START + 7, coolGirl.health);
+
+    gameState = STATE_GAME_PREPARE_LEVEL;
+  }
+  else gameState = STATE_GAME_NEW;
 }
 
 void stateGameMayhem()
 {
-  level = MAYHEM_LEVEL_TO_START_WITH - 1;
   displayLevel = 0;
-  scorePlayer = 0;
   gameState = STATE_GAME_PREPARE_LEVEL;
   initializePlayer(coolGirl);
 }
