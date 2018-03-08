@@ -19,7 +19,7 @@ void stateGamePlaying()
   // Update Level
   byte spawnTime;
   if (gameType != STATE_GAME_MAYHEM) spawnTime = 60;
-  else spawnTime = 1;
+  else spawnTime = 15;
   if (arduboy.everyXFrames(spawnTime * 3)) {
     spawnZombie();
   }
@@ -210,7 +210,7 @@ void stateGameNextLevel()
     sprites.drawSelfMasked(leftX, 24, nextLevel, 0);
     if (pressKeyVisible)
     {
-      if (gameType == STATE_GAME_MAYHEM)sprites.drawSelfMasked(41, 6, textMayhem, 0);
+      if (gameType == STATE_GAME_MAYHEM)sprites.drawSelfMasked(41, 8, textMayhem, 0);
       sprites.drawSelfMasked(37, 48, pressKey, 0);
     }
     drawNumbers(rightX, 24, FONT_BIG, DATA_LEVEL);
@@ -246,10 +246,10 @@ const FunctionPointer PROGMEM gameOverFases[] =
 void stateGameOver()
 {
   ((FunctionPointer) pgm_read_word (&gameOverFases[gameOverAndStageFase]))();
-  if (gameType == STATE_GAME_MAYHEM)sprites.drawSelfMasked(41, 0, textMayhem, 0);
-  sprites.drawSelfMasked(11, 12, gameOver, 0);
-  drawNumbers(36, 34, FONT_BIG, DATA_SCORE);
-  if (pressKeyVisible) sprites.drawSelfMasked(37, 56, pressKey, 0);
+  if (gameType == STATE_GAME_MAYHEM)sprites.drawSelfMasked(41, 3, textMayhem, 0);
+  sprites.drawSelfMasked(11, 15, gameOver, 0);
+  drawNumbers(35, 34, FONT_BIG, DATA_SCORE);
+  if (pressKeyVisible) sprites.drawSelfMasked(37, 53, pressKey, 0);
 }
 
 void stateGameEnd()

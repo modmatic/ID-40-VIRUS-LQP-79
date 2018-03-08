@@ -51,7 +51,7 @@ void setup()
   arduboy.bootLogoSpritesSelfMasked();
   arduboy.setFrameRate(60);
   gameID = GAME_ID;
-  //Serial.begin(9600);
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -60,6 +60,6 @@ void loop() {
   arduboy.clear();
   ((FunctionPointer) pgm_read_word (&mainGameLoop[gameState]))();
   arduboy.display();
-  //Serial.write(arduboy.getBuffer(), 128 * 64 / 8);
+  Serial.write(arduboy.getBuffer(), 128 * 64 / 8);
 }
 
