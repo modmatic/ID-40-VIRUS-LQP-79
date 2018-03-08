@@ -211,6 +211,7 @@ void stateGameNextLevel()
     if (pressKeyVisible)
     {
       if (gameType == STATE_GAME_MAYHEM)sprites.drawSelfMasked(41, 8, textMayhem, 0);
+      else sprites.drawSelfMasked(43, 8, textNormal, 0);
       sprites.drawSelfMasked(37, 48, pressKey, 0);
     }
     drawNumbers(rightX, 24, FONT_BIG, DATA_LEVEL);
@@ -247,6 +248,7 @@ void stateGameOver()
 {
   ((FunctionPointer) pgm_read_word (&gameOverFases[gameOverAndStageFase]))();
   if (gameType == STATE_GAME_MAYHEM)sprites.drawSelfMasked(41, 3, textMayhem, 0);
+  else sprites.drawSelfMasked(43, 3, textNormal, 0);
   sprites.drawSelfMasked(11, 15, gameOver, 0);
   drawNumbers(35, 34, FONT_BIG, DATA_SCORE);
   if (pressKeyVisible) sprites.drawSelfMasked(37, 53, pressKey, 0);
