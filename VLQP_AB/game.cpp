@@ -242,7 +242,7 @@ const FunctionPointer PROGMEM gameOverFases[] =
 void stateGameOver()
 {
   ((FunctionPointer) pgm_read_word (&gameOverFases[gameOverAndStageFase]))();
-  sprites.drawSelfMasked(16, 8, gameOver, 0);
+  sprites.drawSelfMasked(11, 8, gameOver, 0);
   drawNumbers(36, 32, FONT_BIG, DATA_SCORE);
   if (pressKeyVisible) sprites.drawSelfMasked(37, 56, pressKey, 0);
 }
