@@ -166,10 +166,11 @@ void nextLevelEnd()
 
     if (gameType != STATE_GAME_MAYHEM)
     {
-      EEPROM.write(EEPROM_START, gameID);
-      EEPROM.put(EEPROM_START + 1, level - 1);
-      EEPROM.put(EEPROM_START + 3, scorePlayer);
-      EEPROM.put(EEPROM_START + 7, coolGirl.health);
+      EEPROM.write(OFFSET_VLQP_START, gameID);
+      EEPROM.put(OFFSET_LEVEL, level - 1);
+      EEPROM.put(OFFSET_SCORE, scorePlayer);
+      EEPROM.put(OFFSET_HEALTH, coolGirl.health);
+      EEPROM.write(OFFSET_VLQP_END, gameID);
       maxId = (((displayLevel % TOTAL_LEVEL_AMOUNT) - 1) / NUM_MAPS) + 2;
     }
     else maxId = 5;
@@ -286,13 +287,13 @@ void stateGameNew()
 
 void stateGameContinue()
 {
-  if (EEPROM.read(EEPROM_START) == gameID)
+  if ((EEPROM.read(OFFSET_VLQP_START) == gameID) && (EEPROM.read(OFFSET_VLQP_END) == gameID))
   {
     initializePlayer(coolGirl);
-    EEPROM.get(EEPROM_START + 1, level);
+    EEPROM.get(OFFSET_LEVEL, level);
     displayLevel = level;
-    EEPROM.get(EEPROM_START + 3, scorePlayer);
-    EEPROM.get(EEPROM_START + 7, coolGirl.health);
+    EEPROM.get(OFFSET_SCORE, scorePlayer);
+    EEPROM.get(OFFSET_HEALTH, coolGirl.health);
 
     gameState = STATE_GAME_PREPARE_LEVEL;
   }

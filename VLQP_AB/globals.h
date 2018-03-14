@@ -7,7 +7,11 @@
 // constants /////////////////////////////////////////////////////////////////
 
 
-#define EEPROM_START             16
+#define OFFSET_VLQP_START             (EEPROM_STORAGE_SPACE_START + 29)
+#define OFFSET_LEVEL                  (OFFSET_VLQP_START + sizeof(byte))
+#define OFFSET_SCORE                  (OFFSET_LEVEL + sizeof(int))
+#define OFFSET_HEALTH                 (OFFSET_SCORE + sizeof(unsigned long))
+#define OFFSET_VLQP_END               (OFFSET_HEALTH + sizeof(byte))
 
 //define menu states (on main menu)
 #define STATE_MENU_INTRO         0
