@@ -7,7 +7,7 @@
 // constants /////////////////////////////////////////////////////////////////
 
 
-#define OFFSET_VLQP_START             (EEPROM_STORAGE_SPACE_START + 29)
+#define OFFSET_VLQP_START             (EEPROM_STORAGE_SPACE_START + 64)
 #define OFFSET_LEVEL                  (OFFSET_VLQP_START + sizeof(byte))
 #define OFFSET_SCORE                  (OFFSET_LEVEL + sizeof(int))
 #define OFFSET_HEALTH                 (OFFSET_SCORE + sizeof(unsigned long))
