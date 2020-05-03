@@ -11,15 +11,15 @@
 #define BULLET_HEIGHT     2
 #define BULLET_DIRECTIONS 8
 
-extern const char BulletXVelocities[8];
+extern const sint BulletXVelocities[8];
 
 // structures ////////////////////////////////////////////////////////////////
 
 struct Bullet {
   int x;
   int y;
-  char vx;
-  char vy;
+  sint vx;
+  sint vy;
   byte active;
 };
 
@@ -29,8 +29,8 @@ extern Bullet bullets[BULLET_MAX];
 
 // method prototypes /////////////////////////////////////////////////////////
 
-bool setBullet(Bullet& obj, int x, int y, char vx, char vy);
-void addBullet(int x, int y, byte direction, char vx, char vy);
+bool setBullet(Bullet& obj, int x, int y, sint vx, sint vy);
+void addBullet(int x, int y, byte direction, sint vx, sint vy);
 void updateBullet(Bullet& obj);
 void updateBullets();
 void drawBullets();

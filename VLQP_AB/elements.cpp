@@ -61,7 +61,7 @@ void drawSurvivors()
 // survivorCollision
 // takes a survivor, collision box to test against
 // returns true if collision boxes intersect
-bool survivorCollision(Element& obj, int x, int y, char w, char h)
+bool survivorCollision(Element& obj, int x, int y, sint w, sint h)
 {
   return
     ( obj.active ) &&

@@ -20,7 +20,7 @@ short burp(short start, short goal, unsigned char step)
 {
   short a = goal;
   short b = start;
-  char sign = 0;
+  sint sign = 0;
 
   if (start > goal)
   {
@@ -38,4 +38,3 @@ short burp(short start, short goal, unsigned char step)
 
   return start;
 }
-

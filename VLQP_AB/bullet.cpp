@@ -2,7 +2,7 @@
 #include "player.h"
 
 // globals ///////////////////////////////////////////////////////////////////
-const char BulletXVelocities[8] = {
+const sint BulletXVelocities[8] = {
   0,
   -2,
   -3,
@@ -19,7 +19,7 @@ Bullet bullets[BULLET_MAX];
 
 // setBullet
 // sets the position and the velocity of a bullet
-bool setBullet(Bullet& obj, int x, int y, char vx, char vy)
+bool setBullet(Bullet& obj, int x, int y, sint vx, sint vy)
 {
   if (!obj.active)
   {
@@ -35,7 +35,7 @@ bool setBullet(Bullet& obj, int x, int y, char vx, char vy)
 
 // addBullet
 // searches the bullet list for an empty slot, adds one if available
-void addBullet(int x, int y, byte direction, char vx, char vy)
+void addBullet(int x, int y, byte direction, sint vx, sint vy)
 {
   byte id;
 

@@ -39,7 +39,7 @@ extern Element survivors[SURVIVOR_MAX];
 void swapSurvivorPool();
 void updateSurvivors();
 void drawSurvivors();
-bool survivorCollision(Element& obj, int x, int y, char w, char h);
+bool survivorCollision(Element& obj, int x, int y, sint w, sint h);
 bool collectSurvivor(Element& obj);
 void clearSurvivors();
 byte countAmountActiveSurvivors();

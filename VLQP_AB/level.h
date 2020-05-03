@@ -39,7 +39,7 @@
 void drawLevel();
 unsigned char getTileType(unsigned int x, unsigned int y);
 void drawNumbers(byte NumbersX, byte NumbersY, byte fontType, int timerOrScoreOrLevel);
-void mapCollide(int& x, int& y, bool horizontal, char& vel, char w, char h);
+void mapCollide(int& x, int& y, bool horizontal, sint& vel, sint w, sint h);
 
 extern Door exitDoor;
 

@@ -46,9 +46,14 @@ const FunctionPointer PROGMEM mainGameLoop[] =
 
 void setup()
 {
+#if DOTMG_CART_SAMD51
+  arduboy.setColorTheme(THEME_ELEKTRONIK);
+  arduboy.begin();
+#else
   arduboy.boot();                                           // begin with the boot logo en setting up the device to work
   arduboy.audio.begin();
   arduboy.bootLogoSpritesSelfMasked();
+#endif
   arduboy.setFrameRate(60);
   gameID = GAME_ID;
   //Serial.begin(9600);
@@ -62,4 +67,3 @@ void loop() {
   arduboy.display();
   //Serial.write(arduboy.getBuffer(), 128 * 64 / 8);
 }
-

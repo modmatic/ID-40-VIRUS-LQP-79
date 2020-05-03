@@ -121,13 +121,21 @@ void stateMenuPlay()
     menuSelection--;
     globalCounter = 0;
   }
+#if DOTMG_CART_SAMD51
+  if (arduboy.justPressed(A_BUTTON))
+#else
   if (arduboy.justPressed(B_BUTTON))
+#endif
   {
     setSlidersToZero();
     gameState = menuSelection + 10;
     gameType = gameState;
   }
+#if DOTMG_CART_SAMD51
+  else if (arduboy.justPressed(B_BUTTON))
+#else
   else if (arduboy.justPressed(A_BUTTON))
+#endif
   {
     setSlidersToZero();
     gameState = STATE_MENU_MAIN;
@@ -186,4 +194,3 @@ void stateMenuSoundfx()
   }
   makeItSlide();
 }
-

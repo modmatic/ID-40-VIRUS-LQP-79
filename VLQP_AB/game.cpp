@@ -268,7 +268,11 @@ void stateGamePause()
   sprites.drawSelfMasked(30, 0, titleScreen02, 0);
   sprites.drawSelfMasked(92, 0, titleScreen03, 0);
   sprites.drawSelfMasked(37, 40, pause, 0);
+#if DOTMG_CART_SAMD51
+  if (arduboy.justPressed(START_BUTTON))
+#else
   if (arduboy.justPressed(A_BUTTON | B_BUTTON))
+#endif
   {
     gameState = STATE_GAME_PLAYING;
     sprites.drawSelfMasked(22, 32, gameOver, 0);
@@ -310,6 +314,9 @@ void stateGameMayhem()
 
 void checkPause()
 {
+#if DOTMG_CART_SAMD51
+  if (arduboy.justPressed(START_BUTTON)) gameState = STATE_GAME_PAUSE;
+#else
   if (arduboy.pressed(A_BUTTON + B_BUTTON)) gameState = STATE_GAME_PAUSE;
+#endif
 }
-

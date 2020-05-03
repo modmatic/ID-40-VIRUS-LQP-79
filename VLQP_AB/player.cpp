@@ -34,8 +34,8 @@ void updatePlayer(Player& obj)
 {
   if (obj.coolDownCounter > WEAPON_OVERHEAT) obj.overHeated = true;
   // Input velocity
-  char vx = 0;
-  char vy = 0;
+  sint vx = 0;
+  sint vy = 0;
 
   byte id;
   byte tileXMax;
@@ -51,8 +51,13 @@ void updatePlayer(Player& obj)
   bool up = arduboy.pressed(UP_BUTTON);
   bool down = arduboy.pressed(DOWN_BUTTON);
 
+#if DOTMG_CART_SAMD51
+  bool rungun = arduboy.pressed(B_BUTTON);
+  bool standgun = arduboy.pressed(A_BUTTON);
+#else
   bool rungun = arduboy.pressed(A_BUTTON);
   bool standgun = arduboy.pressed(B_BUTTON);
+#endif
   bool strafegun = rungun;
 
   obj.walking = up || down || left || right;
@@ -223,7 +228,7 @@ void updatePlayer(Player& obj)
 
 // hurtPlayer
 // make player take damage
-void playerHealthOffset(Player& obj, char amount)
+void playerHealthOffset(Player& obj, sint amount)
 {
   if (obj.flashTime == 0)
   {
@@ -279,4 +284,3 @@ void drawCoolDown()
     }
   }
 }
-

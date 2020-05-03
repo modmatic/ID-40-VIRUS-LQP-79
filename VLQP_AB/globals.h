@@ -1,8 +1,15 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#include <Arduboy2.h>
-#include <ArduboyTones.h>
+#if DOTMG_CART_SAMD51
+  #include <Arduboy2DotMG.h>
+  #include <ArduboyTonesDotMG.h>
+  #define sint int
+#else
+  #include <Arduboy2.h>
+  #include <ArduboyTones.h>
+  #define sint char
+#endif
 
 // constants /////////////////////////////////////////////////////////////////
 

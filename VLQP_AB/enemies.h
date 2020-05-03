@@ -52,9 +52,9 @@ void updateZombie(Enemy& obj);
 void updateZombies();
 void drawZombie(Enemy& obj);
 void drawZombies();
-bool zombieHealthOffset(Enemy& obj, char amount);
-bool zombieCollision(Enemy& obj, int x, int y, char w, char h);
+bool zombieHealthOffset(Enemy& obj, sint amount);
+bool zombieCollision(Enemy& obj, int x, int y, sint w, sint h);
 void clearZombies();
-void zombieCollide(int &x, int &y, bool horizontal, char &vel, char w, char h);
+void zombieCollide(int &x, int &y, bool horizontal, sint &vel, sint w, sint h);
 
 #endif

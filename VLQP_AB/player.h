@@ -68,7 +68,7 @@ extern byte pickupsCounter;
 
 void updatePlayer(Player& obj);
 void drawPlayer(Player& obj);
-void playerHealthOffset(Player& obj, char amount);
+void playerHealthOffset(Player& obj, sint amount);
 void initializePlayer(Player& obj);
 void drawLife(Player& obj);
 void drawCoolDown();
